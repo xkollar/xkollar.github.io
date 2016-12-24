@@ -16,8 +16,8 @@ Fun
 Transportation
 --------------
 
-* <http://jizdnirady.idnes.cz/brno/spojeni/>
-* <http://jizdnirady.idnes.cz/praha/spojeni/>
+* <https://t.jizdnirady.idnes.cz/idsjmk/spojeni/>
+* <https://t.jizdnirady.idnes.cz/pid/spojeni/>
 
 Weather
 -------
