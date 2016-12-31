@@ -27,7 +27,7 @@ header {
   min-height: 120px;
   background-image: url('/images/Ouroboros-linear.svg');
   background-repeat: no-repeat;
-  background-position: 100% 50%;
+  background-position: 50% 50%;
   display: flex;
   flex-direction: column;
 }
@@ -60,10 +60,13 @@ header nav {
   padding-top: 0.5ex;
   text-align: center;
 }
-header nav li ul {
-  display: inline-block;
+header nav ul {
+  display: inline;
 }
 header nav li {
+  display: inline;
+}
+header nav li ul{
   display: inline-block;
 }
 header nav li:not(:first-child)::before {
