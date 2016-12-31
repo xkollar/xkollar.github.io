@@ -1,0 +1,65 @@
+---
+title: Tea Ceremony
+author: xkollar
+tags: Fun
+---
+A tea ceremony I am going to describe is a ritualized form of making
+tea practiced by many people I know, mostly IT specialists of some kind
+or another.
+
+Everything starts with *the Idea* of having a tea.
+The Idea has to spring up in one's mind and it has to be forgotten
+through submerging your mind into the work.
+
+Then there is *the Desire* to have a tea.
+The Desire shall be strong but it has to be forgotten
+through submerging your mind into the work.
+
+Then there is *the Decision* to have a tea.
+The Decision ought to be firm but it has to be forgotten
+through submerging your mind into the work.
+
+Only after these three steps are completed one should proceed further.
+
+Prepare cup, tea, kettle and choose `n`, natural number, preferably not
+very large.
+
+Fill kettle with water. And because it would be waste of precious time,
+go back to your computer and do some work.
+
+Wait approximately `n` minutes.
+
+Get back to the kettle only to realize that you have not turned
+the kettle on and remedy this unfavourable condition. And because
+you have something really important to do, go back to your
+computer and do _some_ work.
+
+Wait approximately `n` minutes.
+
+Get back to the kettle only to see that it has not been
+plugged into the electric socket for safety reasons and remedy
+this unfavourable condition. (Kettle should be on from the previous
+step, but check just to be sure). And because you have
+some bugs to fix, go back to your computer and do some work.
+
+Wait approximately `n` minutes, and maybe some more.
+
+Get back to the kettle to find it just barely warm,
+as the water has not only boiled but also cooled down substantially.
+Turn the kettle on again. Previous couple of steps can be repeated
+arbitrarily many times based on preference of person performing
+the ceremony.
+
+Should one decide to proceed further and comes to the kettle
+in time, one may pour water into the cup with the tea. And of course,
+because your work sure requires your attention, go back to your
+computer and do some work.
+
+Finish only the most important things that can not wait. Get back
+to your tea and see the cold, over-steeped tea. Give it a calm
+look. Take a sip and let the bitter taste spread through
+your body, thus reminding you of it and putting you into
+present moment.
+
+Slowly pour the beverage into the sink. Have a glass of water.
+And get back to your computer to do some more work.
