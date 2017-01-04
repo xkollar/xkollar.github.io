@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>xkollar</title>
+    <link href="https://xkollar.github.io/atom.xml" rel="self" />
+    <link href="https://xkollar.github.io" />
+    <id>https://xkollar.github.io/atom.xml</id>
+    <author>
+        <name>xkollar</name>
+        <email></email>
+    </author>
+    <updated>2016-12-31T00:00:00Z</updated>
+    <entry>
+    <title>Tea Ceremony</title>
+    <link href="https://xkollar.github.io/posts/2016-12-31-tea-ceremony.html" />
+    <id>https://xkollar.github.io/posts/2016-12-31-tea-ceremony.html</id>
+    <published>2016-12-31T00:00:00Z</published>
+    <updated>2016-12-31T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>A tea ceremony I am going to describe is a ritualized form of making tea practiced by many people I know, mostly IT specialists of some kind or another.</p>
+<p>Everything starts with <em>the Idea</em> of having a tea. The Idea has to spring up in one’s mind and it has to be forgotten through submerging your mind into the work.</p>
+<p>Then there is <em>the Desire</em> to have a tea. The Desire shall be strong but it has to be forgotten through submerging your mind into the work.</p>
+<p>Then there is <em>the Decision</em> to have a tea. The Decision ought to be firm but it has to be forgotten through submerging your mind into the work.</p>
+<p>Only after these three steps are completed one should proceed further.</p>
+<p>Prepare cup, tea, kettle and choose <code>n</code>, natural number, preferably not very large.</p>
+<p>Fill kettle with water. And because it would be waste of precious time, go back to your computer and do some work.</p>
+<p>Wait approximately <code>n</code> minutes.</p>
+<p>Get back to the kettle only to realize that you have not turned the kettle on and remedy this unfavourable condition. And because you have something really important to do, go back to your computer and do <em>some</em> work.</p>
+<p>Wait approximately <code>n</code> minutes.</p>
+<p>Get back to the kettle only to see that it has not been plugged into the electric socket for safety reasons and remedy this unfavourable condition. (Kettle should be on from the previous step, but check just to be sure). And because you have some bugs to fix, go back to your computer and do some work.</p>
+<p>Wait approximately <code>n</code> minutes, and maybe some more.</p>
+<p>Get back to the kettle to find it just barely warm, as the water has not only boiled but also cooled down substantially. Turn the kettle on again. Previous couple of steps can be repeated arbitrarily many times based on preference of person performing the ceremony.</p>
+<p>Should one decide to proceed further and comes to the kettle in time, one may pour water into the cup with the tea. And of course, because your work sure requires your attention, go back to your computer and do some work.</p>
+<p>Finish only the most important things that can not wait. Get back to your tea and see the cold, over-steeped tea. Give it a calm look. Take a sip and let the bitter taste spread through your body, thus reminding you of it and putting you into present moment.</p>
+<p>Slowly pour the beverage into the sink. Have a glass of water. And get back to your computer to do some more work.</p>]]></summary>
+</entry>
+<entry>
+    <title>Earth</title>
+    <link href="https://xkollar.github.io/posts/2016-08-25-earth.html" />
+    <id>https://xkollar.github.io/posts/2016-08-25-earth.html</id>
+    <published>2016-08-25T00:00:00Z</published>
+    <updated>2016-08-25T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Context: Asked randomly in an office space.</p>
+<p>Q: How fast is the Earth spinning?</p>
+<p>A: Approximately one turn a day?</p>]]></summary>
+</entry>
+<entry>
+    <title>Life…</title>
+    <link href="https://xkollar.github.io/posts/2016-08-19-life.html" />
+    <id>https://xkollar.github.io/posts/2016-08-19-life.html</id>
+    <published>2016-08-19T00:00:00Z</published>
+    <updated>2016-08-19T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Life is like a backpack. Full of bad analogies.</p>]]></summary>
+</entry>
+<entry>
+    <title>Q/A Joke</title>
+    <link href="https://xkollar.github.io/posts/2016-06-19-joke.html" />
+    <id>https://xkollar.github.io/posts/2016-06-19-joke.html</id>
+    <published>2016-06-19T00:00:00Z</published>
+    <updated>2016-06-19T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Q: What is the opposite of a venture capitalist?</p>
+<p>A: Adventure communist.</p>]]></summary>
+</entry>
+<entry>
+    <title>Kapr</title>
+    <link href="https://xkollar.github.io/posts/2016-03-21-kapr.html" />
+    <id>https://xkollar.github.io/posts/2016-03-21-kapr.html</id>
+    <published>2016-03-21T00:00:00Z</published>
+    <updated>2016-03-21T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Plave kapr v medu a říká: „Viskózní!“</p>]]></summary>
+</entry>
+<entry>
+    <title>C Language</title>
+    <link href="https://xkollar.github.io/posts/2016-03-18-c-language.html" />
+    <id>https://xkollar.github.io/posts/2016-03-18-c-language.html</id>
+    <published>2016-03-18T00:00:00Z</published>
+    <updated>2016-03-18T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Q: Does C have higher-order functions?</p>
+<p>A: C has higher-order pointers.</p>]]></summary>
+</entry>
+<entry>
+    <title>Maybe Joke</title>
+    <link href="https://xkollar.github.io/posts/2016-02-19-maybe-joke.html" />
+    <id>https://xkollar.github.io/posts/2016-02-19-maybe-joke.html</id>
+    <published>2016-02-19T00:00:00Z</published>
+    <updated>2016-02-19T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Usually I feel <code class="sourceCode haskell"><span class="dt">Nothing</span></code>.</p>
+<p>Today I feel <code class="sourceCode haskell"><span class="dt">Just</span> <span class="dt">Empty</span></code>.</p>]]></summary>
+</entry>
+
+</feed>
