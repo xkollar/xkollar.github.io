@@ -33,6 +33,7 @@ rules = do
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
+            >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/post.html" (postCtxWithTags tags)
             >>= finalize postCtx
             -- >>= loadAndApplyTemplate "templates/default.html" (menuTagsCtx <> postCtx)
@@ -94,6 +95,14 @@ rules = do
                 -- >>= loadAndApplyTemplate "templates/default.html" (menuTagsCtx <> indexCtx)
                 -- >>= relativizeUrls
 
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $ do
+            let feedCtx = postCtx <> bodyField "description"
+            posts <- fmap (take 10) . recentFirst =<<
+                loadAllSnapshots "posts/*" "content"
+            renderAtom myFeedConfiguration feedCtx posts
+
     match "templates/*" $ compile templateBodyCompiler
 
 
@@ -124,3 +133,12 @@ menuTagsField :: String -> Tags -> Context a
 menuTagsField key tags = field key $ \_ -> renderTags makeLink (intercalate separator) tags where
     separator = renderHtml $ H.span H.! A.class_ "space" $ " "
     makeLink tag url _ _ _ = renderHtml $ H.li $ H.a H.! A.href (H.toValue url) $ H.toHtml tag
+
+myFeedConfiguration :: FeedConfiguration
+myFeedConfiguration = FeedConfiguration
+    { feedTitle       = "xkollar"
+    , feedDescription = "…"
+    , feedAuthorName  = "xkollar"
+    , feedAuthorEmail = ""
+    , feedRoot        = "https://xkollar.github.io"
+    }
