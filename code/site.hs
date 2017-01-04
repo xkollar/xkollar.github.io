@@ -36,8 +36,6 @@ rules = do
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/post.html" (postCtxWithTags tags)
             >>= finalize postCtx
-            -- >>= loadAndApplyTemplate "templates/default.html" (menuTagsCtx <> postCtx)
-            -- >>= relativizeUrls
 
     tagsRules tags $ \tag pattern -> do
         let title = "Posts tagged \"" <> tag <> "\""
@@ -51,8 +49,6 @@ rules = do
             makeItem ""
                 >>= loadAndApplyTemplate "templates/tag.html" ctx
                 >>= finalize ctx
-                -- >>= loadAndApplyTemplate "templates/default.html" (menuTagsCtx <> ctx)
-                -- >>= relativizeUrls
 
     create ["archive.html"] $ do
         route idRoute
@@ -66,8 +62,6 @@ rules = do
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
                 >>= finalize archiveCtx
-                -- >>= loadAndApplyTemplate "templates/default.html" (menuTagsCtx <> archiveCtx)
-                -- >>= relativizeUrls
 
     create ["tags/index.html"] $ do
         route idRoute
@@ -76,9 +70,6 @@ rules = do
             let ctx = constField "title" "Tags" <> defaultContext
             makeItem (renderedTags)
                 >>= finalize ctx
-                -- >>= loadAndApplyTemplate "templates/default.html" (menuTagsCtx <> ctx)
-                -- >>= relativizeUrls
-
 
     match "index.html" $ do
         route idRoute
@@ -92,8 +83,6 @@ rules = do
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= finalize indexCtx
-                -- >>= loadAndApplyTemplate "templates/default.html" (menuTagsCtx <> indexCtx)
-                -- >>= relativizeUrls
 
     create ["atom.xml"] $ do
         route idRoute
