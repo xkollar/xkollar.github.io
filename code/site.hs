@@ -25,7 +25,7 @@ rules = do
 
     tags <- buildTags "posts/*" (fromCapture "tags/*.html")
 
-    let menuTagsCtxPart = menuTagsField "menutags" (tagsByFrequency tags)
+    let menuTagsCtxPart = menuTagsField "menutags" . takeTags 3 $ tagsByFrequency tags
         finalize ctx =
             loadAndApplyTemplate "templates/default.html" (menuTagsCtxPart <> ctx)
             >=> relativizeUrls
