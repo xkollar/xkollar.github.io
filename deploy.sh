@@ -2,6 +2,7 @@
 
 cabal sandbox init
 cabal install --only-dep
+cabal run clean
 cabal run build
 
 GIT_USER=$( git config --get user.name )
