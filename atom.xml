@@ -8,8 +8,79 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2016-12-31T00:00:00Z</updated>
+    <updated>2017-01-08T00:00:00Z</updated>
     <entry>
+    <title>Graphviz Support</title>
+    <link href="https://xkollar.github.io/posts/2017-01-08-graphviz-support.html" />
+    <id>https://xkollar.github.io/posts/2017-01-08-graphviz-support.html</id>
+    <published>2017-01-08T00:00:00Z</published>
+    <updated>2017-01-08T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>I have spent some time adding Grapviz support to my blog. Now I am able to write graph descriptions directly in markdown instead of separate <code>.dot</code> files.</p>
+<p>I can write something like this:</p>
+<pre><code>~~~ {.dot-render}
+digraph G {
+    graph [bgcolor=transparent];
+    a -&gt; c;
+    b -&gt; c;
+    c -&gt; d;
+}
+~~~</code></pre>
+<p>And you will see something like this:</p>
+<div class="figure">
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9
+Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4x
+Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9z
+dmcxMS5kdGQiPgo8IS0tIEdlbmVyYXRlZCBieSBncmFwaHZpeiB2ZXJzaW9uIDIu
+MzguMCAoMjAxNDA0MTMuMjA0MSkKIC0tPgo8IS0tIFRpdGxlOiBHIFBhZ2VzOiAx
+IC0tPgo8c3ZnIHdpZHRoPSIxMzRwdCIgaGVpZ2h0PSIxODhwdCIKIHZpZXdCb3g9
+IjAuMDAgMC4wMCAxMzQuMDAgMTg4LjAwIiB4bWxucz0iaHR0cDovL3d3dy53My5v
+cmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5
+L3hsaW5rIj4KPGcgaWQ9ImdyYXBoMCIgY2xhc3M9ImdyYXBoIiB0cmFuc2Zvcm09
+InNjYWxlKDEgMSkgcm90YXRlKDApIHRyYW5zbGF0ZSg0IDE4NCkiPgo8dGl0bGU+
+RzwvdGl0bGU+CjwhLS0gYSAtLT4KPGcgaWQ9Im5vZGUxIiBjbGFzcz0ibm9kZSI+
+PHRpdGxlPmE8L3RpdGxlPgo8ZWxsaXBzZSBmaWxsPSJub25lIiBzdHJva2U9ImJs
+YWNrIiBjeD0iMjciIGN5PSItMTYyIiByeD0iMjciIHJ5PSIxOCIvPgo8dGV4dCB0
+ZXh0LWFuY2hvcj0ibWlkZGxlIiB4PSIyNyIgeT0iLTE1OC4zIiBmb250LWZhbWls
+eT0iVGltZXMsc2VyaWYiIGZvbnQtc2l6ZT0iMTQuMDAiPmE8L3RleHQ+CjwvZz4K
+PCEtLSBjIC0tPgo8ZyBpZD0ibm9kZTIiIGNsYXNzPSJub2RlIj48dGl0bGU+Yzwv
+dGl0bGU+CjxlbGxpcHNlIGZpbGw9Im5vbmUiIHN0cm9rZT0iYmxhY2siIGN4PSI2
+MyIgY3k9Ii05MCIgcng9IjI3IiByeT0iMTgiLz4KPHRleHQgdGV4dC1hbmNob3I9
+Im1pZGRsZSIgeD0iNjMiIHk9Ii04Ni4zIiBmb250LWZhbWlseT0iVGltZXMsc2Vy
+aWYiIGZvbnQtc2l6ZT0iMTQuMDAiPmM8L3RleHQ+CjwvZz4KPCEtLSBhJiM0NTsm
+Z3Q7YyAtLT4KPGcgaWQ9ImVkZ2UxIiBjbGFzcz0iZWRnZSI+PHRpdGxlPmEmIzQ1
+OyZndDtjPC90aXRsZT4KPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIg
+ZD0iTTM1LjM0OTYsLTE0NC43NjVDMzkuNzExNSwtMTM2LjI4MyA0NS4xNDY5LC0x
+MjUuNzE0IDUwLjA0MTMsLTExNi4xOTciLz4KPHBvbHlnb24gZmlsbD0iYmxhY2si
+IHN0cm9rZT0iYmxhY2siIHBvaW50cz0iNTMuMjM0NiwtMTE3LjY0MSA1NC42OTU3
+LC0xMDcuMTQ3IDQ3LjAwOTYsLTExNC40MzkgNTMuMjM0NiwtMTE3LjY0MSIvPgo8
+L2c+CjwhLS0gZCAtLT4KPGcgaWQ9Im5vZGU0IiBjbGFzcz0ibm9kZSI+PHRpdGxl
+PmQ8L3RpdGxlPgo8ZWxsaXBzZSBmaWxsPSJub25lIiBzdHJva2U9ImJsYWNrIiBj
+eD0iNjMiIGN5PSItMTgiIHJ4PSIyNyIgcnk9IjE4Ii8+Cjx0ZXh0IHRleHQtYW5j
+aG9yPSJtaWRkbGUiIHg9IjYzIiB5PSItMTQuMyIgZm9udC1mYW1pbHk9IlRpbWVz
+LHNlcmlmIiBmb250LXNpemU9IjE0LjAwIj5kPC90ZXh0Pgo8L2c+CjwhLS0gYyYj
+NDU7Jmd0O2QgLS0+CjxnIGlkPSJlZGdlMyIgY2xhc3M9ImVkZ2UiPjx0aXRsZT5j
+JiM0NTsmZ3Q7ZDwvdGl0bGU+CjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iYmxh
+Y2siIGQ9Ik02MywtNzEuNjk2NkM2MywtNjMuOTgyNyA2MywtNTQuNzEyNSA2Mywt
+NDYuMTEyNCIvPgo8cG9seWdvbiBmaWxsPSJibGFjayIgc3Ryb2tlPSJibGFjayIg
+cG9pbnRzPSI2Ni41MDAxLC00Ni4xMDQzIDYzLC0zNi4xMDQzIDU5LjUwMDEsLTQ2
+LjEwNDQgNjYuNTAwMSwtNDYuMTA0MyIvPgo8L2c+CjwhLS0gYiAtLT4KPGcgaWQ9
+Im5vZGUzIiBjbGFzcz0ibm9kZSI+PHRpdGxlPmI8L3RpdGxlPgo8ZWxsaXBzZSBm
+aWxsPSJub25lIiBzdHJva2U9ImJsYWNrIiBjeD0iOTkiIGN5PSItMTYyIiByeD0i
+MjciIHJ5PSIxOCIvPgo8dGV4dCB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB4PSI5OSIg
+eT0iLTE1OC4zIiBmb250LWZhbWlseT0iVGltZXMsc2VyaWYiIGZvbnQtc2l6ZT0i
+MTQuMDAiPmI8L3RleHQ+CjwvZz4KPCEtLSBiJiM0NTsmZ3Q7YyAtLT4KPGcgaWQ9
+ImVkZ2UyIiBjbGFzcz0iZWRnZSI+PHRpdGxlPmImIzQ1OyZndDtjPC90aXRsZT4K
+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIgZD0iTTkwLjY1MDQsLTE0
+NC43NjVDODYuMjg4NSwtMTM2LjI4MyA4MC44NTMxLC0xMjUuNzE0IDc1Ljk1ODcs
+LTExNi4xOTciLz4KPHBvbHlnb24gZmlsbD0iYmxhY2siIHN0cm9rZT0iYmxhY2si
+IHBvaW50cz0iNzguOTkwNCwtMTE0LjQzOSA3MS4zMDQzLC0xMDcuMTQ3IDcyLjc2
+NTQsLTExNy42NDEgNzguOTkwNCwtMTE0LjQzOSIvPgo8L2c+CjwvZz4KPC9zdmc+
+Cg==" />
+
+</div>
+<p>And while it could have been done in a simpler manner, I hope to reuse the code for some other stuff…</p>]]></summary>
+</entry>
+<entry>
     <title>Tea Ceremony</title>
     <link href="https://xkollar.github.io/posts/2016-12-31-tea-ceremony.html" />
     <id>https://xkollar.github.io/posts/2016-12-31-tea-ceremony.html</id>
