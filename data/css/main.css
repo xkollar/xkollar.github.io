@@ -100,3 +100,14 @@ a {
 .main > * {
   padding: 1ex 0;
 }
+/* {{{ Tables */
+table {
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #111;
+  /* background: #111; */
+  padding: 0.5ex 0.5em;
+  margin: 1px;
+}
+/* }}} Tables */
