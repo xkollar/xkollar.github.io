@@ -8,6 +8,14 @@ executable site
   build-depends:    base == 4.*
                   , hakyll == 4.9.*
                   , blaze-html == 0.8.*
+
+                  , base64-string
+                  , directory
+                  , pandoc-types == 1.17.*
+                  , process
+                  , temporary
+                  , transformers
+
   hs-source-dirs:   code
   ghc-options:      -threaded -O2
   default-language: Haskell2010

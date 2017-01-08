@@ -7,11 +7,19 @@ import Data.Function (on)
 import Data.List (intersperse, intercalate)
 import Data.Monoid ((<>))
 import Data.Ord (Down(Down))
+import System.IO
 
+import Codec.Binary.Base64.String
+import Hakyll
+import System.Directory
+import System.IO.Temp
+import System.Process
+import Text.Blaze.Html.Renderer.String (renderHtml)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
-import Text.Blaze.Html.Renderer.String (renderHtml)
-import Hakyll
+import Text.Pandoc.Definition
+import Text.Pandoc.Walk
+
 
 rules :: Rules ()
 rules = do
@@ -32,7 +40,7 @@ rules = do
 
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ awesomeCompiler
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/post.html" (postCtxWithTags tags)
             >>= finalize postCtx
@@ -68,7 +76,7 @@ rules = do
         compile $ do
             renderedTags <- renderTagList $ tagsByFrequency tags
             let ctx = constField "title" "Tags" <> defaultContext
-            makeItem (renderedTags)
+            makeItem renderedTags
                 >>= finalize ctx
 
     match "index.html" $ do
@@ -131,3 +139,53 @@ myFeedConfiguration = FeedConfiguration
     , feedAuthorEmail = ""
     , feedRoot        = "https://xkollar.github.io"
     }
+
+-------------------------------------------------------------------------------
+-- {{{ Pandoc experimentation -------------------------------------------------
+-------------------------------------------------------------------------------
+
+transformativePandoc :: (Pandoc -> Compiler Pandoc) -> Compiler (Item String)
+transformativePandoc = pandocCompilerWithTransformM
+    defaultHakyllReaderOptions
+    defaultHakyllWriterOptions
+
+runCmdIn
+    :: FilePath
+    -> String
+    -> [String]
+    -> String
+    -> IO (String, [FilePath])
+runCmdIn dir c opts i = withFile "/dev/null" ReadWriteMode $ \ h -> do
+    v <- readCreateProcess (cp h) i
+    s <- filter (`notElem` [".", ".."]) <$> getDirectoryContents dir
+    return (v,s)
+    where
+        cp h = CreateProcess
+            { cmdspec = RawCommand c opts
+            , std_in = CreatePipe
+            , std_out = CreatePipe
+            , std_err = UseHandle h
+            , cwd = Just dir
+            , env = Nothing
+            , close_fds = True
+            , create_group = False
+            , delegate_ctlc = False
+            }
+
+dotProc :: String -> IO String
+dotProc i = withSystemTempDirectory "dot-processor" $ \ tmp ->
+    fst <$> runCmdIn tmp
+        "dot" ["-Tsvg"] i
+
+dotToImage :: Block -> IO Block
+dotToImage cb@(CodeBlock (i, cs, a) s)
+    | "dot-render" `elem` cs = do
+        s <- dotProc s
+        return (Para [Image nullAttr [] ("data:image/svg+xml;base64," <> encode s, "fig:")])
+dotToImage x = return x
+
+pass :: Functor f => (b -> f a) -> b -> f b
+pass f x = const x <$> f x
+
+awesomeCompiler :: Compiler (Item String)
+awesomeCompiler = transformativePandoc $ unsafeCompiler . walkM dotToImage
