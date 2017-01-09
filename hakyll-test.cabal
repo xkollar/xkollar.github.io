@@ -9,12 +9,12 @@ executable site
                   , hakyll == 4.9.*
                   , blaze-html == 0.8.*
 
-                  , base64-string
                   , directory
                   , pandoc-types == 1.17.*
                   , process
                   , temporary
-                  , transformers
+                  , base64-bytestring
+                  , utf8-string
 
   hs-source-dirs:   code
   ghc-options:      -threaded -O2

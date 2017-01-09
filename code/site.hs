@@ -1,24 +1,24 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main (main) where
 
-import Control.Arrow ((&&&))
 import Control.Monad ((>=>))
 import Data.Function (on)
-import Data.List (intersperse, intercalate)
+import Data.List (intercalate, isSuffixOf)
 import Data.Monoid ((<>))
 import Data.Ord (Down(Down))
 import System.IO
 
-import Codec.Binary.Base64.String
+import Data.ByteString.Base64 (encode)
+import Data.ByteString.UTF8 (fromString, toString)
 import Hakyll
-import System.Directory
-import System.IO.Temp
+import System.Directory (getDirectoryContents)
+import System.IO.Temp (withSystemTempDirectory)
 import System.Process
 import Text.Blaze.Html.Renderer.String (renderHtml)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 import Text.Pandoc.Definition
-import Text.Pandoc.Walk
+import Text.Pandoc.Walk (walkM)
 
 
 rules :: Rules ()
@@ -172,20 +172,49 @@ runCmdIn dir c opts i = withFile "/dev/null" ReadWriteMode $ \ h -> do
             , delegate_ctlc = False
             }
 
+-- pass :: Functor f => (b -> f a) -> b -> f b
+-- pass f x = const x <$> f x
+
+awesomeCompiler :: Compiler (Item String)
+awesomeCompiler = transformativePandoc $ unsafeCompiler . comps where
+    comps = foldr ((>=>) . walkM) return
+        [ dotToImage
+        , abcToImage
+        ]
+
+encodeSvg :: String -> String
+encodeSvg s = "data:image/svg+xml;base64," <> encode' s
+    where
+    encode' = toString . encode . fromString
+
+mkSvgImage :: String -> Inline
+mkSvgImage s = Image nullAttr [] (encodeSvg s, "fig:")
+
+-- {{{ Graphviz ---------------------------------------------------------------
 dotProc :: String -> IO String
 dotProc i = withSystemTempDirectory "dot-processor" $ \ tmp ->
     fst <$> runCmdIn tmp
         "dot" ["-Tsvg"] i
 
 dotToImage :: Block -> IO Block
-dotToImage cb@(CodeBlock (i, cs, a) s)
+dotToImage (CodeBlock (_, cs, _) d)
     | "dot-render" `elem` cs = do
-        s <- dotProc s
-        return (Para [Image nullAttr [] ("data:image/svg+xml;base64," <> encode s, "fig:")])
+        s <- dotProc d
+        return (Para [mkSvgImage s])
 dotToImage x = return x
+-- }}} Graphviz ---------------------------------------------------------------
 
-pass :: Functor f => (b -> f a) -> b -> f b
-pass f x = const x <$> f x
+-- {{{ ABC Music --------------------------------------------------------------
+abcProc :: String -> IO [String]
+abcProc i = withSystemTempDirectory "abc-processor" $ \ tmp -> do
+    let name = tmp <> "/in.abc"
+    writeFile name i
+    s <- filter (isSuffixOf ".svg" ) . snd <$> runCmdIn tmp
+        "abcm2ps" ["-q", "-S", "-g", name] ""
+    mapM (readFile . (tmp <>) . ("/" <>)) s
 
-awesomeCompiler :: Compiler (Item String)
-awesomeCompiler = transformativePandoc $ unsafeCompiler . walkM dotToImage
+abcToImage :: Block -> IO Block
+abcToImage (CodeBlock (_, cs, _) d)
+    | "abc-render" `elem` cs = Para . map mkSvgImage <$> abcProc d
+abcToImage x = return x
+-- }}} ABC Music --------------------------------------------------------------
