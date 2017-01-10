@@ -5,8 +5,9 @@ tags: Haskell, Hakyll, Music
 ---
 Another day (or should I rather say night?) well spent. This time I have added
 support for [ABC Notation](https://en.wikipedia.org/wiki/ABC_notation). From
-now on I can use some reasonably nice musical notation. Next time I might finally add support for
-for [LilyPond](http://lilypond.org/) that was originally planed.
+now on I can use some reasonably nice musical notation. Next time I might
+finally add support for [LilyPond](http://lilypond.org/) that was originally
+planed.
 
 Here is an example (part of my very first piano homework).
 
