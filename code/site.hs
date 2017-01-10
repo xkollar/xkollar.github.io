@@ -102,7 +102,6 @@ rules = do
 
     match "templates/*" $ compile templateBodyCompiler
 
-
 config :: Configuration
 config = defaultConfiguration
     { providerDirectory = "data"
@@ -158,19 +157,20 @@ runCmdIn
 runCmdIn dir c opts i = withFile "/dev/null" ReadWriteMode $ \ h -> do
     v <- readCreateProcess (cp h) i
     s <- filter (`notElem` [".", ".."]) <$> getDirectoryContents dir
-    return (v,s)
+    return (v,map prefixdir s)
     where
-        cp h = CreateProcess
-            { cmdspec = RawCommand c opts
-            , std_in = CreatePipe
-            , std_out = CreatePipe
-            , std_err = UseHandle h
-            , cwd = Just dir
-            , env = Nothing
-            , close_fds = True
-            , create_group = False
-            , delegate_ctlc = False
-            }
+    prefixdir = (dir <>) . ("/" <>)
+    cp h = CreateProcess
+        { cmdspec = RawCommand c opts
+        , std_in = CreatePipe
+        , std_out = CreatePipe
+        , std_err = UseHandle h
+        , cwd = Just dir
+        , env = Nothing
+        , close_fds = True
+        , create_group = False
+        , delegate_ctlc = False
+        }
 
 -- pass :: Functor f => (b -> f a) -> b -> f b
 -- pass f x = const x <$> f x
@@ -211,7 +211,7 @@ abcProc i = withSystemTempDirectory "abc-processor" $ \ tmp -> do
     writeFile name i
     s <- filter (isSuffixOf ".svg" ) . snd <$> runCmdIn tmp
         "abcm2ps" ["-q", "-S", "-g", name] ""
-    mapM (readFile . (tmp <>) . ("/" <>)) s
+    mapM readFile s
 
 abcToImage :: Block -> IO Block
 abcToImage (CodeBlock (_, cs, _) d)
