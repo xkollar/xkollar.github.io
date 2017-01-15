@@ -154,7 +154,7 @@ final impression.
 Conclusion
 ----------
 
-When learning music, it is good ask questions ("why is it this way?", …), but
+When learning music it is good to ask questions ("why is it this way?", …), but
 always be prepared that best answer you can get is "because it is more
 convenient this way, …". And it is not necessarily a bad thing `:-)`.
 
