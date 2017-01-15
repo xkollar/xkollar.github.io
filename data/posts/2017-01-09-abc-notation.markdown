@@ -18,13 +18,14 @@ C:Dle C. Czerného upravil A.S.
 M:3/4
 K:C
 Q:"Moderato"
-V:1 name=Rh
+%%score {Rh | Lh}
+V:Rh
 L:1/4
 !mf!
 (!1!ceg|!4!f)d2|
 (!3!eg3/2c/2|d3)|(!1!ceg|
 fd2)|((ee/2)g/2 d/2g/2|c3)|
-V:2 clef=bass name=Lh
+V:Lh clef=bass
 L:1/16
 !5!C,G,E,G, C,G,E,G, C,G,E,G,| !5!B,,!1!G,!3!D,G, B,,G,D,G, B,,G,!2!F,G,|
 !5!C,G,E,G, C,G,E,G, C,G,E,G,| !5!B,,!1!G,!3!D,G, B,,G,D,G, B,,G,!2!F,G,| !5!C,G,E,G, C,G,E,G, C,G,E,G,|
