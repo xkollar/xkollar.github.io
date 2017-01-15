@@ -45,6 +45,7 @@ ABC Music Editors
 Syntax and Examplex
 -------------------
 
+* [Making Music with ABC 2](http://abcplus.sourceforge.net/#ABCGuide) "A pracital guide to modern ABC notation" by Guido Gonzato
 * <http://abcwiki.selfthinker.org/abc:syntax>
 * <http://trillian.mit.edu/~jc/music/abc/doc/ABCtut.html>
 * <http://abcnotation.com/examples>
