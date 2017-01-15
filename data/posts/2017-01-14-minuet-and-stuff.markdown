@@ -10,6 +10,7 @@ T:Minuet
 C:Christian Petzold, from Notebook for Anna Magdalena Bach
 B:Notebook for Anna Magdalena Bach
 Z:abc-transcription xkollar <http://xkollar.github.io/>
+I:linebreak $
 M:3/4
 K:G
 Q:"Moderato"
@@ -29,7 +30,7 @@ V:Lh
 DB,G,| ">)"!1!D(!1!D,/2!5!C/2B,/2A,/2|!2!B,2)A,|(G,B,)G,|C3|
 %%%%%%%%%%%%%%%%%%
 V:Rh
-(G')!tenuto!G)!tenuto!G|!4!C'(D'/2C'/2B/2A/2|B) (C'/2B/2A/2G/2|A) (B/2A/2!1!G/2!2!F/2|G3) :|
+(G')!tenuto!G)!tenuto!G|!4!C'(D'/2C'/2B/2A/2|B) (C'/2B/2A/2G/2|A) (B/2A/2!1!G/2!2!F/2|G3) :| $
 V:Lh
 !2!A, (C/2B,/2A,/2G,/2|!1!A,2) (!3!F,|!2!G,2) (!1!B,|!2!C) !1!!tenuto!D !tenuto!!5!D, | ">)"!1!G,2!5!G,, :|
 %%%%%%%%%%%%%%%%%%
