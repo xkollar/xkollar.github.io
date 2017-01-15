@@ -6,7 +6,7 @@ tags: Music
 
 (Disclaimer: It is absolutely possible that I have no Idea what I am writing about…)
 
-I still don't fully understand how, but I have started to take piano lessons.
+I still don't fully understand how but I have started to take piano lessons.
 Several people were involved and I can not thank them enough for making my
 childhood dream come true.
 
@@ -16,10 +16,10 @@ perspective, I will now share several thoughts.
 Notation
 --------
 
-Looking at musical notation as a computer scientist I see something like a formalism
-that lets me on one hand express thoughts, and then someone (or something) interpret
-them. Single, unified form of communication, way to preserve and transfer thoughts.
-Source code if you like.
+Looking at musical notation as a computer scientist I see something like a
+formalism that lets me express thoughts and then someone (or something)
+interpret them. Single, unified form of communication, way to preserve and
+transfer thoughts. Source code if you like.
 
 But the world is little more complex than that. Parallel with source code goes a little
 further than that. Just as there is no single programming language, everybody is free
@@ -27,14 +27,14 @@ do develop their own way of notation. And just like with programming languages,
 once you know principles, you are (with some effort) able to understand most of them
 (up to some esoteric stuff).
 
-Of course the parallel is not perfect. For example beauty is often in
-variations of interpretations (on the other hand, interpretation of code is
+Of course the analogy is not perfect. For example beauty is often in
+variations of interpretations (whereas interpretation of code is
 usually more strict). Little (one might say) imperfections that make difference
 between what would software generate and what would professional pianist
-produce is what makes it unique a beautiful. (Even though software is probably
+produce is what makes it unique and beautiful. (Even though software is probably
 getting there.)
 
-And speaking of variations of the notations. Computes scientists and/or
+And speaking of variations of the notations. Computer scientists and/or
 programmers are people that like formalisms and so they too took the challenge
 and created several of their own. I used to find it hard not to try to create
 some kind of formalism of my own. Well, until I tried to typeset some (rather
@@ -42,7 +42,7 @@ uncomplicated) music using some of existing notations (LilyPond, ABC 2, even
 some MIDI).
 
 It helped me realize that the usual musical notation is optimized for reading.
-There are some basic components (notes, rests, …), but then there is whole zoo
+There are some basic components (notes, rests, …) but then there is whole zoo
 of high-level symbols expressing some kind of complex things. And that can be
 binding. On the one hand, it is convenient for reading, but on the other hand,
 you need special symbol for everything as they usually do not compose well.
@@ -123,8 +123,8 @@ D2 z | !5!D,2 (!3!F, | E,) G, !3!F, | (!1!G, !5!B,,) !3!D,| ">)"!tenuto!G,">)"!t
 
 Fingering and some notations are actually work of my teacher. She enhanced
 the one that I have randomly downloaded from the internet and printed.
-Then I have learned, that typesetting music can be as complex as with text.
-When there is someone that is preparing a book with sheet music, the editor(s)
+Then I have learned that typesetting music can be as complex as with text.
+When they are preparing a book with sheet music, editors
 usually have to think hard to use current notation to express the piece
 in "the right way", whatever that in particular context means.
 
@@ -144,7 +144,7 @@ Fingering
 Another interesting thing is fingering. One might be inclined to think that
 there is some canonical fingering, probably backed by a model of hands and
 instrument or something… yet as it turns out, there is not. It is usually up to
-editor to decide this. And then interpret can find out that he does not like it
+editor to decide this. And then the interpreter can find out that he does not like it
 and not use it at all.
 
 To make things even more confusing, sometimes editor might use less natural
@@ -155,7 +155,7 @@ Conclusion
 ----------
 
 When learning music it is good to ask questions ("why is it this way?", …), but
-always be prepared that best answer you can get is "because it is more
+always be prepared that the best answer you can get is "because it is more
 convenient this way, …". And it is not necessarily a bad thing `:-)`.
 
 [wiki:Baroque_music]: https://en.wikipedia.org/wiki/Baroque_music
