@@ -18,15 +18,15 @@ Q:"Moderato"
 V:Rh clef=treble
 L:1/4
 !mf!
-!5!D' (!1!G/2A/2B/2C'/2 (|D')!tenuto!G)!tenuto!G|!5!E'(!1!C'/2D'/2E'/2F'/2|(G')!tenuto!G)!tenuto!G|!4!C'(D'/2C'/2B/2A/2|B)(C'/2B/2A/2!1!G/2|
+!5!D' (!1!G/2A/2B/2C'/2 |(D')!tenuto!G)!tenuto!G|!5!E'(!1!C'/2D'/2E'/2F'/2|(G')!tenuto!G)!tenuto!G|!4!C'(D'/2C'/2B/2A/2|B)(C'/2B/2A/2!1!G/2|
 V:Lh clef=bass
 L:1/4
-!5!!2!!1![E,G,B,]2 !3!A,| !2!B,3| !1!C3| B,3| A,3| G,3|
+!5!!2!!1![G,B,D]2 !3!A,| !2!B,3| !1!C3| B,3| A,3| G,3|
 %%%%%%%%%%%%%%%%%%
 V:Rh
 !2!F) (!1!G/2A/2B/2G/2|{B}A3)| !5!D'(G/2A/2B/2C'/2|(D')!tenuto!G)!tenuto!G|E'(!1!C'/2D'/2E'/2F'/2|
 V:Lh
-DB,G,| ">)"!1!D!1!D,/2!5!C/2B,/2A,/2|!2!B,2A,|(G,B,)G,|C3|
+DB,G,| ">)"!1!D(!1!D,/2!5!C/2B,/2A,/2|!2!B,2)A,|(G,B,)G,|C3|
 %%%%%%%%%%%%%%%%%%
 V:Rh
 (G')!tenuto!G)!tenuto!G|!4!C'(D'/2C'/2B/2A/2|B) (C'/2B/2A/2G/2|A) (B/2A/2!1!G/2!2!F/2|G3) :|
