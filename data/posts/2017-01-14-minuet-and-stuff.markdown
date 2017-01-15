@@ -7,20 +7,62 @@ tags: Music
 (Disclaimer: It is absolutely possible that I have no Idea what I am writing about…)
 
 I still don't fully understand how, but I have started to take piano lessons.
-Several people were involved and I can not thank them enough.
+Several people were involved and I can not thank them enough for making my
+childhood dream come true.
 
-One of things fascinating about music is its notation. As a computer scientist
-I used to find it hard not to try to create some kind of formalism to describe
-it in text form. Well, until I tried to typeset some (rather uncomplicated)
-music using some of existing notations (LilyPond and ABC 2).
+Music is fascinating on so many levels… exploring its world from (for me) new
+perspective, I will now share several thoughts.
 
-Let us have a look at [Minuet in G major, BWV Anh. 114][wiki:Minuet].
+Notation
+--------
+
+Looking at musical notation as a computer scientist I see something like a formalism
+that lets me on one hand express thoughts, and then someone (or something) interpret
+them. Single, unified form of communication, way to preserve and transfer thoughts.
+Source code if you like.
+
+But the world is little more complex than that. Parallel with source code goes a little
+further than that. Just as there is no single programming language, everybody is free
+do develop their own way of notation. And just like with programming languages,
+once you know principles, you are (with some effort) able to understand most of them
+(up to some esoteric stuff).
+
+Of course the parallel is not perfect. For example beauty is often in
+variations of interpretations (on the other hand, interpretation of code is
+usually more strict). Little (one might say) imperfections that make difference
+between what would software generate and what would professional pianist
+produce is what makes it unique a beautiful. (Even though software is probably
+getting there.)
+
+And speaking of variations of the notations. Computes scientists and/or
+programmers are people that like formalisms and so they too took the challenge
+and created several of their own. I used to find it hard not to try to create
+some kind of formalism of my own. Well, until I tried to typeset some (rather
+uncomplicated) music using some of existing notations (LilyPond, ABC 2, even
+some MIDI).
+
+It helped me realize that the usual musical notation is optimized for reading.
+There are some basic components (notes, rests, …), but then there is whole zoo
+of high-level symbols expressing some kind of complex things. And that can be
+binding. On the one hand, it is convenient for reading, but on the other hand,
+you need special symbol for everything as they usually do not compose well.
+
+Interesting thoughts related to this:
+
+[Chiptune: Pushing the Limits Using Constraints](https://www.youtube.com/watch?v=_7k25pwNbj8)
+
+Variations
+----------
+
+Let us have a look at [Minuet in G major, BWV Anh. 114][wiki:Minuet]. If you
+don't know it:
 
 [Minuet In G Major](https://www.youtube.com/watch?v=IzbJiz_DO7E)
 
-The piece is simple enough to be recommended for beginners. Yet trying to use
-ABC Notation I have very soon hit some hurdles. Here is my attempt that took
-some non-trivial time.
+The piece is simple enough to be recommended for beginners such as myself. Yet
+trying to use ABC Notation I have very soon hit some hurdles (may have been
+caused by my lack of familiarity with the notation and/or musical theory). Here
+is my attempt that took some non-trivial time.
 
 ~~~ {.abc-render}
 X:1
@@ -79,21 +121,42 @@ D2 z | !5!D,2 (!3!F, | E,) G, !3!F, | (!1!G, !5!B,,) !3!D,| ">)"!tenuto!G,">)"!t
 %%%%%%%%%%%%%%%%%%
 ~~~
 
-Fingering and some notations are actually work of my teacher.
+Fingering and some notations are actually work of my teacher. She enhanced
+the one that I have randomly downloaded from the internet and printed.
+Then I have learned, that typesetting music can be as complex as with text.
+When there is someone that is preparing a book with sheet music, the editor(s)
+usually have to think hard to use current notation to express the piece
+in "the right way", whatever that in particular context means.
 
-The funny thing is, that quite a lot of this notation is little redundant once
-you know that the piece is [baroque][wiki:Baroque_music]. Then almost all
-[legato][wiki:Legato] annotations become redundant (or at least probably would
-not be used in original), as legato was implied over [steps and
-skips][wiki:Steps_and_skips] in baroque music. On the other hand, music
+Also, the funny thing is that quite a lot of notation in this piece is somewhat
+redundant once you know that it is [baroque][wiki:Baroque_music]. For example
+lots of [legato][wiki:Legato] annotations could have been left out as legato
+was implied over [steps and skips][wiki:Steps_and_skips] in baroque music (and
+probably would not be used in original notation). On the other hand, music
 notations are made to be convenient for reading… so some extra notations can
-become handy to remind someone who does not happen to know this.
+become handy to remind someone who does not happen to know this. And also with
+annotation being more explicit it is much easier to interpret the music with
+computer.
+
+Fingering
+---------
 
 Another interesting thing is fingering. One might be inclined to think that
-there is some canonical fingering, probably backed by some models of hands or
-something… yet as it turns out, there is not. It is usually up to editor to
-decide this. And then interpret can find out that he does not like it and not
-use it at all.
+there is some canonical fingering, probably backed by a model of hands and
+instrument or something… yet as it turns out, there is not. It is usually up to
+editor to decide this. And then interpret can find out that he does not like it
+and not use it at all.
+
+To make things even more confusing, sometimes editor might use less natural
+fingering to force interpreter to make slight pauses, somehow "helping" with
+final impression.
+
+Conclusion
+----------
+
+When learning music, it is good ask questions ("why is it this way?", …), but
+always be prepared that best answer you can get is "because it is more
+convenient this way, …". And it is not necessarily a bad thing `:-)`.
 
 [wiki:Baroque_music]: https://en.wikipedia.org/wiki/Baroque_music
 [wiki:Legato]: https://en.wikipedia.org/wiki/Legato
