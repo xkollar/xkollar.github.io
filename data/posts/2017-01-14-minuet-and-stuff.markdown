@@ -4,6 +4,24 @@ author: xkollar
 tags: Music
 ---
 
+(Disclaimer: It is absolutely possible that I have no Idea what I am writing about…)
+
+I still don't fully understand how, but I have started to take piano lessons.
+Several people were involved and I can not thank them enough.
+
+One of things fascinating about music is its notation. As a computer scientist
+I used to find it hard not to try to create some kind of formalism to describe
+it in text form. Well, until I tried to typeset some (rather uncomplicated)
+music using some of existing notations (LilyPond and ABC 2).
+
+Let us have a look at [Minuet in G major, BWV Anh. 114][wiki:Minuet].
+
+[Minuet In G Major](https://www.youtube.com/watch?v=IzbJiz_DO7E)
+
+The piece is simple enough to be recommended for beginners. Yet trying to use
+ABC Notation I have very soon hit some hurdles. Here is my attempt that took
+some non-trivial time.
+
 ~~~ {.abc-render}
 X:1
 T:Minuet
@@ -60,3 +78,24 @@ V:Lh
 D2 z | !5!D,2 (!3!F, | E,) G, !3!F, | (!1!G, !5!B,,) !3!D,| ">)"!tenuto!G,">)"!tenuto!!2!D,!tenuto!!5!G,,:|
 %%%%%%%%%%%%%%%%%%
 ~~~
+
+Fingering and some notations are actually work of my teacher.
+
+The funny thing is, that quite a lot of this notation is little redundant once
+you know that the piece is [baroque][wiki:Baroque_music]. Then almost all
+[legato][wiki:Legato] annotations become redundant (or at least probably would
+not be used in original), as legato was implied over [steps and
+skips][wiki:Steps_and_skips] in baroque music. On the other hand, music
+notations are made to be convenient for reading… so some extra notations can
+become handy to remind someone who does not happen to know this.
+
+Another interesting thing is fingering. One might be inclined to think that
+there is some canonical fingering, probably backed by some models of hands or
+something… yet as it turns out, there is not. It is usually up to editor to
+decide this. And then interpret can find out that he does not like it and not
+use it at all.
+
+[wiki:Baroque_music]: https://en.wikipedia.org/wiki/Baroque_music
+[wiki:Legato]: https://en.wikipedia.org/wiki/Legato
+[wiki:Minuet]: https://en.wikipedia.org/wiki/Minuet_in_G_major,_BWV_Anh._114
+[wiki:Steps_and_skips]: https://en.wikipedia.org/wiki/Steps_and_skips
