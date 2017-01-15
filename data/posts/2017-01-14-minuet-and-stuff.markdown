@@ -39,11 +39,16 @@ V:Rh
 V:Lh
 |:!1!G,3|F,3|E,G,E,|A,2A,,|"^1-4 Hack1"A,3|B,D^C|
 %%%%%%%%%%%%%%%%%%
+%%score {Rh | (Lh Lh2)}
 V:Rh
 (!5!F' !1!A) ^C' | "Hack2"!>(!D'2-!>)!!p!D' | !5!D' (G/!2!F/ !1!G) | !5!E' (G/F/ G) | !5!D' C' B |
 V:Lh
-(!1!D !4!F,) A, | !1!D !5!D, !1!=C | "Hack3"!3!B,-[B,D2]B, | "Hack4"!2!C-[CE2](!2!C | !3!B,) A, G, |
+(!1!D !4!F,) A, | !1!D !5!D, !1!=C | !3!z D2 | zE2 | x A, G, |
+V:Lh2
+L:1/4
+Z2 B,2B,| !2!C2 (!2!C | !3!B,)
 %%%%%%%%%%%%%%%%%%
+%%score {Rh | Lh}
 V:Rh
 (!2!A/!1!G/!3!F/G/ A) | (!1!D/E/F/!1!G/A/B/ | C') B A | (B/D'/ !tenuto!!1!G) !tenuto!!2!F | !1!!2!!5![B,DG]3:|
 V:Lh
