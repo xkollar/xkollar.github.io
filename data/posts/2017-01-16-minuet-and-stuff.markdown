@@ -21,7 +21,7 @@ formalism that lets me express thoughts and then someone (or something)
 interpret them. Single, unified form of communication, way to preserve and
 transfer thoughts. Source code if you like.
 
-But the world is little more complex than that. Parallel with source code goes a little
+But the world is little more complex than that. Analogy with source code goes a little
 further than that. Just as there is no single programming language, everybody is free
 do develop their own way of notation. And just like with programming languages,
 once you know principles, you are (with some effort) able to understand most of them
@@ -35,9 +35,9 @@ produce is what makes it unique and beautiful. (Even though software is probably
 getting there.)
 
 And speaking of variations of the notations. Computer scientists and/or
-programmers are people that like formalisms and so they too took the challenge
+programmers are people who like formalisms and so they too took the challenge
 and created several of their own. I used to find it hard not to try to create
-some kind of formalism of my own. Well, until I tried to typeset some (rather
+some kind of formalism myself. Well, until I tried to typeset some (rather
 uncomplicated) music using some of existing notations (LilyPond, ABC 2, even
 some MIDI).
 
@@ -122,18 +122,18 @@ D2 z | !5!D,2 (!3!F, | E,) G, !3!F, | (!1!G, !5!B,,) !3!D,| ">)"!tenuto!G,">)"!t
 ~~~
 
 Fingering and some notations are actually work of my teacher. She enhanced
-the one that I have randomly downloaded from the internet and printed.
+the one that I have randomly downloaded from the internet and brought with me to the lesson.
 Then I have learned that typesetting music can be as complex as with text.
 When they are preparing a book with sheet music, editors
 usually have to think hard to use current notation to express the piece
 in "the right way", whatever that in particular context means.
 
-Also, the funny thing is that quite a lot of notation in this piece is somewhat
+Another funny thing is that quite a lot of notation in this transcription is somewhat
 redundant once you know that it is [baroque][wiki:Baroque_music]. For example
-lots of [legato][wiki:Legato] annotations could have been left out as legato
-was implied over [steps and skips][wiki:Steps_and_skips] in baroque music (and
-probably would not be used in original notation). On the other hand, music
-notations are made to be convenient for reading… so some extra notations can
+most of slurs could have been left out as [legato][wiki:Legato]
+was implied over [steps and skips][wiki:Steps_and_skips] in music from that era (and
+probably would not be used in the original). Nevertheless, music
+notations are made to be convenient for reading… so some extra symbols can
 become handy to remind someone who does not happen to know this. And also with
 annotation being more explicit it is much easier to interpret the music with
 computer.
