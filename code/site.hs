@@ -19,6 +19,7 @@ import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 import Text.Pandoc.Definition
 import Text.Pandoc.Walk (walkM)
+import Text.Regex (subRegex, mkRegex)
 
 
 rules :: Rules ()
@@ -213,8 +214,13 @@ abcProc i = withSystemTempDirectory "abc-processor" $ \ tmp -> do
         "abcm2ps" ["-q", "-S", "-g", name] ""
     mapM readFile s
 
+purgeAbcOutput x = subRegex regex x ""
+    where
+    regex = mkRegex pat
+    pat = "^<!-- (Creator|CreationDate|CommandLine): [^>]* -->\n"
+
 abcToImage :: Block -> IO Block
 abcToImage (CodeBlock (_, cs, _) d)
-    | "abc-render" `elem` cs = Para . map mkSvgImage <$> abcProc d
+    | "abc-render" `elem` cs = Para . map (mkSvgImage . purgeAbcOutput) <$> abcProc d
 abcToImage x = return x
 -- }}} ABC Music --------------------------------------------------------------
