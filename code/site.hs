@@ -208,8 +208,8 @@ dotToImage x = return x
 -- {{{ ABC Music --------------------------------------------------------------
 abcProc :: String -> IO [String]
 abcProc i = withSystemTempDirectory "abc-processor" $ \ tmp -> do
-    let name = tmp <> "/in.abc"
-    writeFile name i
+    let name = "in.abc"
+    writeFile (tmp <> "/" <> name) i
     s <- filter (isSuffixOf ".svg" ) . snd <$> runCmdIn tmp
         "abcm2ps" ["-q", "-S", "-g", name] ""
     mapM readFile s
