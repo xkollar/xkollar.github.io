@@ -3,7 +3,6 @@ title: Minuet and Stuff…
 author: xkollar
 tags: Music
 ---
-
 (Disclaimer: It is absolutely possible that I have no Idea what I am writing about…)
 
 I still don't fully understand how but I have started to take piano lessons.
