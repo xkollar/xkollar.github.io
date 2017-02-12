@@ -214,10 +214,13 @@ abcProc i = withSystemTempDirectory "abc-processor" $ \ tmp -> do
         "abcm2ps" ["-q", "-S", "-g", name] ""
     mapM readFile s
 
-purgeAbcOutput x = subRegex regex x ""
+purgeAbcOutput x = foldr (\ (p,r) i -> subRegex (mkRegex p) i r) x subs
     where
-    regex = mkRegex pat
-    pat = "^<!-- (Creator|CreationDate|CommandLine): [^>]* -->\n"
+    subs =
+        [ ("^<!-- (Creator|CreationDate|CommandLine): [^>]* -->\n", "")
+        , ("^<title>[^<]*</title>\n", "")
+        , ("^<\\?xml version=\"1\\.0\"", "<?xml version=\"1.0\" encoding=\"UTF-8\"")
+        ]
 
 abcToImage :: Block -> IO Block
 abcToImage (CodeBlock (_, cs, _) d)
