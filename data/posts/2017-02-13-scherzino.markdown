@@ -12,7 +12,7 @@ C:Неизвестный автор
 B:Etuda
 Z:abc-transcription xkollar <http://xkollar.github.io/>
 I:linebreak $
-Q:"Живо"
+Q:"Живо\n"
 M:2/4
 K:C
 %%score {Rh | Lh}
@@ -21,19 +21,19 @@ L:1/8
 V:Lh clef=treble
 L:1/8
 %%%%%%%%%%%%
-[V:Rh] !mf! (ce).g.f | .e.g.f.e | (df).e.d | .c.e.d.e |
-[V:Lh]      (EG).B.A | .G.B.A.G | (FA).G.F | .E.G.F.G |
+[V:Rh] !mf! (!1!c!3!e).!5!g.!4!f | .e.g.f.e | (df).e.d | .c.e.d.e |
+[V:Lh]      (!5!E!3!G).!1!B.!2!A | .G.B.A.G | (FA).G.F | .E.G.F.G |
 %%%%%%%%%%%%%
 [V:Rh] (ce).g.f | .e.g.f.e | (df).e.d | .!tenuto!c2 .!tenuto!e2 | $
 [V:Lh] (EG).B.A | .G.B.A.G | (FA).G.F | .!tenuto!E2 .!tenuto!G2 | $
 %%%%%%%%%%%%
 %%%%%%%%%%%%
 %%%%%%%%%%%%
-[V:Rh] (b,d).f.d | (b,d).f.d | (a,c).e.c | (a,c).e.c |
-[V:Lh] (DF).A.F  | (DF).A.F  | (CE).G.E  | (CE).G.E  |
+[V:Rh] (!1!b,!3!d).!5!f.d | (b,d).f.d | (!1!a,c).e.c | (a,c).e.c |
+[V:Lh] (!5!D!3!F).!1!A.F  | (DF).A.F  | (!5!CE).G.E  | (CE).G.E  |
 %%%%%%%%%%%%
-[V:Rh] (g,b,).d.b, | (g,b,).d.b, |
-[V:Lh] (B,D).F.D   | (B,D).F.D   | 
+[V:Rh] (!1!g,b,).d.b, | (g,b,).d.b, |
+[V:Lh] (!5!B,D).F.D   | (B,D).F.D   | 
 %%%%%%%%%%%%
 [V:Rh] .!tenuto!!4!c2 .!tenuto!!4!c2 | !tenuto!c4 |]
 [V:Lh] .!tenuto!!2!E2 .!tenuto!!3!D2 | !tenuto!!4!C4 |]
