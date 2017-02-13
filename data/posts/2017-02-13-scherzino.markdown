@@ -43,8 +43,8 @@ Notes:
 
 * Emphasis should be on the first note of every measure measures
   (first note should be a little louder).
-* Additional emphasis in this particular piece is added by slur (firs note
+* Additional emphasis in this particular piece is added by slurs (first note
   is slightly longer, to achieve legato effect).
-* There is nice hand movement to achieve this, referred to as "odskok"(?).
+* There is nice hand movement to achieve this (referred to as "odskok"?).
 
 Seems like simple pieces tend to be complex in the detail `:-)`.
