@@ -27,3 +27,11 @@ L:1/4
 [V:Rh] e2 (e2  | !<(! d2) (d2 | g4) !<)! | !f! f f  f f | e2 (e2 | d2) (d2  |  c4)    ||
 [V:Lh] C D E C |      F2  (G2 | E2) (E2  |     D2) (D2  | G4)    | F E  G F | (E2 C2) ||
 ~~~
+
+Notes:
+
+* Melody is in the right hand, so left hand should be played softer/gentler.
+  Required hand asymmetry might not be simple to achive. There is however simple
+  exercise to get there: Alternate playing C-major scale between left and right hand, right stonger.
+  Over time, make pauses after stronger arm smaller and smaller, untill you play both hands
+  at the same time, but different strength. (Do not forget to train also reverse.)
