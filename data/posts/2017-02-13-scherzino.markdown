@@ -41,10 +41,13 @@ L:1/8
 
 Notes:
 
-* Emphasis should be on the first note of every measure measures
+* Emphasis should be on the first note of every measure
   (first note should be a little louder).
 * Additional emphasis in this particular piece is added by slurs (first note
   is slightly longer, to achieve legato effect).
-* There is nice hand movement to achieve this (referred to as "odskok"?).
+* There is nice hand movement to achieve this (referred to as "odskok" or "odtažení"?).
+* [Scherzo][wiki:Scherzo] is musical term, in case you were wondering.
 
 Seems like simple pieces tend to be complex in the detail `:-)`.
+
+[wiki:Scherzo]: https://en.wikipedia.org/wiki/Scherzo
