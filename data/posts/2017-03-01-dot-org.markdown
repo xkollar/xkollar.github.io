@@ -1,0 +1,18 @@
+---
+title: .org
+author: xkollar
+tags: Fun
+---
+Fun little thing to do: Pronounce ".org" as you would pronounce "orgy".
+
+* [wikipedia.org](https://www.wikipedia.org/)
+* [haskell.org](https://www.haskell.org/)
+* [archive.org](https://archive.org/)
+* [4chan.org](https://www.4chan.org/)
+* [json.org](http://json.org/)
+* [eff.org](https://www.eff.org/)
+* [acm.org](https://www.acm.org/)
+* [lambda-the-ultimate.org](http://lambda-the-ultimate.org/)
+* [developer.mozilla.org](https://developer.mozilla.org/)
+
+PS: There is also a funny way to pronounce ".com" `;-)`.
