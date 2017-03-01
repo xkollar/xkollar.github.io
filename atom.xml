@@ -8,8 +8,28 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2017-02-28T00:00:00Z</updated>
+    <updated>2017-03-01T00:00:00Z</updated>
     <entry>
+    <title>.org</title>
+    <link href="https://xkollar.github.io/posts/2017-03-01-dot-org.html" />
+    <id>https://xkollar.github.io/posts/2017-03-01-dot-org.html</id>
+    <published>2017-03-01T00:00:00Z</published>
+    <updated>2017-03-01T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Fun little thing to do: Pronounce “.org” as you would pronounce “orgy”.</p>
+<ul>
+<li><a href="https://www.wikipedia.org/">wikipedia.org</a></li>
+<li><a href="https://www.haskell.org/">haskell.org</a></li>
+<li><a href="https://archive.org/">archive.org</a></li>
+<li><a href="https://www.4chan.org/">4chan.org</a></li>
+<li><a href="http://json.org/">json.org</a></li>
+<li><a href="https://www.eff.org/">eff.org</a></li>
+<li><a href="https://www.acm.org/">acm.org</a></li>
+<li><a href="http://lambda-the-ultimate.org/">lambda-the-ultimate.org</a></li>
+<li><a href="https://developer.mozilla.org/">developer.mozilla.org</a></li>
+</ul>
+<p>PS: There is also a funny way to pronounce “.com” <code>;-)</code>.</p>]]></summary>
+</entry>
+<entry>
     <title>Kdes, holubičko, lítala</title>
     <link href="https://xkollar.github.io/posts/2017-02-28-kdes-holubicko-litala.html" />
     <id>https://xkollar.github.io/posts/2017-02-28-kdes-holubicko-litala.html</id>
@@ -182,15 +202,6 @@ digraph G {
     <published>2016-08-19T00:00:00Z</published>
     <updated>2016-08-19T00:00:00Z</updated>
     <summary type="html"><![CDATA[<p>Life is like a backpack. Full of bad analogies.</p>]]></summary>
-</entry>
-<entry>
-    <title>Q/A Joke</title>
-    <link href="https://xkollar.github.io/posts/2016-06-19-joke.html" />
-    <id>https://xkollar.github.io/posts/2016-06-19-joke.html</id>
-    <published>2016-06-19T00:00:00Z</published>
-    <updated>2016-06-19T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>Q: What is the opposite of a venture capitalist?</p>
-<p>A: Adventure communist.</p>]]></summary>
 </entry>
 
 </feed>
