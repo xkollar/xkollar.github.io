@@ -32,8 +32,8 @@ L:1/4
 [V:Rh] !mf! !5!D' D' !4!C' | !3!B D'2   |
 [V:Lh]      !3!B,2 (!1!D   | D) !2!C B, |
 %%%%%%%%%%%%%
-[V:Rh] "_decresc." !4!C' C' B | A C'2    | !3!B2 !2!A      | !1!G3       |]
-[V:Lh]             !4!A,2 (C  | C) B, A, | !1!D !3!B, !2!C | !1!D !5!G,2 |]
+[V:Rh] !4!C' C' B | A C'2    | !>(!!3!B2 !2!A  | !>)!!1!G3   |]
+[V:Lh] !4!A,2 (C  | C) B, A, | !1!D !3!B, !2!C | !1!D !5!G,2 |]
 ~~~
 
 In case you are not familiar with it, you can get the feel at
