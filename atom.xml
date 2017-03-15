@@ -8,8 +8,59 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2017-03-03T00:00:00Z</updated>
+    <updated>2017-03-15T00:00:00Z</updated>
     <entry>
+    <title>Heroku and HTTPS</title>
+    <link href="https://xkollar.github.io/posts/2017-03-15-heroku-and-https.html" />
+    <id>https://xkollar.github.io/posts/2017-03-15-heroku-and-https.html</id>
+    <published>2017-03-15T00:00:00Z</published>
+    <updated>2017-03-15T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p><a href="https://www.heroku.com/">Heroku</a> is a <a href="https://en.wikipedia.org/wiki/Platform_as_a_service">Platform as a Service</a> provider we have used in work for prototyping some small services. What bugged me though was that even though they provide you with free HTTPS certificate for your <code>*.herokuapp.com</code> site, the they do not provide simple way to enforce HTTPS.</p>
+<p>So I have wrote simple <a href="https://hackage.haskell.org/package/wai">wai</a> <a href="https://hackage.haskell.org/package/wai-3.2.1.1/docs/Network-Wai.html#t:Middleware">Middleware</a>, which will take care of redirecting users to secured version of your site and also set <a href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">HTTP_Strict_Transport_Security</a>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">herokuHttps ::</span> <span class="dt">Middleware</span>
+herokuHttps <span class="fu">=</span> strictTransportPolicy <span class="fu">.</span> herokuHttpsRedirect
+
+<span class="ot">isHerokuHttps ::</span> <span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+isHerokuHttps <span class="fu">=</span> (<span class="dt">Just</span> <span class="st">&quot;https&quot;</span> <span class="fu">==</span>) <span class="fu">.</span> fmap CI.mk
+    <span class="fu">.</span> lookup <span class="st">&quot;X-Forwarded-Proto&quot;</span> <span class="fu">.</span> requestHeaders
+
+<span class="ot">strictTransportPolicy ::</span> <span class="dt">Middleware</span>
+strictTransportPolicy <span class="fu">=</span> ifRequest isHerokuHttps <span class="fu">.</span> modifyResponse
+    <span class="fu">$</span> mapResponseHeaders ((header, value)<span class="fu">:</span>)
+  <span class="kw">where</span>
+    header <span class="fu">=</span> <span class="st">&quot;Strict-Transport-Security&quot;</span>
+    value <span class="fu">=</span> <span class="st">&quot;max-age=31536000; includeSubDomains&quot;</span>
+
+<span class="ot">herokuHttpsRedirect ::</span> <span class="dt">Middleware</span>
+<span class="ot">#if MIN_VERSION_wai(3,0,0)</span>
+herokuHttpsRedirect app r respond
+<span class="ot">#else</span>
+herokuHttpsRedirect app r
+<span class="ot">#endif</span>
+    <span class="fu">|</span> isHerokuHttps r <span class="fu">=</span> runApp
+    <span class="fu">|</span> <span class="dt">Just</span> host <span class="ot">&lt;-</span> hostHeader r <span class="fu">=</span> res <span class="fu">.</span> redir
+        <span class="fu">$</span> <span class="st">&quot;https://&quot;</span> <span class="fu">&lt;&gt;</span> host <span class="fu">&lt;&gt;</span> rawPathInfo r <span class="fu">&lt;&gt;</span> rawQueryString r
+    <span class="fu">|</span> otherwise <span class="fu">=</span> runApp
+  <span class="kw">where</span>
+
+    <span class="co">-- Heroku does not use &quot;X-Forwarded-Host&quot;, as it simply preserves &quot;Host&quot;</span>
+<span class="ot">    hostHeader ::</span> <span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">ByteString</span>
+    hostHeader <span class="fu">=</span> lookup <span class="st">&quot;Host&quot;</span> <span class="fu">.</span> requestHeaders
+
+<span class="ot">    redir ::</span> <span class="dt">ByteString</span> <span class="ot">-&gt;</span> <span class="dt">Response</span>
+    redir url <span class="fu">=</span> responseLBS HTTP.status301 [(<span class="st">&quot;Location&quot;</span>, url)] <span class="st">&quot;&quot;</span>
+
+<span class="ot">#if MIN_VERSION_wai(3,0,0)</span>
+    res <span class="fu">=</span> respond
+    runApp <span class="fu">=</span> app r respond
+<span class="ot">#else</span>
+    res <span class="fu">=</span> return
+    runApp <span class="fu">=</span> app r
+<span class="ot">#endif</span></code></pre></div>
+<p>Many relevant Haskell libraries use wai (<a href="http://packdeps.haskellers.com/reverse/wai">wai reverse dependencies</a> so you can use it for example with your <a href="https://hackage.haskell.org/package/servant-server">servant</a>-based service.</p>
+<p>PS: You really do not need this should you have proxy configuration under your control, as all major reverse proxies can do this for you.</p>]]></summary>
+</entry>
+<entry>
     <title>Little Song</title>
     <link href="https://xkollar.github.io/posts/2017-03-03-little-song.html" />
     <id>https://xkollar.github.io/posts/2017-03-03-little-song.html</id>
@@ -197,16 +248,6 @@ digraph G {
 <p>Should one decide to proceed further and comes to the kettle in time, one may pour water into the cup with the tea. And of course, because your work sure requires your attention, go back to your computer and do some work.</p>
 <p>Finish only the most important things that can not wait. Get back to your tea and see the cold, over-steeped tea. Give it a calm look. Take a sip and let the bitter taste spread through your body, thus reminding you of it and putting you into present moment.</p>
 <p>Slowly pour the beverage into the sink. Have a glass of water. And get back to your computer to do some more work.</p>]]></summary>
-</entry>
-<entry>
-    <title>Earth</title>
-    <link href="https://xkollar.github.io/posts/2016-08-25-earth.html" />
-    <id>https://xkollar.github.io/posts/2016-08-25-earth.html</id>
-    <published>2016-08-25T00:00:00Z</published>
-    <updated>2016-08-25T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>Context: Asked randomly in an office space.</p>
-<p>Q: How fast is the Earth spinning?</p>
-<p>A: Approximately one turn a day?</p>]]></summary>
 </entry>
 
 </feed>
