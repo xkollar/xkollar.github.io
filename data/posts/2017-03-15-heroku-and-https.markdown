@@ -7,7 +7,7 @@ tags: Haskell
 [Heroku](https://www.heroku.com/) is a [Platform as a Service][wiki:PaaS] provider
 we have used in work for prototyping some small services. What bugged me though was
 that even though they provide you with free HTTPS certificate for your `*.herokuapp.com`
-site, the they do not provide simple way to enforce HTTPS.
+site, they do not provide simple way to enforce HTTPS. 
 
 So I have wrote simple [wai][hackage:wai] [Middleware][hackage:wai:Middleware],
 which will take care of redirecting users to secured version of your site and
@@ -61,7 +61,7 @@ dependencies][wai-reverse] so you can use it for example with your
 [servant][hackage:servant]-based service.
 
 PS: You really do not need this should you have proxy configuration under your
-control, as all major reverse proxies can do this for you.
+control as all major reverse proxies can do this for you.
 
 [wiki:PaaS]: https://en.wikipedia.org/wiki/Platform_as_a_service
 [hackage:wai]: https://hackage.haskell.org/package/wai
