@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xkollar - Sensible Scraping</title>
+<link rel="feed" type="application/atom+xml" href="../atom.xml" title="Atom Feed">
+<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Sensible Scraping</h1><div class="info">Posted on 2017-03-24 by xkollar  <span class="tags">in <a href="../tags/Haskell.html">Haskell</a></span>.</div><p>Whether you are developing tool for accessing publicly provided API or accessing data in less official way (e.g. scraping) chances are service you are using will not appreciate larger amounts of requests that development of such tools tend to require.</p>
+<p>And to be honest, repeated identical requests are unpleasant even from the developer point of view as they unnecessarily stretch experimentation loops.</p>
+<p>Long story short, what one wants is caching. I remember writing something like that as a Python decorator, so I gave it a try also in Haskell.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Cached</span> (cached) <span class="kw">where</span>
+
+<span class="kw">import </span><span class="dt">Data.Monoid</span> ((&lt;&gt;))
+
+<span class="kw">import </span><span class="dt">Crypto.Hash.SHA1</span> (hash)
+<span class="kw">import qualified</span> <span class="dt">Data.ByteString</span> <span class="kw">as</span> <span class="dt">BS</span>
+<span class="kw">import qualified</span> <span class="dt">Data.ByteString.Char8</span> <span class="kw">as</span> <span class="dt">BS8</span>
+<span class="kw">import qualified</span> <span class="dt">Data.ByteString.Lazy</span> <span class="kw">as</span> <span class="dt">BSL</span>
+<span class="kw">import </span><span class="dt">System.Directory</span> (createDirectoryIfMissing, doesFileExist)
+<span class="kw">import </span><span class="dt">System.FilePath</span> ((&lt;/&gt;))
+<span class="kw">import </span><span class="dt">Text.Printf</span> (printf)
+
+
+<span class="ot">toHex ::</span> <span class="dt">BS.ByteString</span> <span class="ot">-&gt;</span> <span class="dt">String</span>
+toHex bytes <span class="fu">=</span> BS.unpack bytes <span class="fu">&gt;&gt;=</span> printf <span class="st">&quot;%02x&quot;</span>
+
+cached
+<span class="ot">    ::</span> FilePath
+    <span class="ot">-&gt;</span> (<span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">BSL.ByteString</span>)
+    <span class="ot">-&gt;</span> <span class="dt">String</span>
+    <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">BSL.ByteString</span>
+cached cacheDir action arg <span class="fu">=</span> <span class="kw">do</span>
+    <span class="kw">let</span> cacheFile <span class="fu">=</span> cacheDir <span class="fu">&lt;/&gt;</span> (toHex <span class="fu">.</span> hash <span class="fu">$</span> BS8.pack arg)
+    hit <span class="ot">&lt;-</span> doesFileExist cacheFile
+    <span class="kw">if</span> hit
+        <span class="kw">then</span> <span class="kw">do</span>
+            putStrLn <span class="fu">$</span> <span class="st">&quot;Cached hit: &quot;</span> <span class="fu">&lt;&gt;</span> arg
+            BSL.readFile cacheFile
+        <span class="kw">else</span> <span class="kw">do</span>
+            putStrLn <span class="fu">$</span> <span class="st">&quot;Cached miss: &quot;</span> <span class="fu">&lt;&gt;</span> arg
+            createDirectoryIfMissing <span class="dt">True</span> cacheDir
+            writeFile (cacheFile <span class="fu">&lt;&gt;</span> <span class="st">&quot;.arg&quot;</span>) arg
+            c <span class="ot">&lt;-</span> action arg
+            BSL.writeFile cacheFile c
+            pure c</code></pre></div>
+<p>(More generic version with <code>Show</code>/<code>Read</code> or some other generic serialization/deserialization certainly is possible but I went with specific types because of my particular use case.)</p>
+<p>Having caching in place, one might still encounter some issues. Some sites lay down rules for using their API in terms of how many requests you can make per time unit to avoid being blacklisted.</p>
+<p>Again very simple wrapper.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Delayed</span> (delayed) <span class="kw">where</span>
+
+<span class="kw">import </span><span class="dt">Control.Concurrent</span> (threadDelay)
+<span class="kw">import </span><span class="dt">Control.Concurrent.MVar</span> (<span class="dt">MVar</span>, newMVar, putMVar, takeMVar)
+<span class="kw">import </span><span class="dt">Control.Exception.Base</span> (evaluate)
+<span class="kw">import </span><span class="dt">Data.Monoid</span> ((&lt;&gt;))
+<span class="kw">import </span><span class="dt">System.IO.Unsafe</span> (unsafePerformIO)
+
+<span class="kw">import </span><span class="dt">Data.Time</span>
+    (<span class="dt">NominalDiffTime</span>, <span class="dt">UTCTime</span>, addUTCTime, diffUTCTime, getCurrentTime)
+
+
+<span class="ot">nextAllowed ::</span> <span class="dt">MVar</span> <span class="dt">UTCTime</span>
+nextAllowed <span class="fu">=</span> unsafePerformIO <span class="fu">$</span> getCurrentTime <span class="fu">&gt;&gt;=</span> newMVar
+
+<span class="ot">microSecondsRemains ::</span> <span class="dt">UTCTime</span> <span class="ot">-&gt;</span> <span class="dt">UTCTime</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>
+microSecondsRemains t1 t2 <span class="fu">=</span> toMicroSeconds <span class="fu">$</span> diffUTCTime t1 t2 <span class="fu">*</span> <span class="dv">1000000</span>
+  <span class="kw">where</span>
+    toMicroSeconds <span class="fu">=</span> max <span class="dv">0</span> <span class="fu">.</span> round <span class="fu">.</span> toRational
+
+<span class="ot">delayed ::</span> <span class="dt">NominalDiffTime</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> a
+delayed dt a <span class="fu">=</span> <span class="kw">do</span>
+    waitTime <span class="ot">&lt;-</span> microSecondsRemains <span class="fu">&lt;$&gt;</span> takeMVar nextAllowed <span class="fu">&lt;*&gt;</span> getCurrentTime
+    putStrLn <span class="fu">$</span> <span class="st">&quot;Waiting &quot;</span> <span class="fu">&lt;&gt;</span> show waitTime
+    threadDelay <span class="fu">$</span> waitTime
+    res <span class="ot">&lt;-</span> a <span class="fu">&gt;&gt;=</span> evaluate
+    getCurrentTime <span class="fu">&gt;&gt;=</span> putMVar nextAllowed <span class="fu">.</span> addUTCTime dt
+    pure res</code></pre></div>
+<p>Using <code>unsafePerformIO</code> is probably not the best practice, but the <code>nextAllowed</code> is kept hidden (not exported) and it makes use of the module much simpler.</p>
+<h2 id="exercises-for-patient-reader">Exercises for patient reader</h2>
+<ul>
+<li>Make generic version of <code>cached</code> that would use some serialization/deserialization mechanism.</li>
+<li>Would <code>delayed</code> work for multi-threaded scraper? (Does it need to, considering our constraints?)</li>
+<li>Implement wrapper that would allow for bursts of requests, but without exceeding <code>n</code> in a given time unit. (Token bucket, leaky bucket, or whatever.)</li>
+<li>Introduce randomness to the time.</li>
+<li>Make transformer version using <code>MonadIO</code> constraint.</li>
+<li>Make <code>freer-effects</code> version and instead of <code>putStrLn</code> use <code>trace</code>.</li>
+</ul>
+</div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
+</html>
