@@ -3,7 +3,6 @@ title: Heroku and HTTPS
 author: xkollar
 tags: Haskell
 ---
-
 [Heroku](https://www.heroku.com/) is a [Platform as a Service][wiki:PaaS] provider
 we have used in work for prototyping some small services. What bugged me though was
 that even though they provide you with free HTTPS certificate for your `*.herokuapp.com`
