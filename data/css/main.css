@@ -100,6 +100,13 @@ a {
 .main > * {
   padding: 1ex 0;
 }
+.main ul li {
+  list-style: disc outside;
+  margin-left: 2ex;
+}
+.main ul li:hover {
+  list-style: square outside;
+}
 /* {{{ Tables */
 table {
   border-collapse: collapse;
