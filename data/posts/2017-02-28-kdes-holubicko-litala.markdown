@@ -38,3 +38,11 @@ L:1/4
 
 In case you are not familiar with it, you can get the feel at
 <https://www.youtube.com/watch?v=e1m5k8d-t7k>.
+
+Notes:
+
+* Pay attention to dynamics.
+* Dynamics change between 8th and 9th bar shoud be hearable but smooth (not too
+  intense).
+* Train hands separately, with left extra attention to timing (count...)
+* Once comfortable, start putting things together.
