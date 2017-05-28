@@ -1,0 +1,85 @@
+---
+title: Gavotte
+author: xkollar
+tags: Music
+---
+My first interpretation is short piece from
+[Cornelius Gurlitt][wiki:Cornelius_Gurlitt] called Gavotte.
+
+~~~ { .abc-render }
+%%encoding utf-8
+%%abc-charset utf-8
+X:1
+T:Gavotte
+C:Cornelius Gurlitt
+B:Op. 210 No. 9
+Z:abc-transcription xkollar <http://xkollar.github.io/>
+I:linebreak $
+Q:"Moderato"
+M:C
+K:C
+%%barnumbers 0
+%%measurenb 0
+%%setbarnb 1
+%%measurefirst 1
+%%score {Rh | Lh}
+V:Rh cleff=treble
+L:1/4
+V:Rh2 cleff=treble
+L:1/4
+V:Lh clef=treble
+L:1/4
+V:Lh2 clef=treble
+L:1/4
+%%%%%%%%%%%%
+[V:Rh] !p! (!2!^d/e/d/e/ S |
+[V:Lh]      z2             |
+%%%%%%%%%%%%
+[V:Rh] .f) .e (^d/e/d/e/        | .f) .e (^d/e/d/e/        |
+[V:Lh] !5!A, !3!!1![CE] A, [CE] | !4!B, !2!!1![DE] B, [DE] |
+%%%%%%%%%%%%
+%%score {(Rh Rh2) | (Lh2 Lh)}
+[V:Rh] !<(!^d/e/!5!a/!2!e/!<)! !>(!!4!g/f/e/=d/!>)! | !>(!!2!c !>)!!1!b,) (!2!^d/e/d/e/ | $
+[V:Rh2]
+[V:Lh] !5!C !3!!1![EA] !5!D !3!!1![FB]  | !4!E2 x2        |
+[V:Lh2] x4                              | (!1!A !2!^G) z2 |
+%%%%%%%%%%%%
+%%%%%%%%%%%%
+%%score {Rh | Lh}
+[V:Rh] .f) .e (^d/e/d/e/ | .f) .e (^d/e/d/e/ |
+[V:Lh] A, [CE] A, [CE]   | B, [DE] B, [DE]   |
+%%%%%%%%%%%%
+[V:Rh] !<(!!2!^d/e/!5!a/!3!e/!<)! !>(!!5!g/f/e/=d/!>)! |
+[V:Lh] !5!C !3!!1![EA] !4!D !2!F                       |
+%%%%%%%%%%%%
+[V:Rh] .c) !2!!4!.[^g,b,] !3!!tenuto!a, z                    ||
+[V:Lh] !1!.E !2!!1!.[DE] "Fine" ">1"">3"">5"!tenuto![A,CE] z ||
+%%%%%%%%%%%%
+[V:Rh] !p! (!2!^g,/!4!b,/g,/b,/ !3!a,/!4!b,/a,/b,/) |
+[V:Lh]     !3!.E .E "^>" !4!!2![^D^F]2              |
+[V:Rh] (^g,/b,/g,/b,/ a,/b,/a,/b,/) | $
+[V:Lh] !3!.E .E "^>" !4!!2![^D^F]2  |
+%%%%%%%%%%%%
+%%%%%%%%%%%%
+[V:Rh] (!<(!^g,/b,/a,/b,/ g,/b,/a,/b,/!<)! |
+[V:Lh]  .E .[^D^F] .E .[^D^F]              |
+%%%%%%%%%%%%
+[V:Rh] !f! ^g,/b,/a,/b,/ .g,) z |
+[V:Lh]  .E .[^D^F] .E z         |
+%%%%%%%%%%%%
+[V:Rh] !p! "^>" (!2!^g,/!4!b,/^a,/b,/ .g,) z |
+[V:Lh]      z4                          |
+%%%%%%%%%%%%
+[V:Rh] "^>" !<(!(!2!b,/!4!d/^c/d/ .b,) z |
+[V:Lh]      z4                           |
+%%%%%%%%%%%%
+[V:Rh] "^>" (!2!d/!4!f/e/!<)!f/ .d) z |
+[V:Lh]       z4 |
+%%%%%%%%%%%%
+[V:Rh] (!2!^d/e/d/e/ S                       |
+[V:Lh]  "_D. S. al Fine"      "dim." z2      |
+~~~
+
+You can litsten to it if you like: <https://www.youtube.com/watch?v=cPNayC79h5A>.
+
+[wiki:Cornelius_Gurlitt]: https://en.wikipedia.org/wiki/Cornelius_Gurlitt_%28composer%29
