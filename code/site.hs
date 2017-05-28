@@ -171,6 +171,11 @@ runCmdIn dir c opts i = withFile "/dev/null" ReadWriteMode $ \ h -> do
         , close_fds = True
         , create_group = False
         , delegate_ctlc = False
+        , detach_console = False
+        , create_new_console = False
+        , new_session = False
+        , child_group = Nothing
+        , child_user = Nothing
         }
 
 -- pass :: Functor f => (b -> f a) -> b -> f b
