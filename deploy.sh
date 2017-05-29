@@ -1,9 +1,23 @@
 #!/usr/bin/env bash
 
-cabal sandbox init
-cabal install --only-dep
-cabal run clean
-cabal run build
+function build_cabal() {
+    cabal sandbox init
+    cabal install --only-dep
+    cabal run clean
+    cabal run build
+}
+
+function build_stack() {
+    stack build
+    stack exec -- site clean
+    stack exec -- site build
+}
+
+case "${1}" in
+    'stack' ) build_stack;;
+    'cabal' ) build_cabal;;
+    * ) exit 1;;
+esac
 
 GIT_USER=$( git config --get user.name )
 GIT_EMAIL=$( git config --get user.email )
