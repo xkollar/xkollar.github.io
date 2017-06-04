@@ -74,4 +74,6 @@ L:1/4
 [V:Lh] C4   |]
 ~~~
 
+Best interpretation I cound find: <https://www.youtube.com/watch?v=YahTfAZy7tA>
+
 [wiki:Cornelius_Gurlitt]: https://en.wikipedia.org/wiki/Cornelius_Gurlitt_%28composer%29
