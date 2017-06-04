@@ -64,11 +64,11 @@ L:1/4
 [V:Rh] d2 d2   |
 [V:Lh] CG!2!FG |
 %%%%%%%%%%%%%%
-[V:Rh] (edce |
+[V:Rh] (edcd |
 [V:Lh] CGFG  |
 %%%%%%%%%%%%%%
 [V:Rh] (c4  |
-[V:Lh] CGEG |
+[V:Lh] CG!3!EG |
 %%%%%%%%%%%%%%
 [V:Rh] c4)) |]
 [V:Lh] C4   |]
