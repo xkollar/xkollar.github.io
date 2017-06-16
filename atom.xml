@@ -115,6 +115,7 @@ delayed dt a <span class="fu">=</span> <span class="kw">do</span>
 <ul>
 <li>Make generic version of <code>cached</code> that would use some serialization/deserialization mechanism.</li>
 <li>Would <code>delayed</code> work for multi-threaded scraper? (Does it need to, considering our constraints?)</li>
+<li>What would happen if supplied action throws exception? Try to fix it.</li>
 <li>Implement wrapper that would allow for bursts of requests, but without exceeding <code>n</code> in a given time unit. (Token bucket, leaky bucket, or whatever.)</li>
 <li>Introduce randomness to the time.</li>
 <li>Make transformer version using <code>MonadIO</code> constraint.</li>
