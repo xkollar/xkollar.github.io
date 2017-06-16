@@ -106,6 +106,7 @@ Exercises for patient reader
   serialization/deserialization mechanism.
 * Would `delayed` work for multi-threaded scraper?
   (Does it need to, considering our constraints?)
+* What would happen if supplied action throws exception? Try to fix it.
 * Implement wrapper that would allow for bursts of requests, but without
   exceeding `n` in a given time unit. (Token bucket, leaky bucket, or
   whatever.)
