@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xkollar - How to Show a Constructor</title>
+<link rel="feed" type="application/atom+xml" href="../atom.xml" title="Atom Feed">
+<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>How to Show a Constructor</h1><div class="info">Posted on 2017-10-31 by xkollar  <span class="tags">in <a href="../tags/Haskell.html">Haskell</a></span>.</div><p>How to show a (toplevel) constructor in a generic way? (Pun intended.)</p>
+<p>Not really a complicated thing but I thought that it might be nice, simple, and yet valuable example for generic programming in Haskell using <code>GHC.Generics</code>.</p>
+<p>Here is the code.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span>
+<span class="ot">{-# LANGUAGE FlexibleInstances #-}</span>
+<span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span>
+<span class="ot">{-# LANGUAGE TypeOperators #-}</span>
+<span class="kw">module</span> <span class="dt">Data.Generics.ShowConstructor</span>
+    ( showConstr
+    ) <span class="kw">where</span>
+
+<span class="kw">import </span><span class="dt">Data.Function</span> ((.))
+<span class="kw">import </span><span class="dt">Data.String</span> (<span class="dt">String</span>)
+<span class="kw">import </span><span class="dt">GHC.Generics</span>
+       ((<span class="fu">:+:</span>)(<span class="dt">L1</span>, <span class="dt">R1</span>), <span class="dt">C</span>, <span class="dt">Constructor</span>, <span class="dt">Generic</span>, <span class="dt">M1</span>(<span class="dt">M1</span>), <span class="dt">Rep</span>, conName,
+        from)
+
+
+<span class="kw">class</span> <span class="dt">ShowConstr</span> f <span class="kw">where</span>
+<span class="ot">    gShowConstr ::</span> f p <span class="ot">-&gt;</span> <span class="dt">String</span>
+
+<span class="kw">instance</span> (<span class="dt">ShowConstr</span> a, <span class="dt">ShowConstr</span> b) <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (a <span class="fu">:+:</span> b) <span class="kw">where</span>
+    gShowConstr (<span class="dt">L1</span> x) <span class="fu">=</span> gShowConstr x
+    gShowConstr (<span class="dt">R1</span> x) <span class="fu">=</span> gShowConstr x
+    <span class="ot">{-# INLINE gShowConstr #-}</span>
+
+<span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> <span class="dt">ShowConstr</span> a <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (<span class="dt">M1</span> i c a) <span class="kw">where</span>
+    gShowConstr (<span class="dt">M1</span> x) <span class="fu">=</span> gShowConstr x
+    <span class="ot">{-# INLINE gShowConstr #-}</span>
+
+<span class="kw">instance</span> <span class="dt">Constructor</span> c <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (<span class="dt">M1</span> <span class="dt">C</span> c a) <span class="kw">where</span>
+    gShowConstr <span class="fu">=</span> conName
+    <span class="ot">{-# INLINE gShowConstr #-}</span>
+
+<span class="ot">showConstr ::</span> (<span class="dt">Generic</span> a, <span class="dt">ShowConstr</span> (<span class="dt">Rep</span> a)) <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span>
+showConstr <span class="fu">=</span> gShowConstr <span class="fu">.</span> from
+<span class="ot">{-# INLINE showConstr #-}</span></code></pre></div>
+<p>Now let’s talk about it a little.</p>
+<p>Usual questions I get from people dipping their toes to <code>Generics</code> for the firs time are:</p>
+<ul>
+<li>Why do I need to create the class?</li>
+<li>Why are there so many instances?</li>
+<li>What are these types for which there are instance for?</li>
+<li>Why there is <code>ShowConstr (Rep a)</code> constraint in type of <code>showConstr</code>?</li>
+</ul>
+<p>Class <code>Generics</code> has not only associated functions <code class="sourceCode haskell"><span class="ot">from ::</span> a <span class="ot">-&gt;</span> <span class="dt">Rep</span> a x</code> and <code class="sourceCode haskell"><span class="ot">to ::</span> <span class="dt">Rep</span> a x <span class="ot">-&gt;</span> a</code> (ignore <code>x</code> for now), but also type (family) <code class="sourceCode haskell"><span class="dt">Rep</span> a</code>, representation of type <code>a</code>. This type is built out of only very few other types (see <a href="https://hackage.haskell.org/package/base/docs/GHC-Generics.html">Generics documentation on Hackage</a>). (Couple more than I have instances for, but I do not need them in my case.)</p>
+<p>To be able to traverse this type, we use Haskell-s ad-hoc polymorphism mechanism, type classes. Take for example Instance <code class="sourceCode haskell"><span class="dt">ShowConstr</span> (<span class="dt">M1</span> i c a)</code>. We do not know type of <code>x</code> in <code>M1 x</code>, and yet we want to process it. And type classes are Haskell-s answer for this sort of problem <code>:-)</code>.</p>
+<p>And just to wrap things up: if you have instances for <code class="sourceCode haskell"><span class="dt">Data.Data.Data</span></code>, you can indeed go for slightly simpler solution.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.Data</span> (<span class="dt">Data</span>, toConstr)
+
+<span class="ot">showConstr ::</span> <span class="dt">Data</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span>
+showConstr <span class="fu">=</span> show <span class="fu">.</span> toConstr</code></pre></div>
+<p>Or yet even (in some sense) simpler, requiring only <code class="sourceCode haskell"><span class="dt">Text.Show.Show</span></code> (but with some trouble-causing corner cases (Lists, Strings, and more generally types with custom Show instance, …)).</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">showConstr ::</span> <span class="dt">Show</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span>
+showConstr <span class="fu">=</span> takeWhile (not <span class="fu">.</span> isSpace) <span class="fu">.</span> show</code></pre></div>
+</div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
+</html>
