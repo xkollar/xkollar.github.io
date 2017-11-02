@@ -1,0 +1,52 @@
+---
+title: Type
+author: xkollar
+tags: Haskell
+---
+Have you ever semi-automatically quasi-subconsciously run `:t` outside GHCi?
+
+```Bash
+$ type :t
+:t is a function
+:t () 
+{ 
+    ghci -v0 <<< ":t ${*}"
+}
+```
+
+What it can do:
+
+```Bash
+$ :t map
+map :: (a -> b) -> [a] -> [b]
+```
+
+```Bash
+$ :t fold
+
+<interactive>:1:1: error:
+    • Variable not in scope: fold
+    • Perhaps you meant one of these:
+        ‘foldr’ (imported from Prelude), ‘foldl’ (imported from Prelude)
+```
+
+Whops… what about
+
+```Bash
+$ :t Data.Foldable.fold
+Data.Foldable.fold :: (Monoid m, Foldable t) => t m -> m
+```
+
+That is better. Maybe we can poke also other packages, not just base…
+
+```Bash
+$ :t Data.Time.addUTCTime
+Data.Time.addUTCTime
+  :: time-1.6.0.1:Data.Time.Clock.UTC.NominalDiffTime
+     -> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime
+     -> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime
+```
+
+Awesome `:-)`.
+
+In the next episode we will deal with accidental runs of `ls`{.Bash} in GHCi.
