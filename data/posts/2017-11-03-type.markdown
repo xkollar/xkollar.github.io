@@ -1,7 +1,7 @@
 ---
 title: Type
 author: xkollar
-tags: Haskell
+tags: Haskell, Fun
 ---
 Have you ever semi-automatically quasi-subconsciously run `:t` outside GHCi?
 
