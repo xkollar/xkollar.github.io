@@ -8,8 +8,95 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2017-11-14T00:00:00Z</updated>
+    <updated>2018-01-25T00:00:00Z</updated>
     <entry>
+    <title>Fine-grained IO with mtl</title>
+    <link href="https://xkollar.github.io/posts/2018-01-25-fine-grained-io-with-mtl.html" />
+    <id>https://xkollar.github.io/posts/2018-01-25-fine-grained-io-with-mtl.html</id>
+    <published>2018-01-25T00:00:00Z</published>
+    <updated>2018-01-25T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>The <a href="https://hackage.haskell.org/package/mtl">mtl</a> library is very convenient to work with. What many people do not like about it is that you do not have suffucient granularity over <code>IO</code>, like solutions build on ideas of extensible effects (like <a href="https://github.com/IxpertaSolutions/freer-effects">freer-effects</a>). Or is there?</p>
+<p>What will I show you is how to get such granularity with just “ordinary” mtl-style transformer stack.</p>
+<p>Lets say we would like to have two separate constraints: one allowing our component to read files, and another to write files. We would like to be able to use it in any stack (which implies in different types). Haskell’s answer for ad-hoc polymorphism are type classes, so we create two of them, with appropriate names and methods (<code>ReadFile</code> and <code>WriteFile</code>).</p>
+<p>Other thing we will use is newtype wrappers for building transformers stacks (<code>ReadFileT</code> and <code>WriteFileT</code>). <code>GeneralizedNewtypeDeriving</code> will make things simpler for us there.</p>
+<p>Then to be able to position our stacks arbitrarily, we will make instances for them for <code>MonadTrans</code> class.</p>
+<p>Once we have that we need to provide instances for our classes (constraints for reading and writing files), both for whole transformer stack and for particular newtype wrappers. (I used overlapping instances. Maybe there is a way to do it without those?)</p>
+<p>And we are done. Included simple example that demonstrates use of the code, demonstrating also integration with <code>MonadReader</code> from <code>mtl</code>.</p>
+<p>Feel free to play with it and try to sneak in some other IO for example to <code>writeAction</code>, I dare you <code>;-)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span>
+<span class="ot">{-# LANGUAGE FlexibleInstances #-}</span>
+<span class="ot">{-# LANGUAGE GeneralizedNewtypeDeriving #-}</span>
+<span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span>
+<span class="kw">module</span> <span class="dt">Main</span> (main) <span class="kw">where</span>
+
+<span class="kw">import </span><span class="dt">Control.Applicative</span> (<span class="dt">Applicative</span>)
+<span class="kw">import </span><span class="dt">Control.Monad</span> (<span class="dt">Monad</span>, (&gt;&gt;=))
+<span class="kw">import </span><span class="dt">Data.Function</span> (($), (.), flip)
+<span class="kw">import </span><span class="dt">Data.Functor</span> (<span class="dt">Functor</span>)
+<span class="kw">import </span><span class="dt">Data.String</span> (<span class="dt">String</span>)
+<span class="kw">import </span><span class="dt">System.IO</span> (<span class="dt">FilePath</span>, <span class="dt">IO</span>)
+<span class="kw">import qualified</span> <span class="dt">System.IO</span> <span class="kw">as</span> <span class="dt">IO</span> (readFile, writeFile)
+
+<span class="kw">import </span><span class="dt">Control.Monad.IO.Class</span> (<span class="dt">MonadIO</span>, liftIO)
+<span class="kw">import </span><span class="dt">Control.Monad.Reader</span> (<span class="dt">MonadReader</span>, asks, runReaderT)
+<span class="kw">import </span><span class="dt">Control.Monad.Trans</span> (<span class="dt">MonadTrans</span>, lift)
+
+
+<span class="co">-- CLASSES --------------------------------------</span>
+<span class="kw">class</span> <span class="dt">ReadFile</span> m <span class="kw">where</span>
+<span class="ot">    readFile ::</span> FilePath <span class="ot">-&gt;</span> m <span class="dt">String</span>
+
+<span class="kw">class</span> <span class="dt">WriteFile</span> m <span class="kw">where</span>
+<span class="ot">    writeFile ::</span> FilePath <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()
+
+<span class="co">-- NEWTYPES--------------------------------------</span>
+<span class="kw">newtype</span> <span class="dt">ReadFileT</span> m a <span class="fu">=</span> <span class="dt">ReadFile</span> {<span class="ot"> runReadFile ::</span> m a }
+  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)
+
+<span class="kw">newtype</span> <span class="dt">WriteFileT</span> m a <span class="fu">=</span> <span class="dt">WriteFile</span> {<span class="ot"> runWriteFile ::</span> m a }
+  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)
+
+<span class="co">-- INSTANCES ------------------------------------</span>
+<span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">ReadFileT</span> <span class="kw">where</span>
+    lift <span class="fu">=</span> <span class="dt">ReadFile</span>
+
+<span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">WriteFileT</span> <span class="kw">where</span>
+    lift <span class="fu">=</span> <span class="dt">WriteFile</span>
+
+<span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (t m) <span class="kw">where</span>
+    readFile <span class="fu">=</span> lift <span class="fu">.</span> readFile
+
+<span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (t m) <span class="kw">where</span>
+    writeFile fp <span class="fu">=</span> lift <span class="fu">.</span> writeFile fp
+
+<span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (<span class="dt">ReadFileT</span> m) <span class="kw">where</span>
+    readFile <span class="fu">=</span> liftIO <span class="fu">.</span> <span class="dt">IO</span><span class="fu">.</span>readFile
+
+<span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (<span class="dt">WriteFileT</span> m) <span class="kw">where</span>
+    writeFile fp <span class="fu">=</span> liftIO <span class="fu">.</span> <span class="dt">IO</span><span class="fu">.</span>writeFile fp
+
+<span class="co">-- EXAMPLE --------------------------------------</span>
+<span class="kw">data</span> <span class="dt">What</span> <span class="fu">=</span> <span class="dt">What</span>
+    {<span class="ot"> from ::</span> FilePath
+    ,<span class="ot"> to ::</span> FilePath
+    }
+
+<span class="ot">readAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> m <span class="dt">String</span>
+readAction <span class="fu">=</span> asks from <span class="fu">&gt;&gt;=</span> readFile
+
+<span class="ot">writeAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()
+writeAction c <span class="fu">=</span> asks to <span class="fu">&gt;&gt;=</span> flip writeFile c
+
+<span class="ot">combinedAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> m ()
+combinedAction <span class="fu">=</span> readAction <span class="fu">&gt;&gt;=</span> writeAction
+
+<span class="ot">main ::</span> <span class="dt">IO</span> ()
+main <span class="fu">=</span> runWriteFile <span class="fu">.</span> runReadFile <span class="fu">$</span> runReaderT combinedAction conf
+  <span class="kw">where</span>
+    conf <span class="fu">=</span> <span class="dt">What</span> <span class="st">&quot;/etc/resolv.conf&quot;</span> <span class="st">&quot;/dev/stdout&quot;</span></code></pre></div>
+<p>And you can go much crazier than this. For example add tags to newtypes, that would indicate, what files you can actually read and write… I leave this as an exercise for patient reader though <code>;-)</code>.</p>]]></summary>
+</entry>
+<entry>
     <title>Bash in the UK</title>
     <link href="https://xkollar.github.io/posts/2017-11-14-bash-in-the-uk.html" />
     <id>https://xkollar.github.io/posts/2017-11-14-bash-in-the-uk.html</id>
@@ -309,26 +396,6 @@ herokuHttpsRedirect app r
 
 </div>
 <p>Part of <a href="https://www.youtube.com/watch?v=jPLoAbGzMG0" class="uri">https://www.youtube.com/watch?v=jPLoAbGzMG0</a>? Indeed we may never know<a href="http://www.poorlydrawnlines.com/comic/imagination/">…</a></p>]]></summary>
-</entry>
-<entry>
-    <title>.org</title>
-    <link href="https://xkollar.github.io/posts/2017-03-01-dot-org.html" />
-    <id>https://xkollar.github.io/posts/2017-03-01-dot-org.html</id>
-    <published>2017-03-01T00:00:00Z</published>
-    <updated>2017-03-01T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>Fun little thing to do: Pronounce “.org” as you would pronounce “orgy”.</p>
-<ul>
-<li><a href="https://www.wikipedia.org/">wikipedia.org</a></li>
-<li><a href="https://www.haskell.org/">haskell.org</a></li>
-<li><a href="https://archive.org/">archive.org</a></li>
-<li><a href="https://www.4chan.org/">4chan.org</a></li>
-<li><a href="http://json.org/">json.org</a></li>
-<li><a href="https://www.eff.org/">eff.org</a></li>
-<li><a href="https://www.acm.org/">acm.org</a></li>
-<li><a href="http://lambda-the-ultimate.org/">lambda-the-ultimate.org</a></li>
-<li><a href="https://developer.mozilla.org/">developer.mozilla.org</a></li>
-</ul>
-<p>PS: There is also a funny way to pronounce “.com” <code>;-)</code>.</p>]]></summary>
 </entry>
 
 </feed>
