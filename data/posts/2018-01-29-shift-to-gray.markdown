@@ -6,8 +6,8 @@ tags: soc
 
 Colour. Is it? Not everyone thinks so. Maybe the only one there is.
 
-It used to black. Well trained eye could have seen whole spectrum in black.
-Black is still nice but somehow grey seems more appropriate. Grey it is not new
+It used to be black. Well trained eye could have seen whole spectrum in black.
+Black is still nice but somehow grey seems more appropriate. Grey is not new
 black. It never will be. It never could. It is grey after all. Neutral. Without
 emotion. Safe. Soothing. Protecting… One can dissolve themselves within grey.
 Their identity. Fears. Hopes. Assumptions. Ideas. Intelligence. Ego. Sexuality.
@@ -25,10 +25,10 @@ accepted grey.
 Grey is the colour of city sky. Beautiful. If you like that kind of thing.
 One does. The only one that makes sense, that is true, unpretending.
 
-Colour of being alone, even when surrounded by others. Ultimate hideout when
+Colour of being alone, even when surrounded by others. Ultimate hideout where
 no-one dares to follow, neither friends, nor foes. Emotional desert, where only
-nomads dare to go and they know better than interrupting each other's solitude.
-They know grey.
+nomads go and they know better than interrupting each other's solitude.
+They embrace grey.
 
 Colour of minimal energy. White being energetic, overpowering. Grey is not that
 wasteful, yet it reveals enough so it can be seen that there is nothing, unlike
@@ -37,9 +37,9 @@ promising, nor white, inviting and pure. Just realistic grey of acceptance.
 
 One used to believe eyes can not be grey. One was mistaken.
 
----
-
+<!--
 * Monochromatic photopgraphy
 * Colorblind
 * Ash
 * Dusk
+-->
