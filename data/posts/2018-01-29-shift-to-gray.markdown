@@ -36,3 +36,10 @@ pitch black. It is truly colour of death. Neither black, mysterious and
 promising, nor white, inviting and pure. Just realistic grey of acceptance.
 
 One used to believe eyes can not be grey. One was mistaken.
+
+---
+
+* Monochromatic photopgraphy
+* Colorblind
+* Ash
+* Dusk
