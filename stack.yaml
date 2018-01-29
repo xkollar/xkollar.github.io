@@ -64,3 +64,17 @@ extra-package-dbs: []
 #
 # Allow a newer minor version of GHC than the snapshot specifies
 # compiler-check: newer-minor
+
+# Still does not work, need graphivz and abcm2ps
+nix:
+  # enable: true
+  # pure: true
+  pure: false
+  packages:
+  - cairo
+  - pkgconfig
+  - tzdata
+  - zlib
+  - gcc
+  # - openssl
+  # - abcm2ps ... something like this...
