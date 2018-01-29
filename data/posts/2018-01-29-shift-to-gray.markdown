@@ -30,10 +30,11 @@ no-one dares to follow, neither friends, nor foes. Emotional desert, where only
 nomads go and they know better than interrupting each other's solitude.
 They embrace grey.
 
-Colour of minimal energy. White being energetic, overpowering. Grey is not that
-wasteful, yet it reveals enough so it can be seen that there is nothing, unlike
-pitch black. It is truly colour of death. Neither black, mysterious and
-promising, nor white, inviting and pure. Just realistic grey of acceptance.
+Colour of minimal energy. Not as wasteful as energeting and overpowering white,
+yet revealing enough so that it is clear there is nothling, not leaving
+anything for imagination, unlike black. It is truly colour of death. Neither
+black, mysterious and promising, nor white, inviting and pure. Just realistic
+grey of acceptance.
 
 One used to believe eyes can not be grey. One was mistaken.
 
@@ -43,4 +44,6 @@ One used to believe eyes can not be grey. One was mistaken.
 * Ash
 * Dusk
 * Black raven -> Grey wolf
+* Paint black -> grey
+* … and the sky is grey…
 -->
