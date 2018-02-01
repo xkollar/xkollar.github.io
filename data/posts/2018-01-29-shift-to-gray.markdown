@@ -16,14 +16,14 @@ Desires. Emotions. Pain…
 Accept grey and become undistinguishable part of environment, almost cease to
 be, at least for all intents and purposes. There is no mystery, there is no
 light. Just grey nothing. If nothing had a colour, it would be grey. It is so
-tempting to become part of nothing. Elusive. Too good to be true.
+tempting to become part of nothing. Elusive. Too good to be true. Is it?
 
 Colour of unimportant. All grey mice living their lives in the traps of
 cubicles, dreaming of all colours of cheese. Boring? One does not care. One has
 accepted grey.
 
-Grey is the colour of city sky. Beautiful. If you like that kind of thing.
-One does. The only one that makes sense, that is true, unpretending.
+Colour of city sky. Beautiful. If one likes that kind of thing.
+One does. The only colour that makes sense, that is true, unpretending.
 
 Colour of being alone, even when surrounded by others. Ultimate hideout where
 no-one dares to follow, neither friends, nor foes. Emotional desert, where only
