@@ -30,8 +30,8 @@ no-one dares to follow, neither friends, nor foes. Emotional desert, where only
 nomads go and they know better than interrupting each other's solitude.
 They embrace grey.
 
-Colour of minimal energy. Not as wasteful as energeting and overpowering white,
-yet revealing enough so that it is clear there is nothling, not leaving
+Colour of minimal energy. Not as wasteful as energetic and overpowering white,
+yet revealing enough so that it is clear there is nothing, not leaving
 anything for imagination, unlike black. It is truly colour of death. Neither
 black, mysterious and promising, nor white, inviting and pure. Just realistic
 grey of acceptance.
