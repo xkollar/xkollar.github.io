@@ -10,7 +10,7 @@ $ type :t
 :t is a function
 :t () 
 { 
-    ghci -v0 <<< ":t ${*}"
+    ghci -v0 <<< ":t ${*:-undefined}"
 }
 ```
 
