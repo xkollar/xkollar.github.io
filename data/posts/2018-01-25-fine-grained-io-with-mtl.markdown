@@ -1,7 +1,7 @@
 ---
 title: Fine-grained IO with mtl
 author: xkollar
-tags: Haskell
+tags: Haskell, mtl
 ---
 
 The [mtl](https://hackage.haskell.org/package/mtl) library is very convenient

@@ -1,7 +1,7 @@
 ---
 title: Fine-grained IO with mtl Simplified
 author: xkollar
-tags: Haskell
+tags: Haskell, mtl
 ---
 
 In [previous article](2018-01-25-fine-grained-io-with-mtl.html) I have provided
