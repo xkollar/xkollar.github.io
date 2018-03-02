@@ -80,8 +80,6 @@ import qualified System.IO as IO (readFile, writeFile)
 import Control.Monad.IO.Class (MonadIO, liftIO)
 import Control.Monad.Reader (MonadReader, asks, runReaderT)
 import Control.Monad.Trans (MonadTrans, lift)
-import Data.Map.Strict (Map)
-import qualified Data.Map.Strict as Map
 
 
 -- CLASSES --------------------------------------
