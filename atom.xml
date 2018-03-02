@@ -8,8 +8,129 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2018-01-29T00:00:00Z</updated>
+    <updated>2018-03-02T00:00:00Z</updated>
     <entry>
+    <title>Fine-grained IO with mtl Simplified</title>
+    <link href="https://xkollar.github.io/posts/2018-03-02-fine-grained-io-with-mtl-simplified.html" />
+    <id>https://xkollar.github.io/posts/2018-03-02-fine-grained-io-with-mtl-simplified.html</id>
+    <published>2018-03-02T00:00:00Z</published>
+    <updated>2018-03-02T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>In <a href="2018-01-25-fine-grained-io-with-mtl.html">previous article</a> I have provided example of how to do selectively add “impure” actions into mtl monadic stack without full power of <code>MonadIO</code>. This what I have done though was to define separate newtype wrappers, which is useful if you want to have more cotrol and flexibility over possible interpreters. Most of the time however, you just want to have simpler code. If that is what you are aiming for, you can have just one wrapper newtype and provide all instances for this particular wrapper.</p>
+<p>Diff.</p>
+<div class="sourceCode"><pre class="sourceCode diff"><code class="sourceCode diff"><span class="dt">@@ -27,18 +27,12 @@ class WriteFile m where</span>
+     writeFile :: FilePath -&gt; String -&gt; m ()
+ 
+ -- NEWTYPES -------------------------------------
+<span class="st">-newtype ReadFileT m a = ReadFile { runReadFile :: m a }</span>
+<span class="st">-  deriving (Functor, Applicative, Monad, MonadIO)</span>
+<span class="st">-</span>
+<span class="st">-newtype WriteFileT m a = WriteFile { runWriteFile :: m a }</span>
+<span class="va">+newtype SimpleIORunnerT m a = SimpleIORunner { runSimpleRunner :: m a }</span>
+   deriving (Functor, Applicative, Monad, MonadIO)
+ 
+ -- INSTANCES ------------------------------------
+<span class="st">-instance MonadTrans ReadFileT where</span>
+<span class="st">-    lift = ReadFile</span>
+<span class="st">-</span>
+<span class="st">-instance MonadTrans WriteFileT where</span>
+<span class="st">-    lift = WriteFile</span>
+<span class="va">+instance MonadTrans SimpleIORunnerT where</span>
+<span class="va">+    lift = SimpleIORunner</span>
+ 
+ instance {-# OVERLAPPABLE #-} (Monad m, MonadTrans t, ReadFile m) =&gt; ReadFile (t m) where
+     readFile = lift . readFile
+<span class="dt">@@ -46,10 +40,10 @@ instance {-# OVERLAPPABLE #-} (Monad m, MonadTrans t, ReadFile m) =&gt; ReadFile (t</span>
+ instance {-# OVERLAPPABLE #-} (Monad m, MonadTrans t, WriteFile m) =&gt; WriteFile (t m) where
+     writeFile fp = lift . writeFile fp
+ 
+<span class="st">-instance {-# OVERLAPS #-} MonadIO m =&gt; ReadFile (ReadFileT m) where</span>
+<span class="va">+instance {-# OVERLAPS #-} MonadIO m =&gt; ReadFile (SimpleIORunnerT m) where</span>
+     readFile = liftIO . IO.readFile
+ 
+<span class="st">-instance {-# OVERLAPS #-} MonadIO m =&gt; WriteFile (WriteFileT m) where</span>
+<span class="va">+instance {-# OVERLAPS #-} MonadIO m =&gt; WriteFile (SimpleIORunnerT m) where</span>
+     writeFile fp = liftIO . IO.writeFile fp
+ 
+ -- EXAMPLE --------------------------------------
+<span class="dt">@@ -68,7 +62,7 @@ combinedAction :: (MonadReader What m, ReadFile m, WriteFile m) =&gt; m ()</span>
+ combinedAction = readAction &gt;&gt;= writeAction
+ 
+ example1 :: IO ()
+<span class="st">-example1 = runWriteFile . runReadFile $ runReaderT combinedAction conf</span>
+<span class="va">+example1 = runSimpleRunner $ runReaderT combinedAction conf</span>
+   where
+     conf = What &quot;/etc/resolv.conf&quot; &quot;/dev/stdout&quot;</code></pre></div>
+<p>Full code.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span>
+<span class="ot">{-# LANGUAGE FlexibleInstances #-}</span>
+<span class="ot">{-# LANGUAGE GeneralizedNewtypeDeriving #-}</span>
+<span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span>
+<span class="kw">module</span> <span class="dt">Main</span> (main) <span class="kw">where</span>
+
+<span class="kw">import </span><span class="dt">Control.Applicative</span> (<span class="dt">Applicative</span>, pure, (&lt;*&gt;))
+<span class="kw">import </span><span class="dt">Control.Monad</span> (<span class="dt">Monad</span>, (&gt;&gt;=))
+<span class="kw">import </span><span class="dt">Data.Function</span> (($), (.), flip, const)
+<span class="kw">import </span><span class="dt">Data.Functor</span> (<span class="dt">Functor</span>, fmap)
+<span class="kw">import </span><span class="dt">Data.String</span> (<span class="dt">String</span>)
+<span class="kw">import </span><span class="dt">System.IO</span> (<span class="dt">FilePath</span>, <span class="dt">IO</span>)
+<span class="kw">import qualified</span> <span class="dt">System.IO</span> <span class="kw">as</span> <span class="dt">IO</span> (readFile, writeFile)
+
+<span class="kw">import </span><span class="dt">Control.Monad.IO.Class</span> (<span class="dt">MonadIO</span>, liftIO)
+<span class="kw">import </span><span class="dt">Control.Monad.Reader</span> (<span class="dt">MonadReader</span>, asks, runReaderT)
+<span class="kw">import </span><span class="dt">Control.Monad.Trans</span> (<span class="dt">MonadTrans</span>, lift)
+<span class="kw">import </span><span class="dt">Data.Map.Strict</span> (<span class="dt">Map</span>)
+<span class="kw">import qualified</span> <span class="dt">Data.Map.Strict</span> <span class="kw">as</span> <span class="dt">Map</span>
+
+
+<span class="co">-- CLASSES --------------------------------------</span>
+<span class="kw">class</span> <span class="dt">ReadFile</span> m <span class="kw">where</span>
+<span class="ot">    readFile ::</span> FilePath <span class="ot">-&gt;</span> m <span class="dt">String</span>
+
+<span class="kw">class</span> <span class="dt">WriteFile</span> m <span class="kw">where</span>
+<span class="ot">    writeFile ::</span> FilePath <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()
+
+<span class="co">-- STACK ----------------------------------------</span>
+<span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (t m) <span class="kw">where</span>
+    readFile <span class="fu">=</span> lift <span class="fu">.</span> readFile
+
+<span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (t m) <span class="kw">where</span>
+    writeFile fp <span class="fu">=</span> lift <span class="fu">.</span> writeFile fp
+
+<span class="co">-- NEWTYPES and basic INSTANCES -----------------</span>
+<span class="kw">newtype</span> <span class="dt">SimpleIORunnerT</span> m a <span class="fu">=</span> <span class="dt">SimpleIORunner</span> {<span class="ot"> runSimpleRunner ::</span> m a }
+  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)
+
+<span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">SimpleIORunnerT</span> <span class="kw">where</span>
+    lift <span class="fu">=</span> <span class="dt">SimpleIORunner</span>
+
+<span class="co">-- IMPLEMENTATIONS ------------------------------</span>
+<span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (<span class="dt">SimpleIORunnerT</span> m) <span class="kw">where</span>
+    readFile <span class="fu">=</span> liftIO <span class="fu">.</span> <span class="dt">IO</span><span class="fu">.</span>readFile
+
+<span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (<span class="dt">SimpleIORunnerT</span> m) <span class="kw">where</span>
+    writeFile fp <span class="fu">=</span> liftIO <span class="fu">.</span> <span class="dt">IO</span><span class="fu">.</span>writeFile fp
+
+<span class="co">-- EXAMPLE --------------------------------------</span>
+<span class="kw">data</span> <span class="dt">What</span> <span class="fu">=</span> <span class="dt">What</span>
+    {<span class="ot"> from ::</span> FilePath
+    ,<span class="ot"> to ::</span> FilePath
+    }
+
+<span class="ot">readAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> m <span class="dt">String</span>
+readAction <span class="fu">=</span> asks from <span class="fu">&gt;&gt;=</span> readFile
+
+<span class="ot">writeAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()
+writeAction c <span class="fu">=</span> asks to <span class="fu">&gt;&gt;=</span> flip writeFile c
+
+<span class="ot">combinedAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> m ()
+combinedAction <span class="fu">=</span> readAction <span class="fu">&gt;&gt;=</span> writeAction
+
+<span class="ot">main ::</span> <span class="dt">IO</span> ()
+main <span class="fu">=</span> runSimpleRunner <span class="fu">$</span> runReaderT combinedAction conf
+  <span class="kw">where</span>
+    conf <span class="fu">=</span> <span class="dt">What</span> <span class="st">&quot;/etc/resolv.conf&quot;</span> <span class="st">&quot;/dev/stdout&quot;</span></code></pre></div>]]></summary>
+</entry>
+<entry>
     <title>Shift to Grey</title>
     <link href="https://xkollar.github.io/posts/2018-01-29-shift-to-gray.html" />
     <id>https://xkollar.github.io/posts/2018-01-29-shift-to-gray.html</id>
@@ -356,57 +477,6 @@ delayed dt a <span class="fu">=</span> <span class="kw">do</span>
 <li>Make transformer version using <code>MonadIO</code> constraint.</li>
 <li>Make <code>freer-effects</code> version and instead of <code>putStrLn</code> use <code>trace</code>.</li>
 </ul>]]></summary>
-</entry>
-<entry>
-    <title>Heroku and HTTPS</title>
-    <link href="https://xkollar.github.io/posts/2017-03-15-heroku-and-https.html" />
-    <id>https://xkollar.github.io/posts/2017-03-15-heroku-and-https.html</id>
-    <published>2017-03-15T00:00:00Z</published>
-    <updated>2017-03-15T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p><a href="https://www.heroku.com/">Heroku</a> is a <a href="https://en.wikipedia.org/wiki/Platform_as_a_service">Platform as a Service</a> provider we have used in work for prototyping some small services. What bugged me though was that even though they provide you with free HTTPS certificate for your <code>*.herokuapp.com</code> site, they do not provide simple way to enforce HTTPS.</p>
-<p>So I have wrote simple <a href="https://hackage.haskell.org/package/wai">wai</a> <a href="https://hackage.haskell.org/package/wai-3.2.1.1/docs/Network-Wai.html#t:Middleware">Middleware</a>, which will take care of redirecting users to secured version of your site and also set <a href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">HTTP_Strict_Transport_Security</a>.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">herokuHttps ::</span> <span class="dt">Middleware</span>
-herokuHttps <span class="fu">=</span> strictTransportPolicy <span class="fu">.</span> herokuHttpsRedirect
-
-<span class="ot">isHerokuHttps ::</span> <span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
-isHerokuHttps <span class="fu">=</span> (<span class="dt">Just</span> <span class="st">&quot;https&quot;</span> <span class="fu">==</span>) <span class="fu">.</span> fmap CI.mk
-    <span class="fu">.</span> lookup <span class="st">&quot;X-Forwarded-Proto&quot;</span> <span class="fu">.</span> requestHeaders
-
-<span class="ot">strictTransportPolicy ::</span> <span class="dt">Middleware</span>
-strictTransportPolicy <span class="fu">=</span> ifRequest isHerokuHttps <span class="fu">.</span> modifyResponse
-    <span class="fu">$</span> mapResponseHeaders ((header, value)<span class="fu">:</span>)
-  <span class="kw">where</span>
-    header <span class="fu">=</span> <span class="st">&quot;Strict-Transport-Security&quot;</span>
-    value <span class="fu">=</span> <span class="st">&quot;max-age=31536000; includeSubDomains&quot;</span>
-
-<span class="ot">herokuHttpsRedirect ::</span> <span class="dt">Middleware</span>
-<span class="ot">#if MIN_VERSION_wai(3,0,0)</span>
-herokuHttpsRedirect app r respond
-<span class="ot">#else</span>
-herokuHttpsRedirect app r
-<span class="ot">#endif</span>
-    <span class="fu">|</span> isHerokuHttps r <span class="fu">=</span> runApp
-    <span class="fu">|</span> <span class="dt">Just</span> host <span class="ot">&lt;-</span> hostHeader r <span class="fu">=</span> res <span class="fu">.</span> redir
-        <span class="fu">$</span> <span class="st">&quot;https://&quot;</span> <span class="fu">&lt;&gt;</span> host <span class="fu">&lt;&gt;</span> rawPathInfo r <span class="fu">&lt;&gt;</span> rawQueryString r
-    <span class="fu">|</span> otherwise <span class="fu">=</span> runApp
-  <span class="kw">where</span>
-
-    <span class="co">-- Heroku does not use &quot;X-Forwarded-Host&quot;, as it simply preserves &quot;Host&quot;</span>
-<span class="ot">    hostHeader ::</span> <span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">ByteString</span>
-    hostHeader <span class="fu">=</span> lookup <span class="st">&quot;Host&quot;</span> <span class="fu">.</span> requestHeaders
-
-<span class="ot">    redir ::</span> <span class="dt">ByteString</span> <span class="ot">-&gt;</span> <span class="dt">Response</span>
-    redir url <span class="fu">=</span> responseLBS HTTP.status301 [(<span class="st">&quot;Location&quot;</span>, url)] <span class="st">&quot;&quot;</span>
-
-<span class="ot">#if MIN_VERSION_wai(3,0,0)</span>
-    res <span class="fu">=</span> respond
-    runApp <span class="fu">=</span> app r respond
-<span class="ot">#else</span>
-    res <span class="fu">=</span> return
-    runApp <span class="fu">=</span> app r
-<span class="ot">#endif</span></code></pre></div>
-<p>Many relevant Haskell libraries use wai (<a href="http://packdeps.haskellers.com/reverse/wai">wai reverse dependencies</a> so you can use it for example with your <a href="https://hackage.haskell.org/package/servant-server">servant</a>-based service.</p>
-<p>PS: You really do not need this should you have proxy configuration under your control as all major reverse proxies can do this for you.</p>]]></summary>
 </entry>
 
 </feed>
