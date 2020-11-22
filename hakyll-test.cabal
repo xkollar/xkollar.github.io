@@ -7,11 +7,11 @@ executable site
   main-is:          site.hs
   build-depends:    base == 4.*
                   , hakyll == 4.9.*
-                  , blaze-html == 0.8.*
+                  , blaze-html == 0.9.*
 
                   , base64-bytestring
                   , directory
-                  , pandoc-types == 1.17.*
+                  , pandoc-types
                   , process
                   , regex-compat
                   , temporary
