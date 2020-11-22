@@ -119,16 +119,45 @@ th, td {
 }
 /* }}} Tables */
 /* {{{ Images */
-.figure {
+figure {
   text-align: center;
 }
-.figure img {
+figure img {
   background: #ccc;
   margin-left: auto;
   margin-right: auto;
   max-width: 90%;
 }
 /* }}} Images */
+
+/* {{{ Quote */
+blockquote {
+  padding: 0;
+  background: #333;
+  border-left: 10px solid #666;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+blockquote:before {
+  color: #999;
+  font-size: 4em;
+  line-height: 0.1em;
+  vertical-align: -0.4em;
+  content: open-quote;
+}
+blockquote:after {
+  content: close-quote;
+  font-size: 0em;
+  position: absolute;
+}
+blockquote > *:first-child {
+  margin-top: -2ex;
+  text-indent: 2em;
+  padding: 1ex 1em;
+}
+blockquote > *:not(:first-child) {
+  padding: 1ex 1em;
+}
+/* }}} Quote */
 
 /* {{{ Code */
 pre.sourceCode {
@@ -149,33 +178,33 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #dddddd; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { font-weight: bold; } /* Keyword */
-code > span.dt { color: #00ffff; } /* DataType */
-code > span.dv { color: #ffff00; } /* DecVal */
-code > span.bn { color: #ffff00; } /* BaseN */
-code > span.fl { color: #88ff88; } /* Float */
-code > span.ch { color: #ff00ff; } /* Char */
-code > span.st { color: #ff8888; } /* String */
-code > span.co { color: #888888; font-style: italic; } /* Comment */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #ffff80; } /* Function */
-code > span.er { color: #00ffff; font-weight: bold; } /* Error */
-code > span.wa { color: #00ffff; font-weight: bold; } /* Warning */
-code > span.cn { color: #ffffff; } /* Constant */
-code > span.sc { color: #00ff00; } /* SpecialChar */
-code > span.vs { color: #22ffff; } /* VerbatimString */
-code > span.ss { color: #22ffff; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #88ff88; } /* Variable */
-code > span.cf { } /* ControlFlow */
-code > span.op { } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { font-weight: bold; } /* Preprocessor */
-code > span.at { } /* Attribute */
-code > span.do { color: #808080; font-style: italic; } /* Documentation */
-code > span.an { color: #808080; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #808080; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #808080; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { font-weight: bold; } /* Keyword */
+code span.dt { color: #00ffff; } /* DataType */
+code span.dv { color: #ffff00; } /* DecVal */
+code span.bn { color: #ffff00; } /* BaseN */
+code span.fl { color: #88ff88; } /* Float */
+code span.ch { color: #ff00ff; } /* Char */
+code span.st { color: #ff8888; } /* String */
+code span.co { color: #888888; font-style: italic; } /* Comment */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: #ffff80; } /* Function */
+code span.er { color: #00ffff; font-weight: bold; } /* Error */
+code span.wa { color: #00ffff; font-weight: bold; } /* Warning */
+code span.cn { color: #ffffff; } /* Constant */
+code span.sc { color: #00ff00; } /* SpecialChar */
+code span.vs { color: #22ffff; } /* VerbatimString */
+code span.ss { color: #22ffff; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: #88ff88; } /* Variable */
+code span.cf { } /* ControlFlow */
+code span.op { color: #ff0; } /* Operator */
+code span.bu { color: #ff0; } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { font-weight: bold; } /* Preprocessor */
+code span.at { } /* Attribute */
+code span.do { color: #808080; font-style: italic; } /* Documentation */
+code span.an { color: #808080; font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: #808080; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: #808080; font-weight: bold; font-style: italic; } /* Information */
 
 /* }}} Code */
