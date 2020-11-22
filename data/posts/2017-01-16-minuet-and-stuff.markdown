@@ -155,7 +155,7 @@ Conclusion
 
 When learning music it is good to ask questions ("why is it this way?", …), but
 always be prepared that the best answer you can get is "because it is more
-convenient this way, …". And it is not necessarily a bad thing `:-)`.
+convenient this way, …". And it is not necessarily a bad thing <abbr title="☺️ :smiling_face:">`:-)`</abbr>.
 
 [wiki:Baroque_music]: https://en.wikipedia.org/wiki/Baroque_music
 [wiki:Legato]: https://en.wikipedia.org/wiki/Legato

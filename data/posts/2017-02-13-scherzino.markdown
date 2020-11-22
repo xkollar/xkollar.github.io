@@ -48,6 +48,6 @@ Notes:
 * There is nice hand movement to achieve this (referred to as "odskok" or "odtažení"?).
 * [Scherzo][wiki:Scherzo] is musical term, in case you were wondering.
 
-Seems like simple pieces tend to be complex in the detail `:-)`.
+Seems like simple pieces tend to be complex in the detail <abbr title="☺️ :smiling_face:">`:-)`</abbr>.
 
 [wiki:Scherzo]: https://en.wikipedia.org/wiki/Scherzo

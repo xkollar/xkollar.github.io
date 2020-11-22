@@ -15,4 +15,4 @@ Fun little thing to do: Pronounce ".org" as you would pronounce "orgy".
 * [lambda-the-ultimate.org](http://lambda-the-ultimate.org/)
 * [developer.mozilla.org](https://developer.mozilla.org/)
 
-PS: There is also a funny way to pronounce ".com" `;-)`.
+PS: There is also a funny way to pronounce ".com" <abbr title="😉 :wink:">`;-)`</abbr>.

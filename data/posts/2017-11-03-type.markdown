@@ -1,7 +1,7 @@
 ---
 title: Type
 author: xkollar
-tags: Haskell, Fun
+tags: Bash, Haskell, Fun
 ---
 Have you ever semi-automatically quasi-subconsciously run `:t` outside GHCi?
 
@@ -47,6 +47,6 @@ Data.Time.addUTCTime
      -> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime
 ```
 
-Awesome `:-)`.
+Awesome <abbr title="☺️ :smiling_face:">`:-)`</abbr>.
 
 In the next episode we will deal with accidental runs of `ls`{.Bash} in GHCi.

@@ -5,38 +5,37 @@ tags: Haskell, mtl
 ---
 
 The [mtl](https://hackage.haskell.org/package/mtl) library is very convenient
-to work with. What many people do not like about it is that you do not have
-suffucient granularity over `IO`, like solutions build on ideas of extensible
-effects (like
+to work with. What some do not like about it is that there is no granularity
+over `IO`, like solutions build on ideas of extensible effects (like
 [freer-effects](https://github.com/IxpertaSolutions/freer-effects)). Or is
-there?
+there? (Or rather can there be?)
 
-What will I show you is how to get such granularity with just "ordinary"
+Here I will show you how to get such granularity with just "ordinary"
 mtl-style transformer stack.
 
-Lets say we would like to have two separate constraints: one allowing our
+Let's say we would like to have two separate constraints: one allowing our
 component to read files, and another to write files. We would like to be able
 to use it in any stack (which implies in different types). Haskell's answer for
 ad-hoc polymorphism are type classes, so we create two of them, with
 appropriate names and methods (`ReadFile` and `WriteFile`).
 
-Other thing we will use is newtype wrappers for building transformers stacks
+Other thing we will use is `newtype`{.haskell} wrappers for building transformers stacks
 (`ReadFileT` and `WriteFileT`). `GeneralizedNewtypeDeriving` will
 make things simpler for us there.
 
-Then to be able to position our stacks arbitrarily, we will make instances
-for them for `MonadTrans` class.
+Then, to be able to position our stacks arbitrarily, we will make instances
+for `MonadTrans` class.
 
 Once we have that we need to provide instances for our classes (constraints
 for reading and writing files), both for whole transformer stack and for
-particular newtype wrappers. (I used overlapping instances. Maybe there is a
+particular `newtype`{.haskell} wrappers. (I used overlapping instances. Maybe there is a
 way to do it without those?)
 
-And we are done. Included simple example that demonstrates use of the code,
-demonstrating also integration with `MonadReader` from `mtl`.
+And we are done. Included is simple example that demonstrates use of the code
+and integration with `MonadReader` from `mtl`.
 
-Feel free to play with it and try to sneak in some other IO for example to
-`writeAction`, I dare you `;-)`.
+Feel free to play with it and try to sneak in some other `IO`{.haskell} for example to
+`writeAction`, I dare you <abbr title="😉 :wink:">`;-)`</abbr>.
 
 ```Haskell
 {-# LANGUAGE FlexibleContexts #-}
@@ -112,6 +111,6 @@ main = runWriteFile . runReadFile $ runReaderT combinedAction conf
     conf = What "/etc/resolv.conf" "/dev/stdout"
 ```
 
-And you can go much crazier than this. For example add tags to newtypes, that
+And you can go much crazier than this. For example add tags to `newtype`{.haskell}s, that
 would indicate, what files you can actually read and write… I leave this
-as an exercise for patient reader though `;-)`.
+as an exercise for patient reader though <abbr title="😉 :wink:">`;-)`</abbr>.

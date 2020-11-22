@@ -1,7 +1,7 @@
 ---
 title: Bash in the UK
 author: xkollar
-tags: Fun
+tags: Fun, Bash
 ---
 
 ```Bash

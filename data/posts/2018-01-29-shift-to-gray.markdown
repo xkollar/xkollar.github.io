@@ -6,7 +6,7 @@ tags: soc
 
 Colour. Is it? Not everyone thinks so. Maybe the only one there is.
 
-It used to be black. Well trained eye could have seen whole spectrum in black.
+It used to be black. Well trained eye could have seen the whole spectrum in black.
 Black is still nice but somehow grey seems more appropriate. Grey is not new
 black. It never will be. It never could. It is grey after all. Neutral. Without
 emotion. Safe. Soothing. Protecting… One can dissolve themselves within grey.

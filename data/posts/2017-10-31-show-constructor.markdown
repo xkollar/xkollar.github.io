@@ -67,7 +67,7 @@ Hackage](https://hackage.haskell.org/package/base/docs/GHC-Generics.html)).
 To be able to traverse this type, we use Haskell-s ad-hoc polymorphism mechanism,
 type classes. Take for example Instance `ShowConstr (M1 i c a)`{.Haskell}.
 We do not know type of `x` in `M1 x`, and yet we want to process it.
-And type classes are Haskell-s answer for this sort of problem `:-)`.
+And type classes are Haskell-s answer for this sort of problem <abbr title="☺️ :smiling_face:">`:-)`</abbr>.
 
 And just to wrap things up: if you have instances for
 `Data.Data.Data`{.Haskell}, you can indeed go for slightly simpler solution.
