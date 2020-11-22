@@ -10,46 +10,46 @@
 </head>
 <body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Heroku and HTTPS</h1><div class="info">Posted on 2017-03-15 by xkollar  <span class="tags">in <a href="../tags/Haskell.html">Haskell</a></span>.</div><p><a href="https://www.heroku.com/">Heroku</a> is a <a href="https://en.wikipedia.org/wiki/Platform_as_a_service">Platform as a Service</a> provider we have used in work for prototyping some small services. What bugged me though was that even though they provide you with free HTTPS certificate for your <code>*.herokuapp.com</code> site, they do not provide simple way to enforce HTTPS.</p>
 <p>So I have wrote simple <a href="https://hackage.haskell.org/package/wai">wai</a> <a href="https://hackage.haskell.org/package/wai-3.2.1.1/docs/Network-Wai.html#t:Middleware">Middleware</a>, which will take care of redirecting users to secured version of your site and also set <a href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">HTTP_Strict_Transport_Security</a>.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">herokuHttps ::</span> <span class="dt">Middleware</span>
-herokuHttps <span class="fu">=</span> strictTransportPolicy <span class="fu">.</span> herokuHttpsRedirect
-
-<span class="ot">isHerokuHttps ::</span> <span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
-isHerokuHttps <span class="fu">=</span> (<span class="dt">Just</span> <span class="st">&quot;https&quot;</span> <span class="fu">==</span>) <span class="fu">.</span> fmap CI.mk
-    <span class="fu">.</span> lookup <span class="st">&quot;X-Forwarded-Proto&quot;</span> <span class="fu">.</span> requestHeaders
-
-<span class="ot">strictTransportPolicy ::</span> <span class="dt">Middleware</span>
-strictTransportPolicy <span class="fu">=</span> ifRequest isHerokuHttps <span class="fu">.</span> modifyResponse
-    <span class="fu">$</span> mapResponseHeaders ((header, value)<span class="fu">:</span>)
-  <span class="kw">where</span>
-    header <span class="fu">=</span> <span class="st">&quot;Strict-Transport-Security&quot;</span>
-    value <span class="fu">=</span> <span class="st">&quot;max-age=31536000; includeSubDomains&quot;</span>
-
-<span class="ot">herokuHttpsRedirect ::</span> <span class="dt">Middleware</span>
-<span class="ot">#if MIN_VERSION_wai(3,0,0)</span>
-herokuHttpsRedirect app r respond
-<span class="ot">#else</span>
-herokuHttpsRedirect app r
-<span class="ot">#endif</span>
-    <span class="fu">|</span> isHerokuHttps r <span class="fu">=</span> runApp
-    <span class="fu">|</span> <span class="dt">Just</span> host <span class="ot">&lt;-</span> hostHeader r <span class="fu">=</span> res <span class="fu">.</span> redir
-        <span class="fu">$</span> <span class="st">&quot;https://&quot;</span> <span class="fu">&lt;&gt;</span> host <span class="fu">&lt;&gt;</span> rawPathInfo r <span class="fu">&lt;&gt;</span> rawQueryString r
-    <span class="fu">|</span> otherwise <span class="fu">=</span> runApp
-  <span class="kw">where</span>
-
-    <span class="co">-- Heroku does not use &quot;X-Forwarded-Host&quot;, as it simply preserves &quot;Host&quot;</span>
-<span class="ot">    hostHeader ::</span> <span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">ByteString</span>
-    hostHeader <span class="fu">=</span> lookup <span class="st">&quot;Host&quot;</span> <span class="fu">.</span> requestHeaders
-
-<span class="ot">    redir ::</span> <span class="dt">ByteString</span> <span class="ot">-&gt;</span> <span class="dt">Response</span>
-    redir url <span class="fu">=</span> responseLBS HTTP.status301 [(<span class="st">&quot;Location&quot;</span>, url)] <span class="st">&quot;&quot;</span>
-
-<span class="ot">#if MIN_VERSION_wai(3,0,0)</span>
-    res <span class="fu">=</span> respond
-    runApp <span class="fu">=</span> app r respond
-<span class="ot">#else</span>
-    res <span class="fu">=</span> return
-    runApp <span class="fu">=</span> app r
-<span class="ot">#endif</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="ot">herokuHttps ::</span> <span class="dt">Middleware</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>herokuHttps <span class="ot">=</span> strictTransportPolicy <span class="op">.</span> herokuHttpsRedirect</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="ot">isHerokuHttps ::</span> <span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>isHerokuHttps <span class="ot">=</span> (<span class="dt">Just</span> <span class="st">&quot;https&quot;</span> <span class="op">==</span>) <span class="op">.</span> <span class="fu">fmap</span> CI.mk</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="op">.</span> <span class="fu">lookup</span> <span class="st">&quot;X-Forwarded-Proto&quot;</span> <span class="op">.</span> requestHeaders</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="ot">strictTransportPolicy ::</span> <span class="dt">Middleware</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>strictTransportPolicy <span class="ot">=</span> ifRequest isHerokuHttps <span class="op">.</span> modifyResponse</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    <span class="op">$</span> mapResponseHeaders ((header, value)<span class="op">:</span>)</span>
+<span id="cb1-11"><a href="#cb1-11"></a>  <span class="kw">where</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    header <span class="ot">=</span> <span class="st">&quot;Strict-Transport-Security&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    value <span class="ot">=</span> <span class="st">&quot;max-age=31536000; includeSubDomains&quot;</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="ot">herokuHttpsRedirect ::</span> <span class="dt">Middleware</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="pp">#if MIN_VERSION_wai(3,0,0)</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>herokuHttpsRedirect app r respond</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="pp">#else</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>herokuHttpsRedirect app r</span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="pp">#endif</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>    <span class="op">|</span> isHerokuHttps r <span class="ot">=</span> runApp</span>
+<span id="cb1-22"><a href="#cb1-22"></a>    <span class="op">|</span> <span class="dt">Just</span> host <span class="ot">&lt;-</span> hostHeader r <span class="ot">=</span> res <span class="op">.</span> redir</span>
+<span id="cb1-23"><a href="#cb1-23"></a>        <span class="op">$</span> <span class="st">&quot;https://&quot;</span> <span class="op">&lt;&gt;</span> host <span class="op">&lt;&gt;</span> rawPathInfo r <span class="op">&lt;&gt;</span> rawQueryString r</span>
+<span id="cb1-24"><a href="#cb1-24"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> runApp</span>
+<span id="cb1-25"><a href="#cb1-25"></a>  <span class="kw">where</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a></span>
+<span id="cb1-27"><a href="#cb1-27"></a>    <span class="co">-- Heroku does not use &quot;X-Forwarded-Host&quot;, as it simply preserves &quot;Host&quot;</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="ot">    hostHeader ::</span> <span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">ByteString</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>    hostHeader <span class="ot">=</span> <span class="fu">lookup</span> <span class="st">&quot;Host&quot;</span> <span class="op">.</span> requestHeaders</span>
+<span id="cb1-30"><a href="#cb1-30"></a></span>
+<span id="cb1-31"><a href="#cb1-31"></a><span class="ot">    redir ::</span> <span class="dt">ByteString</span> <span class="ot">-&gt;</span> <span class="dt">Response</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a>    redir url <span class="ot">=</span> responseLBS HTTP.status301 [(<span class="st">&quot;Location&quot;</span>, url)] <span class="st">&quot;&quot;</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a></span>
+<span id="cb1-34"><a href="#cb1-34"></a><span class="pp">#if MIN_VERSION_wai(3,0,0)</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a>    res <span class="ot">=</span> respond</span>
+<span id="cb1-36"><a href="#cb1-36"></a>    runApp <span class="ot">=</span> app r respond</span>
+<span id="cb1-37"><a href="#cb1-37"></a><span class="pp">#else</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a>    res <span class="ot">=</span> <span class="fu">return</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a>    runApp <span class="ot">=</span> app r</span>
+<span id="cb1-40"><a href="#cb1-40"></a><span class="pp">#endif</span></span></code></pre></div>
 <p>Many relevant Haskell libraries use wai (<a href="http://packdeps.haskellers.com/reverse/wai">wai reverse dependencies</a> so you can use it for example with your <a href="https://hackage.haskell.org/package/servant-server">servant</a>-based service.</p>
 <p>PS: You really do not need this should you have proxy configuration under your control as all major reverse proxies can do this for you.</p>
 </div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
