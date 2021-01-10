@@ -21,18 +21,20 @@ esac
 
 GIT_USER=$( git config --get user.name )
 GIT_EMAIL=$( git config --get user.email )
+GIT_ORIGIN=$( git remote get-url origin )
 
 if [[ -e _deploy ]]; then
     echo "_deploy exists, exiting..."
+    exit 1
 fi
 
 mkdir ./_deploy/
 (
     cd _deploy/
     git init
-    git config user.name "$GIT_USER"
-    git config user.email "$GIT_EMAIL"
-    git remote add origin git@github.com:xkollar/xkollar.github.io.git
+    git config user.name "${GIT_USER}"
+    git config user.email "${GIT_EMAIL}"
+    git remote add origin "${GIT_ORIGIN}"
     git fetch --all
     git checkout -b master origin/master
     git ls-files | xargs rm
