@@ -71,3 +71,37 @@ bezier([
 And here is somewhat more complex example of what it can do:
 
 ![Bézier demonstration](https://raw.githubusercontent.com/xkollar/holder/master/anim.gif)
+
+## Going Beyond Cubic
+
+Cubic Bézier is usually enough for all practical purposes...
+However I was curious whether it would be possible to create
+a generic version of the function, one that would be able
+to approximate curve of any degree.
+
+Also an interesting thing to notice is that
+modules and functions do not share a namespace
+so it is possible to have both a function and a module
+with the same time.
+
+Function `bezier_pt` recursively calculates point
+on a curve. Function `bezier` breaks down provided
+input based on the degree.
+
+```typescript
+function bezier_pt(points, t) = let (l = len(points))
+    l < 2
+    ? points[0]
+    : bezier_pt([for (i = [0:l-2]) (points[i+1]-points[i])*t+points[i]],t);
+
+function bezier(points, degree=3, steps=$fn) =
+    [for (pt = [0:degree:len(points)-degree-1])
+        each [for (i = [0:1:steps])
+           bezier_pt([for (j=[pt:pt+degree]) points[j]],i/steps)
+        ]
+    ];
+
+module bezier(points, degree=3, extra=[], steps=$fn) {
+    polygon(concat(bezier(points, degree=degree, steps=steps), extra));
+}
+```
