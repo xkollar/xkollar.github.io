@@ -105,3 +105,5 @@ module bezier(points, degree=3, extra=[], steps=$fn) {
     polygon(concat(bezier(points, degree=degree, steps=steps), extra));
 }
 ```
+
+![Fifth-order Bézier animation](https://upload.wikimedia.org/wikipedia/commons/0/0b/BezierCurve.gif)
