@@ -4,12 +4,14 @@ module Main (main) where
 import Control.Monad ((>=>))
 import Data.Function (on)
 import Data.List (intercalate, isSuffixOf)
-import Data.Monoid ((<>))
 import Data.Ord (Down(Down))
+import Data.String (fromString)
 import System.IO
 
 import Data.ByteString.Base64 (encode)
-import Data.ByteString.UTF8 (fromString, toString)
+import Data.Text (Text)
+import qualified Data.Text as Text
+import qualified Data.Text.Encoding as Text (decodeUtf8, encodeUtf8)
 import Hakyll
 import System.Directory (getDirectoryContents)
 import System.IO.Temp (withSystemTempDirectory)
@@ -161,7 +163,7 @@ runCmdIn dir c opts i = withFile "/dev/null" ReadWriteMode $ \ h -> do
     return (v,map prefixdir s)
     where
     prefixdir = (dir <>) . ("/" <>)
-    cp h = CreateProcess
+    cp _ = CreateProcess
         { cmdspec = RawCommand c opts
         , std_in = CreatePipe
         , std_out = CreatePipe
@@ -176,6 +178,7 @@ runCmdIn dir c opts i = withFile "/dev/null" ReadWriteMode $ \ h -> do
         , new_session = False
         , child_group = Nothing
         , child_user = Nothing
+        , use_process_jobs = True
         }
 
 -- pass :: Functor f => (b -> f a) -> b -> f b
@@ -188,19 +191,19 @@ awesomeCompiler = transformativePandoc $ unsafeCompiler . comps where
         , abcToImage
         ]
 
-encodeSvg :: String -> String
+encodeSvg :: Text -> Text
 encodeSvg s = "data:image/svg+xml;base64," <> encode' s
     where
-    encode' = toString . encode . fromString
+    encode' = Text.decodeUtf8 . encode . Text.encodeUtf8
 
-mkSvgImage :: String -> Inline
+mkSvgImage :: Text -> Inline
 mkSvgImage s = Image nullAttr [] (encodeSvg s, "fig:")
 
 -- {{{ Graphviz ---------------------------------------------------------------
-dotProc :: String -> IO String
+dotProc :: Text -> IO Text
 dotProc i = withSystemTempDirectory "dot-processor" $ \ tmp ->
-    fst <$> runCmdIn tmp
-        "dot" ["-Tsvg"] i
+    fromString . fst <$> runCmdIn tmp
+        "dot" ["-Tsvg"] (Text.unpack i)
 
 dotToImage :: Block -> IO Block
 dotToImage (CodeBlock (_, cs, _) d)
@@ -219,7 +222,8 @@ abcProc i = withSystemTempDirectory "abc-processor" $ \ tmp -> do
         "abcm2ps" ["-q", "-S", "-g", name] ""
     mapM readFile s
 
-purgeAbcOutput x = foldr (\ (p,r) i -> subRegex (mkRegex p) i r) x subs
+purgeAbcOutput :: String -> Text
+purgeAbcOutput x = Text.pack $ foldr (\ (p,r) i -> subRegex (mkRegex p) i r) x subs
     where
     subs =
         [ ("^<!-- (Creator|CreationDate|CommandLine): [^>]* -->\n", "")
@@ -229,6 +233,6 @@ purgeAbcOutput x = foldr (\ (p,r) i -> subRegex (mkRegex p) i r) x subs
 
 abcToImage :: Block -> IO Block
 abcToImage (CodeBlock (_, cs, _) d)
-    | "abc-render" `elem` cs = Para . map (mkSvgImage . purgeAbcOutput) <$> abcProc d
+    | "abc-render" `elem` cs = Para . map (mkSvgImage . purgeAbcOutput) <$> abcProc (Text.unpack d)
 abcToImage x = return x
 -- }}} ABC Music --------------------------------------------------------------

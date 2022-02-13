@@ -6,7 +6,7 @@ cabal-version:      >= 1.10
 executable site
   main-is:          site.hs
   build-depends:    base == 4.*
-                  , hakyll == 4.9.*
+                  , hakyll == 4.15.*
                   , blaze-html == 0.9.*
 
                   , base64-bytestring
@@ -15,6 +15,7 @@ executable site
                   , process
                   , regex-compat
                   , temporary
+                  , text
                   , utf8-string
 
   hs-source-dirs:   code
