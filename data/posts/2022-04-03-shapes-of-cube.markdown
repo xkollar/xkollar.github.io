@@ -3,20 +3,28 @@ title: "Shapes of Cube"
 author: xkollar
 tags: Fun
 ---
+
+Interactive animation desgined to present various representations of cube.
+Click around.
+
 <style><!--
   #shapes {
     background-color: #000;
     align-items: center;
     vertical-align: center;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
+    padding: 2pt;
   }
   #shapes a {
     background-color: #311;
-    margin: 0 2pt;
+    margin: 2pt 2pt;
     padding: 0.5ex 1em;
     cursor: pointer;
     flex: auto;
+    display: inline-block;
+    text-align: center;
   }
   #shapes a:hover {
       background-color: #422;
@@ -24,11 +32,13 @@ tags: Fun
   canvas {
     margin: 0 auto;
     background: linear-gradient(#200, #866);
-    display: block;
+    max-width: 90%;
   }
 --></style>
 <div id="shapes"></div>
+<figure>
 <canvas id="canvas" width="500" height="500"></canvas>
+</figure>
 <script id="rendered-js" >
   const pt = (x,y) => { return {x:x, y:y}; };
   circ = [];
@@ -63,6 +73,7 @@ tags: Fun
   for (shape in shapes) {
       var a = document.createElement("a");
       a.appendChild(document.createTextNode(shape));
+      a.href = "#" + shape;
       // a.href = "";
       a.onclick = (x => e => {
           start_time = current_time;
