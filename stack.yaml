@@ -80,4 +80,5 @@ nix:
   - zlib
   - gcc
   # - openssl
-  # - abcm2ps ... something like this...
+  - abcm2ps # ... something like this...
+  - graphviz-nox
