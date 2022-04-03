@@ -8,60 +8,73 @@
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
-<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>How to Show a Constructor</h1><div class="info">Posted on 2017-10-31 by xkollar  <span class="tags">in <a href="../tags/Haskell.html">Haskell</a></span>.</div><p>How to show a (toplevel) constructor in a generic way? (Pun intended.)</p>
-<p>Not really a complicated thing but I thought that it might be nice, simple, and yet valuable example for generic programming in Haskell using <code>GHC.Generics</code>.</p>
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>How to Show a Constructor</h1><div class="info">Posted on 2017-10-31 by xkollar  <span class="tags">in <a title="All pages tagged 'Haskell'." href="../tags/Haskell.html">Haskell</a></span>.</div><p>How to show a (toplevel) constructor in a generic way? (Pun intended.)</p>
+<p>Not really a complicated thing but I thought that it might be nice, simple, and
+yet valuable example for generic programming in Haskell using <code>GHC.Generics</code>.</p>
 <p>Here is the code.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="ot">{-# LANGUAGE TypeOperators #-}</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">module</span> <span class="dt">Data.Generics.ShowConstructor</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>    ( showConstr</span>
-<span id="cb1-7"><a href="#cb1-7"></a>    ) <span class="kw">where</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">import</span> <span class="dt">Data.Function</span> ((.))</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">import</span> <span class="dt">Data.String</span> (<span class="dt">String</span>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">import</span> <span class="dt">GHC.Generics</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>       ((<span class="op">:+:</span>)(<span class="dt">L1</span>, <span class="dt">R1</span>), <span class="dt">C</span>, <span class="dt">Constructor</span>, <span class="dt">Generic</span>, <span class="dt">M1</span>(<span class="dt">M1</span>), <span class="dt">Rep</span>, conName,</span>
-<span id="cb1-13"><a href="#cb1-13"></a>        from)</span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">class</span> <span class="dt">ShowConstr</span> f <span class="kw">where</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="ot">    gShowConstr ::</span> f p <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="kw">instance</span> (<span class="dt">ShowConstr</span> a, <span class="dt">ShowConstr</span> b) <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (a <span class="op">:+:</span> b) <span class="kw">where</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a>    gShowConstr (<span class="dt">L1</span> x) <span class="ot">=</span> gShowConstr x</span>
-<span id="cb1-21"><a href="#cb1-21"></a>    gShowConstr (<span class="dt">R1</span> x) <span class="ot">=</span> gShowConstr x</span>
-<span id="cb1-22"><a href="#cb1-22"></a>    <span class="ot">{-# INLINE gShowConstr #-}</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a></span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> <span class="dt">ShowConstr</span> a <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (<span class="dt">M1</span> i c a) <span class="kw">where</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a>    gShowConstr (<span class="dt">M1</span> x) <span class="ot">=</span> gShowConstr x</span>
-<span id="cb1-26"><a href="#cb1-26"></a>    <span class="ot">{-# INLINE gShowConstr #-}</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="kw">instance</span> <span class="dt">Constructor</span> c <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (<span class="dt">M1</span> <span class="dt">C</span> c a) <span class="kw">where</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a>    gShowConstr <span class="ot">=</span> conName</span>
-<span id="cb1-30"><a href="#cb1-30"></a>    <span class="ot">{-# INLINE gShowConstr #-}</span></span>
-<span id="cb1-31"><a href="#cb1-31"></a></span>
-<span id="cb1-32"><a href="#cb1-32"></a><span class="ot">showConstr ::</span> (<span class="dt">Generic</span> a, <span class="dt">ShowConstr</span> (<span class="dt">Rep</span> a)) <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a>showConstr <span class="ot">=</span> gShowConstr <span class="op">.</span> from</span>
-<span id="cb1-34"><a href="#cb1-34"></a><span class="ot">{-# INLINE showConstr #-}</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE TypeOperators #-}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Data.Generics.ShowConstructor</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    ( showConstr</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="kw">where</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Function</span> ((.))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.String</span> (<span class="dt">String</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">GHC.Generics</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>       ((<span class="op">:+:</span>)(<span class="dt">L1</span>, <span class="dt">R1</span>), <span class="dt">C</span>, <span class="dt">Constructor</span>, <span class="dt">Generic</span>, <span class="dt">M1</span>(<span class="dt">M1</span>), <span class="dt">Rep</span>, conName,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        from)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">ShowConstr</span> f <span class="kw">where</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ot">    gShowConstr ::</span> f p <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> (<span class="dt">ShowConstr</span> a, <span class="dt">ShowConstr</span> b) <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (a <span class="op">:+:</span> b) <span class="kw">where</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    gShowConstr (<span class="dt">L1</span> x) <span class="ot">=</span> gShowConstr x</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    gShowConstr (<span class="dt">R1</span> x) <span class="ot">=</span> gShowConstr x</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="ot">{-# INLINE gShowConstr #-}</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> <span class="dt">ShowConstr</span> a <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (<span class="dt">M1</span> i c a) <span class="kw">where</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    gShowConstr (<span class="dt">M1</span> x) <span class="ot">=</span> gShowConstr x</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="ot">{-# INLINE gShowConstr #-}</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Constructor</span> c <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (<span class="dt">M1</span> <span class="dt">C</span> c a) <span class="kw">where</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    gShowConstr <span class="ot">=</span> conName</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="ot">{-# INLINE gShowConstr #-}</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ot">showConstr ::</span> (<span class="dt">Generic</span> a, <span class="dt">ShowConstr</span> (<span class="dt">Rep</span> a)) <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>showConstr <span class="ot">=</span> gShowConstr <span class="op">.</span> from</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# INLINE showConstr #-}</span></span></code></pre></div>
 <p>Now let’s talk about it a little.</p>
-<p>Usual questions I get from people dipping their toes to <code>Generics</code> for the firs time are:</p>
+<p>Usual questions I get from people dipping their toes to <code>Generics</code> for the
+firs time are:</p>
 <ul>
 <li>Why do I need to create the class?</li>
 <li>Why are there so many instances?</li>
 <li>What are these types for which there are instance for?</li>
 <li>Why there is <code>ShowConstr (Rep a)</code> constraint in type of <code>showConstr</code>?</li>
 </ul>
-<p>Class <code>Generics</code> has not only associated functions <code class="sourceCode haskell"><span class="ot">from ::</span> a <span class="ot">-&gt;</span> <span class="dt">Rep</span> a x</code> and <code class="sourceCode haskell"><span class="ot">to ::</span> <span class="dt">Rep</span> a x <span class="ot">-&gt;</span> a</code> (ignore <code>x</code> for now), but also type (family) <code class="sourceCode haskell"><span class="dt">Rep</span> a</code>, representation of type <code>a</code>. This type is built out of only very few other types (see <a href="https://hackage.haskell.org/package/base/docs/GHC-Generics.html">Generics documentation on Hackage</a>). (Couple more than I have instances for, but I do not need them in my case.)</p>
-<p>To be able to traverse this type, we use Haskell-s ad-hoc polymorphism mechanism, type classes. Take for example Instance <code class="sourceCode haskell"><span class="dt">ShowConstr</span> (<span class="dt">M1</span> i c a)</code>. We do not know type of <code>x</code> in <code>M1 x</code>, and yet we want to process it. And type classes are Haskell-s answer for this sort of problem <abbr title="☺️ :smiling_face:"><code>:-)</code></abbr>.</p>
-<p>And just to wrap things up: if you have instances for <code class="sourceCode haskell"><span class="dt">Data.Data.Data</span></code>, you can indeed go for slightly simpler solution.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">import</span> <span class="dt">Data.Data</span> (<span class="dt">Data</span>, toConstr)</span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="ot">showConstr ::</span> <span class="dt">Data</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>showConstr <span class="ot">=</span> <span class="fu">show</span> <span class="op">.</span> toConstr</span></code></pre></div>
-<p>Or yet even (in some sense) simpler, requiring only <code class="sourceCode haskell"><span class="dt">Text.Show.Show</span></code> (but with some trouble-causing corner cases (Lists, Strings, and more generally types with custom Show instance, …)).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="ot">showConstr ::</span> <span class="dt">Show</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>showConstr <span class="ot">=</span> <span class="fu">takeWhile</span> (<span class="fu">not</span> <span class="op">.</span> <span class="fu">isSpace</span>) <span class="op">.</span> <span class="fu">show</span></span></code></pre></div>
+<p>Class <code>Generics</code> has not only associated functions
+<code class="sourceCode haskell"><span class="ot">from ::</span> a <span class="ot">-&gt;</span> <span class="dt">Rep</span> a x</code> and <code class="sourceCode haskell"><span class="ot">to ::</span> <span class="dt">Rep</span> a x <span class="ot">-&gt;</span> a</code> (ignore <code>x</code>
+for now), but also type (family) <code class="sourceCode haskell"><span class="dt">Rep</span> a</code>, representation of type <code>a</code>.
+This type is built out of only very few other types (see <a href="https://hackage.haskell.org/package/base/docs/GHC-Generics.html">Generics documentation on
+Hackage</a>).
+(Couple more than I have instances for, but I do not need them in my case.)</p>
+<p>To be able to traverse this type, we use Haskell-s ad-hoc polymorphism mechanism,
+type classes. Take for example Instance <code class="sourceCode haskell"><span class="dt">ShowConstr</span> (<span class="dt">M1</span> i c a)</code>.
+We do not know type of <code>x</code> in <code>M1 x</code>, and yet we want to process it.
+And type classes are Haskell-s answer for this sort of problem <abbr title="☺️ :smiling_face:"><code>:-)</code></abbr>.</p>
+<p>And just to wrap things up: if you have instances for
+<code class="sourceCode haskell"><span class="dt">Data.Data.Data</span></code>, you can indeed go for slightly simpler solution.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Data</span> (<span class="dt">Data</span>, toConstr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">showConstr ::</span> <span class="dt">Data</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>showConstr <span class="ot">=</span> <span class="fu">show</span> <span class="op">.</span> toConstr</span></code></pre></div>
+<p>Or yet even (in some sense) simpler, requiring only <code class="sourceCode haskell"><span class="dt">Text.Show.Show</span></code>
+(but with some trouble-causing corner cases (Lists, Strings, and more generally
+types with custom Show instance, …)).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">showConstr ::</span> <span class="dt">Show</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>showConstr <span class="ot">=</span> <span class="fu">takeWhile</span> (<span class="fu">not</span> <span class="op">.</span> <span class="fu">isSpace</span>) <span class="op">.</span> <span class="fu">show</span></span></code></pre></div>
 </div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
 </html>

@@ -8,31 +8,31 @@
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
-<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Type</h1><div class="info">Posted on 2017-11-03 by xkollar  <span class="tags">in <a href="../tags/Bash.html">Bash</a>, <a href="../tags/Haskell.html">Haskell</a>, <a href="../tags/Fun.html">Fun</a></span>.</div><p>Have you ever semi-automatically quasi-subconsciously run <code>:t</code> outside GHCi?</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="bu">type</span> :t</span>
-<span id="cb1-2"><a href="#cb1-2"></a>:<span class="ex">t</span> is a function</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">:t ()</span> </span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">{</span> </span>
-<span id="cb1-5"><a href="#cb1-5"></a>    <span class="ex">ghci</span> -v0 <span class="op">&lt;&lt;&lt;</span> <span class="st">&quot;:t </span><span class="va">${*:-</span>undefined<span class="va">}</span><span class="st">&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">}</span></span></code></pre></div>
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Type</h1><div class="info">Posted on 2017-11-03 by xkollar  <span class="tags">in <a title="All pages tagged 'Bash'." href="../tags/Bash.html">Bash</a>, <a title="All pages tagged 'Haskell'." href="../tags/Haskell.html">Haskell</a>, <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a></span>.</div><p>Have you ever semi-automatically quasi-subconsciously run <code>:t</code> outside GHCi?</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> type :t</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">:t</span> is a function</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">:t ()</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ghci</span> <span class="at">-v0</span> <span class="op">&lt;&lt;&lt;</span> <span class="st">&quot;:t </span><span class="va">${*</span><span class="op">:-</span>undefined<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 <p>What it can do:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ :<span class="ex">t</span> map</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">map</span> :: (a -<span class="op">&gt;</span> b) <span class="ex">-</span><span class="op">&gt;</span> [a] -<span class="op">&gt;</span> [b]</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>$ :<span class="ex">t</span> fold</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="op">&lt;</span><span class="ex">interactive</span><span class="op">&gt;</span>:1:1: error:</span>
-<span id="cb3-4"><a href="#cb3-4"></a>    • <span class="ex">Variable</span> not in scope: fold</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    • <span class="ex">Perhaps</span> you meant one of these:</span>
-<span id="cb3-6"><a href="#cb3-6"></a>        ‘<span class="ex">foldr</span>’ (imported from Prelude), ‘<span class="ex">foldl</span>’ (imported from Prelude)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> :t map</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">map</span> :: <span class="er">(</span><span class="ex">a</span> <span class="at">-</span><span class="op">&gt;</span> b<span class="kw">)</span> <span class="ex">-</span><span class="op">&gt;</span> [a] <span class="at">-</span><span class="op">&gt;</span> [b]</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> :t fold</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>interactive<span class="op">&gt;</span>:1:1: <span class="ex">error:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">•</span> Variable not in scope: fold</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">•</span> Perhaps you meant one of these:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">‘foldr’</span> <span class="er">(</span><span class="ex">imported</span> from Prelude<span class="kw">)</span><span class="ex">,</span> ‘foldl’ <span class="er">(</span><span class="ex">imported</span> from Prelude<span class="kw">)</span></span></code></pre></div>
 <p>Whops… what about</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>$ :<span class="ex">t</span> Data.Foldable.fold</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">Data.Foldable.fold</span> :: (Monoid m, Foldable t) =<span class="op">&gt;</span> <span class="ex">t</span> m -<span class="op">&gt;</span> m</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> :t Data.Foldable.fold</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Data.Foldable.fold</span> :: <span class="er">(</span><span class="ex">Monoid</span> m, Foldable t<span class="kw">)</span> <span class="ex">=</span><span class="op">&gt;</span> t m <span class="at">-</span><span class="op">&gt;</span> m</span></code></pre></div>
 <p>That is better. Maybe we can poke also other packages, not just base…</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>$ :<span class="ex">t</span> Data.Time.addUTCTime</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">Data.Time.addUTCTime</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>  :: <span class="ex">time-1.6.0.1</span>:Data.Time.Clock.UTC.NominalDiffTime</span>
-<span id="cb5-4"><a href="#cb5-4"></a>     <span class="ex">-</span><span class="op">&gt;</span> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime</span>
-<span id="cb5-5"><a href="#cb5-5"></a>     <span class="ex">-</span><span class="op">&gt;</span> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> :t Data.Time.addUTCTime</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Data.Time.addUTCTime</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">::</span> time-1.6.0.1:Data.Time.Clock.UTC.NominalDiffTime</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>     <span class="ex">-</span><span class="op">&gt;</span> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>     <span class="ex">-</span><span class="op">&gt;</span> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime</span></code></pre></div>
 <p>Awesome <abbr title="☺️ :smiling_face:"><code>:-)</code></abbr>.</p>
 <p>In the next episode we will deal with accidental runs of <code class="sourceCode bash"><span class="fu">ls</span></code> in GHCi.</p>
 </div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>

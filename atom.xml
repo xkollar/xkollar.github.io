@@ -8,8 +8,168 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2021-10-06T00:00:00Z</updated>
+    <updated>2022-04-03T00:00:00Z</updated>
     <entry>
+    <title>Shapes of Cube</title>
+    <link href="https://xkollar.github.io/posts/2022-04-03-shapes-of-cube.html" />
+    <id>https://xkollar.github.io/posts/2022-04-03-shapes-of-cube.html</id>
+    <published>2022-04-03T00:00:00Z</published>
+    <updated>2022-04-03T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<style><!--
+  #shapes {
+    background-color: #000;
+    align-items: center;
+    vertical-align: center;
+    display: flex;
+    flex-direction: row;
+  }
+  #shapes a {
+    background-color: #311;
+    margin: 0 2pt;
+    padding: 0.5ex 1em;
+    cursor: pointer;
+    flex: auto;
+  }
+  #shapes a:hover {
+      background-color: #422;
+  }
+  canvas {
+    margin: 0 auto;
+    background: linear-gradient(#200, #866);
+    display: block;
+  }
+--></style>
+<div id="shapes">
+
+</div>
+<canvas id="canvas" width="500" height="500">
+</canvas>
+<script id="rendered-js" >
+  const pt = (x,y) => { return {x:x, y:y}; };
+  circ = [];
+  for (const i in [0,1,2,3,4,5,6,7]) {
+      p = (i/8*2+2/16)*Math.PI;
+      const radius = Math.sqrt(2)*150;
+      circ.push(pt(-Math.cos(p)*radius+250, Math.sin(p)*radius+250));
+  }
+
+  between = (from, to, fr) => pt(
+      to.x*fr + from.x*(1-fr),
+      to.y*fr + from.y*(1-fr)
+  );
+
+  const shapes = {
+      base:   [pt(100,400), pt(300,400), pt(300,200), pt(100,200), pt(200,300), pt(400,300), pt(400,100), pt(200,100)],
+      front:  [pt(200,300), pt(300,300), pt(300,200), pt(200,200), pt(100,400), pt(400,400), pt(400,100), pt(100,100)],
+      octo1:  [circ[0], circ[1], circ[4], circ[5], circ[7], circ[2], circ[3], circ[6]],
+      octo2:  [circ[0], circ[2], circ[4], circ[6], circ[1], circ[3], circ[5], circ[7]],
+      octo3:  [circ[0], circ[1], circ[2], circ[3], circ[4], circ[5], circ[6], circ[7]],
+      bipart: [pt(100,400), pt(100,100), pt(200,400), pt(200,100), pt(300,100), pt(300,400), pt(400,100), pt(400,400)],
+      order:  [pt(250,400), pt(400,300), pt(250,200), pt(100,300), pt(250,300), pt(400,200), pt(250,100), pt(100,200)],
+  };
+
+  var start_time = -1;
+  var current_time = 0;
+  var start = shapes.base;
+  var current = [];
+  var target = start;
+
+  const menu = document.getElementById("shapes");
+  for (shape in shapes) {
+      var a = document.createElement("a");
+      a.appendChild(document.createTextNode(shape));
+      // a.href = "";
+      a.onclick = (x => e => {
+          start_time = current_time;
+          start = [];
+          for (const i in current) {
+              start[i] = current[i];
+          }
+          target = shapes[x];
+          // window.requestAnimationFrame(d);
+          return false;
+      })(shape);
+      menu.appendChild(a);
+  }
+
+  cube = {
+      0: [1,3,4],
+      1: [2,5],
+      2: [3,6],
+      3: [7],
+      4: [5,7],
+      5: [6],
+      6: [7],
+      7: [],
+  };
+
+  var lines = [];
+  for (const x in cube) {
+      for (const i in cube[x]) {
+          const y = cube[x][i];
+          lines.push([x,y]);
+      }
+  }
+
+  const drawLine = (ctx, pt1, pt2) => {
+      ctx.moveTo(pt1.x,pt1.y);
+      ctx.lineTo(pt2.x,pt2.y);
+  }
+
+  var animation_done = false;
+
+  const draw = (canvas) => (ts) => {
+      current_time = ts;
+
+      var t = (current_time - start_time) / 2000;
+      if (t < 1) {
+          animation_done = false;
+      } else {
+          if (animation_done == true) {
+              window.requestAnimationFrame(draw(canvas));
+              return;
+          }
+          animation_done = true;
+      }
+      t = Math.min(t, 1);
+      for (const i in target) {
+          current[i] = between(start[i], target[i], t);
+      }
+
+      ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.lineWidth = 3;
+      ctx.save();
+      ctx.beginPath();
+      for (const i in lines) {
+          const line = lines[i];
+          drawLine(ctx, current[line[0]], current[line[1]]);
+      }
+      ctx.stroke();
+      ctx.restore();
+      ctx.save();
+      for (const i in cube) {
+          ctx.beginPath();
+          ctx.arc(current[i].x, current[i].y, 20, 0, 2*Math.PI, false);
+          ctx.fillStyle = '#633';
+          ctx.fill();
+          ctx.stroke();
+          ctx.font = "bold 16px Arial";
+          ctx.fillStyle = '#311';
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(i, current[i].x, current[i].y);
+      }
+      ctx.restore();
+      window.requestAnimationFrame(draw(canvas));
+  }
+  const d = draw(document.getElementById("canvas"));
+  window.requestAnimationFrame(d);
+</script>
+<p>Had this thing in mind for some time…</p>
+<p>Some are more redundant than others… any other ideas?</p>]]></summary>
+</entry>
+<entry>
     <title>Cubic Bézier Curves for OpenSCAD</title>
     <link href="https://xkollar.github.io/posts/2021-10-06-cubic-bezier-for-openscad.html" />
     <id>https://xkollar.github.io/posts/2021-10-06-cubic-bezier-for-openscad.html</id>
@@ -19,68 +179,92 @@
 <blockquote>
 <p>OpenSCAD is a solid 3D modeler that enables creation of parametric models using its scripting language.</p>
 </blockquote>
-<p>It is quite nice and I have already played with it. My previous project used simple constructs, mostly polygons and <a href="https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Using_the_2D_Subsystem#Rotate_Extrude">rotate extrude</a>. And it was great for that. However my current project is somewhat more artsy which in this case means I wanted it to have curves. I had some experience playing with cubic <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Bézier curves</a> however there was no such primitive in the language or standard library (though I haven’t looked too hard).</p>
+<p>It is quite nice and I have already played with it. My previous project used
+simple constructs, mostly polygons and
+<a href="https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Using_the_2D_Subsystem#Rotate_Extrude">rotate extrude</a>.
+And it was great for that. However my current project is somewhat more artsy
+which in this case means I wanted it to have curves. I had some experience
+playing with cubic <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Bézier curves</a>
+however there was no such primitive in the language or standard library
+(though I haven’t looked too hard).</p>
 <p>Bézier curves are quite easy to implement and easy/intuitive(-ish) to use.</p>
-<p>Animation is better than thousand words, so if you don’t want to read through the whole Wikipedia article here is just the most relevant animation:</p>
+<p>Animation is better than thousand words, so if you don’t want to read through
+the whole Wikipedia article here is just the most relevant animation:</p>
 <figure>
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/db/B%C3%A9zier_3_big.gif" alt="" /><figcaption>Cubic Bezier animation</figcaption>
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/db/B%C3%A9zier_3_big.gif" alt="Cubic Bezier animation" /><figcaption aria-hidden="true">Cubic Bezier animation</figcaption>
 </figure>
 <p>That turned out to be a nice exercise. Here is the code:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">module</span> <span class="dt">bezier</span>(<span class="dt">points</span>, <span class="dt">extra</span>=[], <span class="dt">steps</span>=<span class="dt">$fn</span>) <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>    s <span class="op">=</span> <span class="op">[</span><span class="fu">for</span> (pt <span class="op">=</span> <span class="op">[</span><span class="dv">0</span><span class="op">:</span><span class="dv">3</span><span class="op">:</span><span class="fu">len</span>(points)<span class="op">-</span><span class="dv">4</span><span class="op">]</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>        each <span class="op">[</span><span class="fu">for</span> (i <span class="op">=</span> <span class="op">[</span><span class="dv">0</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span>steps<span class="op">]</span>)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>           <span class="fu">let</span> (</span>
-<span id="cb1-5"><a href="#cb1-5"></a>                t <span class="op">=</span> i<span class="op">/</span>steps<span class="op">,</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>                p0 <span class="op">=</span> points<span class="op">[</span>pt<span class="op">],</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>                p1 <span class="op">=</span> points<span class="op">[</span>pt<span class="op">+</span><span class="dv">1</span><span class="op">],</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>                p2 <span class="op">=</span> points<span class="op">[</span>pt<span class="op">+</span><span class="dv">2</span><span class="op">],</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>                p3 <span class="op">=</span> points<span class="op">[</span>pt<span class="op">+</span><span class="dv">3</span><span class="op">],</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>                p01 <span class="op">=</span> (p1<span class="op">-</span>p0)<span class="op">*</span>t<span class="op">+</span>p0<span class="op">,</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>                p12 <span class="op">=</span> (p2<span class="op">-</span>p1)<span class="op">*</span>t<span class="op">+</span>p1<span class="op">,</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>                p23 <span class="op">=</span> (p3<span class="op">-</span>p2)<span class="op">*</span>t<span class="op">+</span>p2<span class="op">,</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>                p012 <span class="op">=</span> (p12<span class="op">-</span>p01)<span class="op">*</span>t<span class="op">+</span>p01<span class="op">,</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a>                p123 <span class="op">=</span> (p23<span class="op">-</span>p12)<span class="op">*</span>t<span class="op">+</span>p12<span class="op">,</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>                p0123 <span class="op">=</span> (p123<span class="op">-</span>p012)<span class="op">*</span>t<span class="op">+</span>p012)</span>
-<span id="cb1-16"><a href="#cb1-16"></a>           p0123<span class="op">]];</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a></span>
-<span id="cb1-18"><a href="#cb1-18"></a>    <span class="fu">polygon</span>(<span class="fu">concat</span>(s<span class="op">,</span> extra))<span class="op">;</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">module</span> <span class="dt">bezier</span>(<span class="dt">points</span>, <span class="dt">extra</span>=[], <span class="dt">steps</span>=<span class="dt">$fn</span>) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> [<span class="fu">for</span> (pt <span class="op">=</span> [<span class="dv">0</span><span class="op">:</span><span class="dv">3</span><span class="op">:</span><span class="fu">len</span>(points)<span class="op">-</span><span class="dv">4</span>])</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        each [<span class="fu">for</span> (i <span class="op">=</span> [<span class="dv">0</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span>steps])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">let</span> (</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                t <span class="op">=</span> i<span class="op">/</span>steps<span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                p0 <span class="op">=</span> points[pt]<span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                p1 <span class="op">=</span> points[pt<span class="op">+</span><span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                p2 <span class="op">=</span> points[pt<span class="op">+</span><span class="dv">2</span>]<span class="op">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                p3 <span class="op">=</span> points[pt<span class="op">+</span><span class="dv">3</span>]<span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                p01 <span class="op">=</span> (p1<span class="op">-</span>p0)<span class="op">*</span>t<span class="op">+</span>p0<span class="op">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                p12 <span class="op">=</span> (p2<span class="op">-</span>p1)<span class="op">*</span>t<span class="op">+</span>p1<span class="op">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                p23 <span class="op">=</span> (p3<span class="op">-</span>p2)<span class="op">*</span>t<span class="op">+</span>p2<span class="op">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                p012 <span class="op">=</span> (p12<span class="op">-</span>p01)<span class="op">*</span>t<span class="op">+</span>p01<span class="op">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                p123 <span class="op">=</span> (p23<span class="op">-</span>p12)<span class="op">*</span>t<span class="op">+</span>p12<span class="op">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                p0123 <span class="op">=</span> (p123<span class="op">-</span>p012)<span class="op">*</span>t<span class="op">+</span>p012)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>           p0123]]<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">polygon</span>(<span class="fu">concat</span>(s<span class="op">,</span> extra))<span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <ul>
-<li>Argument <code>points</code> is list of points that specify individual chunks of curve as cubic Bézier curves. The first chunk is specified by first 4 points followed by triplets of points (first point is always the last one from the previous chunk). This technically works for 2D and 3D.</li>
-<li>Argument <code>extra</code> is extra points to be added at the end without any curving, mostly useful during model creation.</li>
-<li>It (ab)uses special variable <code>$fn</code> to determine how many segments should be used to approximate each part of the whole curve.</li>
+<li>Argument <code>points</code> is list of points that specify individual chunks of curve
+as cubic Bézier curves. The first chunk is specified by first 4 points followed
+by triplets of points (first point is always the last one from the previous
+chunk). This technically works for 2D and 3D.</li>
+<li>Argument <code>extra</code> is extra points to be added at the end without any curving,
+mostly useful during model creation.</li>
+<li>It (ab)uses special variable <code>$fn</code> to determine how many segments should be
+used to approximate each part of the whole curve.</li>
 </ul>
 <p>Example use:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">bezier</span>(<span class="op">[</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>    <span class="op">[</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">],[</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">],[</span><span class="dv">2</span><span class="op">,</span><span class="dv">0</span><span class="op">],[</span><span class="dv">0</span><span class="op">,-</span><span class="dv">1</span><span class="op">],</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>    <span class="op">[-</span><span class="dv">2</span><span class="op">,</span><span class="dv">0</span><span class="op">],[</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">],[</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">]</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>    <span class="op">]</span>)<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bezier</span>([</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span><span class="op">,</span><span class="dv">0</span>]<span class="op">,</span>[<span class="dv">0</span><span class="op">,</span><span class="dv">1</span>]<span class="op">,</span>[<span class="dv">2</span><span class="op">,</span><span class="dv">0</span>]<span class="op">,</span>[<span class="dv">0</span><span class="op">,-</span><span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    [<span class="op">-</span><span class="dv">2</span><span class="op">,</span><span class="dv">0</span>]<span class="op">,</span>[<span class="dv">0</span><span class="op">,</span><span class="dv">1</span>]<span class="op">,</span>[<span class="dv">0</span><span class="op">,</span><span class="dv">0</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ])<span class="op">;</span></span></code></pre></div>
 <figure>
-<img src="/images/openscad-bezier.png" alt="" /><figcaption>Rendered example</figcaption>
+<img src="/images/openscad-bezier.png" alt="Rendered example" /><figcaption aria-hidden="true">Rendered example</figcaption>
 </figure>
 <p>And here is somewhat more complex example of what it can do:</p>
 <figure>
-<img src="https://raw.githubusercontent.com/xkollar/holder/master/anim.gif" alt="" /><figcaption>Bézier demonstration</figcaption>
+<img src="https://raw.githubusercontent.com/xkollar/holder/master/anim.gif" alt="Bézier demonstration" /><figcaption aria-hidden="true">Bézier demonstration</figcaption>
 </figure>
 <h2 id="going-beyond-cubic">Going Beyond Cubic</h2>
-<p>Cubic Bézier is usually enough for all practical purposes… However I was curious whether it would be possible to create a generic version of the function, one that would be able to approximate curve of any degree.</p>
-<p>Also an interesting thing to notice is that modules and functions do not share a namespace so it is possible to have both a function and a module with the same time.</p>
-<p>Function <code>bezier_pt</code> recursively calculates point on a curve. Function <code>bezier</code> breaks down provided input based on the degree.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">function</span> <span class="fu">bezier_pt</span>(points<span class="op">,</span> t) <span class="op">=</span> <span class="fu">let</span> (l <span class="op">=</span> <span class="fu">len</span>(points))</span>
-<span id="cb3-2"><a href="#cb3-2"></a>    l <span class="op">&lt;</span> <span class="dv">2</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="op">?</span> points<span class="op">[</span><span class="dv">0</span><span class="op">]</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>    <span class="op">:</span> <span class="fu">bezier_pt</span>(<span class="op">[</span><span class="fu">for</span> (i <span class="op">=</span> <span class="op">[</span><span class="dv">0</span><span class="op">:</span>l<span class="dv">-2</span><span class="op">]</span>) (points<span class="op">[</span>i<span class="op">+</span><span class="dv">1</span><span class="op">]-</span>points<span class="op">[</span>i<span class="op">]</span>)<span class="op">*</span>t<span class="op">+</span>points<span class="op">[</span>i<span class="op">]],</span>t)<span class="op">;</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">function</span> <span class="fu">bezier</span>(points<span class="op">,</span> degree<span class="op">=</span><span class="dv">3</span><span class="op">,</span> steps<span class="op">=</span>$fn) <span class="op">=</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>    <span class="op">[</span><span class="fu">for</span> (pt <span class="op">=</span> <span class="op">[</span><span class="dv">0</span><span class="op">:</span>degree<span class="op">:</span><span class="fu">len</span>(points)<span class="op">-</span>degree<span class="dv">-1</span><span class="op">]</span>)</span>
-<span id="cb3-8"><a href="#cb3-8"></a>        each <span class="op">[</span><span class="fu">for</span> (i <span class="op">=</span> <span class="op">[</span><span class="dv">0</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span>steps<span class="op">]</span>)</span>
-<span id="cb3-9"><a href="#cb3-9"></a>           <span class="fu">bezier_pt</span>(<span class="op">[</span><span class="fu">for</span> (j<span class="op">=[</span>pt<span class="op">:</span>pt<span class="op">+</span>degree<span class="op">]</span>) points<span class="op">[</span>j<span class="op">]],</span>i<span class="op">/</span>steps)</span>
-<span id="cb3-10"><a href="#cb3-10"></a>        <span class="op">]</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a>    <span class="op">];</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="im">module</span> <span class="dt">bezier</span>(<span class="dt">points</span>, <span class="dt">degree</span>=3, <span class="dt">extra</span>=[], <span class="dt">steps</span>=<span class="dt">$fn</span>) <span class="op">{</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a>    <span class="fu">polygon</span>(<span class="fu">concat</span>(<span class="fu">bezier</span>(points<span class="op">,</span> degree<span class="op">=</span>degree<span class="op">,</span> steps<span class="op">=</span>steps)<span class="op">,</span> extra))<span class="op">;</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="op">}</span></span></code></pre></div>]]></summary>
+<p>Cubic Bézier is usually enough for all practical purposes…
+However I was curious whether it would be possible to create
+a generic version of the function, one that would be able
+to approximate curve of any degree.</p>
+<p>Also an interesting thing to notice is that
+modules and functions do not share a namespace
+so it is possible to have both a function and a module
+with the same time.</p>
+<p>Function <code>bezier_pt</code> recursively calculates point
+on a curve. Function <code>bezier</code> breaks down provided
+input based on the degree.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">bezier_pt</span>(points<span class="op">,</span> t) <span class="op">=</span> <span class="fu">let</span> (l <span class="op">=</span> <span class="fu">len</span>(points))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    l <span class="op">&lt;</span> <span class="dv">2</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> points[<span class="dv">0</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="fu">bezier_pt</span>([<span class="fu">for</span> (i <span class="op">=</span> [<span class="dv">0</span><span class="op">:</span>l<span class="op">-</span><span class="dv">2</span>]) (points[i<span class="op">+</span><span class="dv">1</span>]<span class="op">-</span>points[i])<span class="op">*</span>t<span class="op">+</span>points[i]]<span class="op">,</span>t)<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">bezier</span>(points<span class="op">,</span> degree<span class="op">=</span><span class="dv">3</span><span class="op">,</span> steps<span class="op">=</span>$fn) <span class="op">=</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    [<span class="fu">for</span> (pt <span class="op">=</span> [<span class="dv">0</span><span class="op">:</span>degree<span class="op">:</span><span class="fu">len</span>(points)<span class="op">-</span>degree<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        each [<span class="fu">for</span> (i <span class="op">=</span> [<span class="dv">0</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span>steps])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">bezier_pt</span>([<span class="fu">for</span> (j<span class="op">=</span>[pt<span class="op">:</span>pt<span class="op">+</span>degree]) points[j]]<span class="op">,</span>i<span class="op">/</span>steps)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="im">module</span> <span class="dt">bezier</span>(<span class="dt">points</span>, <span class="dt">degree</span>=3, <span class="dt">extra</span>=[], <span class="dt">steps</span>=<span class="dt">$fn</span>) {</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">polygon</span>(<span class="fu">concat</span>(<span class="fu">bezier</span>(points<span class="op">,</span> degree<span class="op">=</span>degree<span class="op">,</span> steps<span class="op">=</span>steps)<span class="op">,</span> extra))<span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<figure>
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/BezierCurve.gif" alt="Fifth-order Bézier animation" /><figcaption aria-hidden="true">Fifth-order Bézier animation</figcaption>
+</figure>]]></summary>
 </entry>
 <entry>
     <title>Daily Commute</title>
@@ -99,44 +283,63 @@
     <id>https://xkollar.github.io/posts/2020-11-23-bash-interview-echo.html</id>
     <published>2020-11-23T00:00:00Z</published>
     <updated>2020-11-23T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>Interviews are funny. You have only very little time to find out whether participating sides are a good match or not. On many different levels: from personal to technical. Traditionally it is established by series of questions and answers (ideally not one sided…).</p>
-<p>Good questions are not necessarily about correct answer but they will let you see someone’s thought process, will allow for a conversation about it, and also will enable you to estimate candidate’s experience level. (So the information gained from the interaction is not just binary.) Bonus points if the question will show the candidate that you are a cool place to be.</p>
-<p>For example, interviewing someone for a position that involves Linux, I like to ask:</p>
+    <summary type="html"><![CDATA[<p>Interviews are funny. You have only very little time
+to find out whether participating sides are a good match or not.
+On many different levels: from personal to technical.
+Traditionally it is established by series of questions
+and answers (ideally not one sided…).</p>
+<p>Good questions are not necessarily about correct answer but they will
+let you see someone’s thought process, will allow for a conversation about it,
+and also will enable you to estimate candidate’s experience level. (So the
+information gained from the interaction is not just binary.) Bonus points
+if the question will show the candidate that you are a cool place to be.</p>
+<p>For example, interviewing someone for a position that involves Linux,
+I like to ask:</p>
 <blockquote>
 <p>Using <code class="sourceCode bash"><span class="bu">echo</span></code>, print <code>-e</code> (<abbr title="ASCII HEX 2D">minus</abbr> e) on a line.</p>
 </blockquote>
-<p>Candidate would be ideally provided with a terminal to play with. Actually, try it yourself before reading any further, it is quite fun (if you are into that kind of thing <abbr title="😉 :wink:"><code>;-)</code></abbr>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="bu">echo</span> -e</span></code></pre></div>
-<p>Lol. But no. Hopefully they are just trolling. (I consider being confident enough to make a joke a good sign.)</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="bu">echo</span> -e -e</span></code></pre></div>
+<p>Candidate would be ideally provided with a terminal to play with. Actually, try
+it yourself before reading any further, it is quite fun (if you are into that
+kind of thing <abbr title="😉 :wink:"><code>;-)</code></abbr>).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span></span></code></pre></div>
+<p>Lol. But no. Hopefully they are just trolling.
+(I consider being confident enough to make a joke a good sign.)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="at">-e</span></span></code></pre></div>
 <p>Nice try, candidate started to think, but no.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">echo</span> -- -e</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">--</span> <span class="at">-e</span></span></code></pre></div>
 <p>Okay, candidate knows about <code class="sourceCode bash"><span class="ex">--</span></code> convention, but no.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>\<span class="bu">echo</span> -- -e</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">...</span></span></code></pre></div>
-<p>Trying some of previous variants with executable echo rather than builtin one, but no.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="bu">echo</span> <span class="st">&quot;-e&quot;</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="bu">echo</span> <span class="st">&#39;-e&#39;</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="bu">echo</span> \-e</span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="bu">echo</span> <span class="dt">\\</span>-e</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">\echo</span> <span class="at">--</span> <span class="at">-e</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
+<p>Trying some of previous variants with executable echo rather than builtin one,
+but no.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;-e&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;-e&#39;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">\-</span>e</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">\\</span>-e</span></code></pre></div>
 <p>Candidate started to panic, interviewer needs to calm them down.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="bu">echo</span> -n -<span class="kw">;</span> <span class="bu">echo</span> e</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="bu">printf</span> -- <span class="st">&#39;-e\n&#39;</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="fu">cat</span> <span class="op">&lt;&lt;&lt;</span> -e</span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="bu">echo</span> –e</span></code></pre></div>
-<p>Fair enough, it is important skill to be able to realize that one is being tricked (and try to trick in response). Interviewer needs to re-assure the candidate that it is indeed possible, with single echo. And that they meant ASCII character <abbr title="HEX 2D">-</abbr>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="bu">echo</span> <span class="st">$&#39;</span><span class="dt">\x2D</span><span class="st">e&#39;</span></span></code></pre></div>
-<p>Candidate realized that they need to be sneaky somehow, but still no. Somewhat impressive though as not everyone knows <code class="sourceCode bash"><span class="st">$&#39;&#39;</span></code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-n</span> <span class="at">-</span><span class="kw">;</span> <span class="bu">echo</span> e</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="at">--</span> <span class="st">&#39;-e\n&#39;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt;&lt;</span> -e</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> –e</span></code></pre></div>
+<p>Fair enough, it is important skill to be able to realize that one is being
+tricked (and try to trick in response). Interviewer needs to re-assure the
+candidate that it is indeed possible, with single echo. And that they meant
+ASCII character <abbr title="HEX 2D">-</abbr>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">$&#39;</span><span class="dt">\x2D</span><span class="st">e&#39;</span></span></code></pre></div>
+<p>Candidate realized that they need to be sneaky somehow, but
+still no. Somewhat impressive though as not everyone knows <code class="sourceCode bash"><span class="st">$&#39;&#39;</span></code>.</p>
 <p>Hopefully from there it is not far to get to the following.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">echo</span> -e <span class="st">&#39;\x2De&#39;</span></span></code></pre></div>
-<p>If candidate on top of getting to the correct answer have a big grin on their face (signifying they had fun), I’m happy.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">&#39;\x2De&#39;</span></span></code></pre></div>
+<p>If candidate on top of getting to the correct answer have
+a big grin on their face (signifying they had fun), I’m happy.</p>
 <h2 id="alternativessimilar">Alternatives/similar</h2>
 <blockquote>
-<p>You run <code class="sourceCode bash"><span class="bu">echo</span> *</code> yet nothing gets printed. Can you explain?</p>
+<p>You run <code class="sourceCode bash"><span class="bu">echo</span> <span class="pp">*</span></code> yet nothing gets printed. Can you explain?</p>
 </blockquote>
 <p>Hint: directory is not empy. Hidden files are irrelevant.</p>
 <blockquote>
-<p>There is a directory called <code>~</code> in current directory. Remove it and all it contains.</p>
+<p>There is a directory called <code>~</code> in current directory. Remove it and
+all it contains.</p>
 </blockquote>
 <p>Hint: maybe don’t give them terminal to try this one.</p>
 <p>Or slightly more obvious version:</p>
@@ -144,14 +347,18 @@
 <p>There is a file called <code>file; rm -rf ~</code> in current directory. Remove it.</p>
 </blockquote>
 <p>Also fun thing to ponder:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">touch</span> <span class="st">&#39;\e[31mhello&#39;</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">touch</span> <span class="st">&#39;\e[33mworld&#39;</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="fu">touch</span> ./-e</span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#clear</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="bu">echo</span> *</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="st">&#39;\e[31mhello&#39;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="st">&#39;\e[33mworld&#39;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> ./-e</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#clear</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="pp">*</span></span></code></pre></div>
 <h2 id="final-note">Final note</h2>
-<p>If it is not clear from the tags, this article was not meant to be serious. If you however decide to use this in a real interview, please don’t make it the first question. You can ask it once you think the candidate is good enough and want to have a bit more of a interesting conversation with them.</p>
-<p>If anything, I hope that reader got some intuition into why defensive programming in Bash is important.</p>]]></summary>
+<p>If it is not clear from the tags, this article was not meant to be serious. If
+you however decide to use this in a real interview, please don’t make it the
+first question. You can ask it once you think the candidate is good enough
+and want to have a bit more of a interesting conversation with them.</p>
+<p>If anything, I hope that reader got some intuition into why defensive
+programming in Bash is important.</p>]]></summary>
 </entry>
 <entry>
     <title>Some Types</title>
@@ -167,118 +374,124 @@
     <id>https://xkollar.github.io/posts/2018-03-02-fine-grained-io-with-mtl-simplified.html</id>
     <published>2018-03-02T00:00:00Z</published>
     <updated>2018-03-02T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>In <a href="2018-01-25-fine-grained-io-with-mtl.html">previous article</a> I have provided example of how to do selectively add “impure” actions into mtl monadic stack without full power of <code>MonadIO</code>. There I have defined separate newtype wrappers, which is useful if you want to have more control and flexibility over possible interpreters. Most of the time however, one just wants to have simpler code. If that is what you are aiming for, you can have just one wrapper newtype and provide all instances for this particular wrapper.</p>
+    <summary type="html"><![CDATA[<p>In <a href="2018-01-25-fine-grained-io-with-mtl.html">previous article</a> I have provided
+example of how to do selectively add “impure” actions into mtl monadic stack
+without full power of <code>MonadIO</code>. There I have defined separate newtype
+wrappers, which is useful if you want to have more control and flexibility over
+possible interpreters. Most of the time however, one just wants to have simpler
+code. If that is what you are aiming for, you can have just one wrapper newtype
+and provide all instances for this particular wrapper.</p>
 <p>Diff.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb1-1"><a href="#cb1-1"></a><span class="dt">@@ -27,18 +27,12 @@ class WriteFile m where</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>     writeFile :: FilePath -&gt; String -&gt; m ()</span>
-<span id="cb1-3"><a href="#cb1-3"></a> </span>
-<span id="cb1-4"><a href="#cb1-4"></a> -- NEWTYPES -------------------------------------</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="st">-newtype ReadFileT m a = ReadFile { runReadFile :: m a }</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="st">-  deriving (Functor, Applicative, Monad, MonadIO)</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="st">-</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="st">-newtype WriteFileT m a = WriteFile { runWriteFile :: m a }</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="va">+newtype SimpleIORunnerT m a = SimpleIORunner { runSimpleRunner :: m a }</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>   deriving (Functor, Applicative, Monad, MonadIO)</span>
-<span id="cb1-11"><a href="#cb1-11"></a> </span>
-<span id="cb1-12"><a href="#cb1-12"></a> -- INSTANCES ------------------------------------</span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="st">-instance MonadTrans ReadFileT where</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="st">-    lift = ReadFile</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="st">-</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="st">-instance MonadTrans WriteFileT where</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="st">-    lift = WriteFile</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="va">+instance MonadTrans SimpleIORunnerT where</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="va">+    lift = SimpleIORunner</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a> </span>
-<span id="cb1-21"><a href="#cb1-21"></a> instance {-# OVERLAPPABLE #-} (Monad m, MonadTrans t, ReadFile m) =&gt; ReadFile (t m) where</span>
-<span id="cb1-22"><a href="#cb1-22"></a>     readFile = lift . readFile</span>
-<span id="cb1-23"><a href="#cb1-23"></a><span class="dt">@@ -46,10 +40,10 @@ instance {-# OVERLAPPABLE #-} (Monad m, MonadTrans t, ReadFile m) =&gt; ReadFile (t</span></span>
-<span id="cb1-24"><a href="#cb1-24"></a> instance {-# OVERLAPPABLE #-} (Monad m, MonadTrans t, WriteFile m) =&gt; WriteFile (t m) where</span>
-<span id="cb1-25"><a href="#cb1-25"></a>     writeFile fp = lift . writeFile fp</span>
-<span id="cb1-26"><a href="#cb1-26"></a> </span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="st">-instance {-# OVERLAPS #-} MonadIO m =&gt; ReadFile (ReadFileT m) where</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="va">+instance {-# OVERLAPS #-} MonadIO m =&gt; ReadFile (SimpleIORunnerT m) where</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a>     readFile = liftIO . IO.readFile</span>
-<span id="cb1-30"><a href="#cb1-30"></a> </span>
-<span id="cb1-31"><a href="#cb1-31"></a><span class="st">-instance {-# OVERLAPS #-} MonadIO m =&gt; WriteFile (WriteFileT m) where</span></span>
-<span id="cb1-32"><a href="#cb1-32"></a><span class="va">+instance {-# OVERLAPS #-} MonadIO m =&gt; WriteFile (SimpleIORunnerT m) where</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a>     writeFile fp = liftIO . IO.writeFile fp</span>
-<span id="cb1-34"><a href="#cb1-34"></a> </span>
-<span id="cb1-35"><a href="#cb1-35"></a> -- EXAMPLE --------------------------------------</span>
-<span id="cb1-36"><a href="#cb1-36"></a><span class="dt">@@ -68,7 +62,7 @@ combinedAction :: (MonadReader What m, ReadFile m, WriteFile m) =&gt; m ()</span></span>
-<span id="cb1-37"><a href="#cb1-37"></a> combinedAction = readAction &gt;&gt;= writeAction</span>
-<span id="cb1-38"><a href="#cb1-38"></a> </span>
-<span id="cb1-39"><a href="#cb1-39"></a> example1 :: IO ()</span>
-<span id="cb1-40"><a href="#cb1-40"></a><span class="st">-example1 = runWriteFile . runReadFile $ runReaderT combinedAction conf</span></span>
-<span id="cb1-41"><a href="#cb1-41"></a><span class="va">+example1 = runSimpleRunner $ runReaderT combinedAction conf</span></span>
-<span id="cb1-42"><a href="#cb1-42"></a>   where</span>
-<span id="cb1-43"><a href="#cb1-43"></a>     conf = What &quot;/etc/resolv.conf&quot; &quot;/dev/stdout&quot;</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -27,18 +27,12 @@ class WriteFile m where</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     writeFile :: FilePath -&gt; String -&gt; m ()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> -- NEWTYPES -------------------------------------</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">-newtype ReadFileT m a = ReadFile { runReadFile :: m a }</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">-  deriving (Functor, Applicative, Monad, MonadIO)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">-</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">-newtype WriteFileT m a = WriteFile { runWriteFile :: m a }</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">+newtype SimpleIORunnerT m a = SimpleIORunner { runSimpleRunner :: m a }</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>   deriving (Functor, Applicative, Monad, MonadIO)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> -- INSTANCES ------------------------------------</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">-instance MonadTrans ReadFileT where</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">-    lift = ReadFile</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">-</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">-instance MonadTrans WriteFileT where</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">-    lift = WriteFile</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="va">+instance MonadTrans SimpleIORunnerT where</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="va">+    lift = SimpleIORunner</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a> instance {-# OVERLAPPABLE #-} (Monad m, MonadTrans t, ReadFile m) =&gt; ReadFile (t m) where</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>     readFile = lift . readFile</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -46,10 +40,10 @@ instance {-# OVERLAPPABLE #-} (Monad m, MonadTrans t, ReadFile m) =&gt; ReadFile (t</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a> instance {-# OVERLAPPABLE #-} (Monad m, MonadTrans t, WriteFile m) =&gt; WriteFile (t m) where</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>     writeFile fp = lift . writeFile fp</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">-instance {-# OVERLAPS #-} MonadIO m =&gt; ReadFile (ReadFileT m) where</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="va">+instance {-# OVERLAPS #-} MonadIO m =&gt; ReadFile (SimpleIORunnerT m) where</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>     readFile = liftIO . IO.readFile</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="st">-instance {-# OVERLAPS #-} MonadIO m =&gt; WriteFile (WriteFileT m) where</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="va">+instance {-# OVERLAPS #-} MonadIO m =&gt; WriteFile (SimpleIORunnerT m) where</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>     writeFile fp = liftIO . IO.writeFile fp</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a> -- EXAMPLE --------------------------------------</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -68,7 +62,7 @@ combinedAction :: (MonadReader What m, ReadFile m, WriteFile m) =&gt; m ()</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a> combinedAction = readAction &gt;&gt;= writeAction</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a> example1 :: IO ()</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="st">-example1 = runWriteFile . runReadFile $ runReaderT combinedAction conf</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="va">+example1 = runSimpleRunner $ runReaderT combinedAction conf</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>   where</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>     conf = What &quot;/etc/resolv.conf&quot; &quot;/dev/stdout&quot;</span></code></pre></div>
 <p>Full code.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="ot">{-# LANGUAGE GeneralizedNewtypeDeriving #-}</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="kw">module</span> <span class="dt">Main</span> (main) <span class="kw">where</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="kw">import</span> <span class="dt">Control.Applicative</span> (<span class="dt">Applicative</span>, pure, (&lt;*&gt;))</span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="kw">import</span> <span class="dt">Control.Monad</span> (<span class="dt">Monad</span>, (&gt;&gt;=))</span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="kw">import</span> <span class="dt">Data.Function</span> (($), (.), flip, const)</span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="kw">import</span> <span class="dt">Data.Functor</span> (<span class="dt">Functor</span>, fmap)</span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="kw">import</span> <span class="dt">Data.String</span> (<span class="dt">String</span>)</span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="kw">import</span> <span class="dt">System.IO</span> (<span class="dt">FilePath</span>, <span class="dt">IO</span>)</span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">System.IO</span> <span class="kw">as</span> <span class="dt">IO</span> (readFile, writeFile)</span>
-<span id="cb2-14"><a href="#cb2-14"></a></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="kw">import</span> <span class="dt">Control.Monad.IO.Class</span> (<span class="dt">MonadIO</span>, liftIO)</span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="kw">import</span> <span class="dt">Control.Monad.Reader</span> (<span class="dt">MonadReader</span>, asks, runReaderT)</span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="kw">import</span> <span class="dt">Control.Monad.Trans</span> (<span class="dt">MonadTrans</span>, lift)</span>
-<span id="cb2-18"><a href="#cb2-18"></a></span>
-<span id="cb2-19"><a href="#cb2-19"></a></span>
-<span id="cb2-20"><a href="#cb2-20"></a><span class="co">-- CLASSES --------------------------------------</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="kw">class</span> <span class="dt">ReadFile</span> m <span class="kw">where</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="ot">    readFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> m <span class="dt">String</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="kw">class</span> <span class="dt">WriteFile</span> m <span class="kw">where</span></span>
-<span id="cb2-25"><a href="#cb2-25"></a><span class="ot">    writeFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
-<span id="cb2-26"><a href="#cb2-26"></a></span>
-<span id="cb2-27"><a href="#cb2-27"></a><span class="co">-- STACK ----------------------------------------</span></span>
-<span id="cb2-28"><a href="#cb2-28"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (t m) <span class="kw">where</span></span>
-<span id="cb2-29"><a href="#cb2-29"></a>    <span class="fu">readFile</span> <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">readFile</span></span>
-<span id="cb2-30"><a href="#cb2-30"></a></span>
-<span id="cb2-31"><a href="#cb2-31"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (t m) <span class="kw">where</span></span>
-<span id="cb2-32"><a href="#cb2-32"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">writeFile</span> fp</span>
-<span id="cb2-33"><a href="#cb2-33"></a></span>
-<span id="cb2-34"><a href="#cb2-34"></a><span class="co">-- NEWTYPES and basic INSTANCES -----------------</span></span>
-<span id="cb2-35"><a href="#cb2-35"></a><span class="kw">newtype</span> <span class="dt">SimpleIORunnerT</span> m a <span class="ot">=</span> <span class="dt">SimpleIORunner</span> {<span class="ot"> runSimpleRunner ::</span> m a }</span>
-<span id="cb2-36"><a href="#cb2-36"></a>  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)</span>
-<span id="cb2-37"><a href="#cb2-37"></a></span>
-<span id="cb2-38"><a href="#cb2-38"></a><span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">SimpleIORunnerT</span> <span class="kw">where</span></span>
-<span id="cb2-39"><a href="#cb2-39"></a>    lift <span class="ot">=</span> <span class="dt">SimpleIORunner</span></span>
-<span id="cb2-40"><a href="#cb2-40"></a></span>
-<span id="cb2-41"><a href="#cb2-41"></a><span class="co">-- IMPLEMENTATIONS ------------------------------</span></span>
-<span id="cb2-42"><a href="#cb2-42"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (<span class="dt">SimpleIORunnerT</span> m) <span class="kw">where</span></span>
-<span id="cb2-43"><a href="#cb2-43"></a>    <span class="fu">readFile</span> <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">readFile</span></span>
-<span id="cb2-44"><a href="#cb2-44"></a></span>
-<span id="cb2-45"><a href="#cb2-45"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (<span class="dt">SimpleIORunnerT</span> m) <span class="kw">where</span></span>
-<span id="cb2-46"><a href="#cb2-46"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">writeFile</span> fp</span>
-<span id="cb2-47"><a href="#cb2-47"></a></span>
-<span id="cb2-48"><a href="#cb2-48"></a><span class="co">-- EXAMPLE --------------------------------------</span></span>
-<span id="cb2-49"><a href="#cb2-49"></a><span class="kw">data</span> <span class="dt">What</span> <span class="ot">=</span> <span class="dt">What</span></span>
-<span id="cb2-50"><a href="#cb2-50"></a>    {<span class="ot"> from ::</span> <span class="dt">FilePath</span></span>
-<span id="cb2-51"><a href="#cb2-51"></a>    ,<span class="ot"> to ::</span> <span class="dt">FilePath</span></span>
-<span id="cb2-52"><a href="#cb2-52"></a>    }</span>
-<span id="cb2-53"><a href="#cb2-53"></a></span>
-<span id="cb2-54"><a href="#cb2-54"></a><span class="ot">readAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> m <span class="dt">String</span></span>
-<span id="cb2-55"><a href="#cb2-55"></a>readAction <span class="ot">=</span> asks from <span class="op">&gt;&gt;=</span> <span class="fu">readFile</span></span>
-<span id="cb2-56"><a href="#cb2-56"></a></span>
-<span id="cb2-57"><a href="#cb2-57"></a><span class="ot">writeAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
-<span id="cb2-58"><a href="#cb2-58"></a>writeAction c <span class="ot">=</span> asks to <span class="op">&gt;&gt;=</span> <span class="fu">flip</span> <span class="fu">writeFile</span> c</span>
-<span id="cb2-59"><a href="#cb2-59"></a></span>
-<span id="cb2-60"><a href="#cb2-60"></a><span class="ot">combinedAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> m ()</span>
-<span id="cb2-61"><a href="#cb2-61"></a>combinedAction <span class="ot">=</span> readAction <span class="op">&gt;&gt;=</span> writeAction</span>
-<span id="cb2-62"><a href="#cb2-62"></a></span>
-<span id="cb2-63"><a href="#cb2-63"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
-<span id="cb2-64"><a href="#cb2-64"></a>main <span class="ot">=</span> runSimpleRunner <span class="op">$</span> runReaderT combinedAction conf</span>
-<span id="cb2-65"><a href="#cb2-65"></a>  <span class="kw">where</span></span>
-<span id="cb2-66"><a href="#cb2-66"></a>    conf <span class="ot">=</span> <span class="dt">What</span> <span class="st">&quot;/etc/resolv.conf&quot;</span> <span class="st">&quot;/dev/stdout&quot;</span></span></code></pre></div>]]></summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE GeneralizedNewtypeDeriving #-}</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> (main) <span class="kw">where</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Applicative</span> (<span class="dt">Applicative</span>, pure, (&lt;*&gt;))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad</span> (<span class="dt">Monad</span>, (&gt;&gt;=))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Function</span> (($), (.), flip, const)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Functor</span> (<span class="dt">Functor</span>, fmap)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.String</span> (<span class="dt">String</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">System.IO</span> (<span class="dt">FilePath</span>, <span class="dt">IO</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">System.IO</span> <span class="kw">as</span> <span class="dt">IO</span> (readFile, writeFile)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad.IO.Class</span> (<span class="dt">MonadIO</span>, liftIO)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad.Reader</span> (<span class="dt">MonadReader</span>, asks, runReaderT)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad.Trans</span> (<span class="dt">MonadTrans</span>, lift)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">-- CLASSES --------------------------------------</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">ReadFile</span> m <span class="kw">where</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="ot">    readFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> m <span class="dt">String</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">WriteFile</span> m <span class="kw">where</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="ot">    writeFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">-- STACK ----------------------------------------</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (t m) <span class="kw">where</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">readFile</span> <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">readFile</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (t m) <span class="kw">where</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">writeFile</span> fp</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">-- NEWTYPES and basic INSTANCES -----------------</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">SimpleIORunnerT</span> m a <span class="ot">=</span> <span class="dt">SimpleIORunner</span> {<span class="ot"> runSimpleRunner ::</span> m a }</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">SimpleIORunnerT</span> <span class="kw">where</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    lift <span class="ot">=</span> <span class="dt">SimpleIORunner</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">-- IMPLEMENTATIONS ------------------------------</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (<span class="dt">SimpleIORunnerT</span> m) <span class="kw">where</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">readFile</span> <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">readFile</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (<span class="dt">SimpleIORunnerT</span> m) <span class="kw">where</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">writeFile</span> fp</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co">-- EXAMPLE --------------------------------------</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">What</span> <span class="ot">=</span> <span class="dt">What</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    {<span class="ot"> from ::</span> <span class="dt">FilePath</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    ,<span class="ot"> to ::</span> <span class="dt">FilePath</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="ot">readAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> m <span class="dt">String</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>readAction <span class="ot">=</span> asks from <span class="op">&gt;&gt;=</span> <span class="fu">readFile</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="ot">writeAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>writeAction c <span class="ot">=</span> asks to <span class="op">&gt;&gt;=</span> <span class="fu">flip</span> <span class="fu">writeFile</span> c</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ot">combinedAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> m ()</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>combinedAction <span class="ot">=</span> readAction <span class="op">&gt;&gt;=</span> writeAction</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> runSimpleRunner <span class="op">$</span> runReaderT combinedAction conf</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    conf <span class="ot">=</span> <span class="dt">What</span> <span class="st">&quot;/etc/resolv.conf&quot;</span> <span class="st">&quot;/dev/stdout&quot;</span></span></code></pre></div>]]></summary>
 </entry>
 <entry>
     <title>Shift to Grey</title>
@@ -287,12 +500,30 @@
     <published>2018-01-29T00:00:00Z</published>
     <updated>2018-01-29T00:00:00Z</updated>
     <summary type="html"><![CDATA[<p>Colour. Is it? Not everyone thinks so. Maybe the only one there is.</p>
-<p>It used to be black. Well trained eye could have seen the whole spectrum in black. Black is still nice but somehow grey seems more appropriate. Grey is not new black. It never will be. It never could. It is grey after all. Neutral. Without emotion. Safe. Soothing. Protecting… One can dissolve themselves within grey. Their identity. Fears. Hopes. Assumptions. Ideas. Intelligence. Ego. Sexuality. Desires. Emotions. Pain…</p>
-<p>Accept grey and become undistinguishable part of environment, almost cease to be, at least for all intents and purposes. There is no mystery, there is no light. Just grey nothing. If nothing had a colour, it would be grey. It is so tempting to become part of nothing. Elusive. Too good to be true. Is it?</p>
-<p>Colour of unimportant. All grey mice living their lives in the traps of cubicles, dreaming of all colours of cheese. Boring? One does not care. One has accepted grey.</p>
-<p>Colour of city sky. Beautiful. If one likes that kind of thing. One does. The only colour that makes sense, that is true, unpretending.</p>
-<p>Colour of being alone, even when surrounded by others. Ultimate hideout where no-one dares to follow, neither friends, nor foes. Emotional desert, where only nomads go and they know better than interrupting each other’s solitude. They embrace grey.</p>
-<p>Colour of minimal energy. Not as wasteful as energetic and overpowering white, yet revealing enough so that it is clear there is nothing, not leaving anything for imagination, unlike black. It is truly colour of death. Neither black, mysterious and promising, nor white, inviting and pure. Just realistic grey of acceptance.</p>
+<p>It used to be black. Well trained eye could have seen the whole spectrum in black.
+Black is still nice but somehow grey seems more appropriate. Grey is not new
+black. It never will be. It never could. It is grey after all. Neutral. Without
+emotion. Safe. Soothing. Protecting… One can dissolve themselves within grey.
+Their identity. Fears. Hopes. Assumptions. Ideas. Intelligence. Ego. Sexuality.
+Desires. Emotions. Pain…</p>
+<p>Accept grey and become undistinguishable part of environment, almost cease to
+be, at least for all intents and purposes. There is no mystery, there is no
+light. Just grey nothing. If nothing had a colour, it would be grey. It is so
+tempting to become part of nothing. Elusive. Too good to be true. Is it?</p>
+<p>Colour of unimportant. All grey mice living their lives in the traps of
+cubicles, dreaming of all colours of cheese. Boring? One does not care. One has
+accepted grey.</p>
+<p>Colour of city sky. Beautiful. If one likes that kind of thing.
+One does. The only colour that makes sense, that is true, unpretending.</p>
+<p>Colour of being alone, even when surrounded by others. Ultimate hideout where
+no-one dares to follow, neither friends, nor foes. Emotional desert, where only
+nomads go and they know better than interrupting each other’s solitude.
+They embrace grey.</p>
+<p>Colour of minimal energy. Not as wasteful as energetic and overpowering white,
+yet revealing enough so that it is clear there is nothing, not leaving
+anything for imagination, unlike black. It is truly colour of death. Neither
+black, mysterious and promising, nor white, inviting and pure. Just realistic
+grey of acceptance.</p>
 <p>One used to believe eyes can not be grey. One was mistaken.</p>
 <!--
 * Monochromatic photopgraphy
@@ -310,86 +541,105 @@
     <id>https://xkollar.github.io/posts/2018-01-25-fine-grained-io-with-mtl.html</id>
     <published>2018-01-25T00:00:00Z</published>
     <updated>2018-01-25T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>The <a href="https://hackage.haskell.org/package/mtl">mtl</a> library is very convenient to work with. What some do not like about it is that there is no granularity over <code>IO</code>, like solutions build on ideas of extensible effects (like <a href="https://github.com/IxpertaSolutions/freer-effects">freer-effects</a>). Or is there? (Or rather can there be?)</p>
-<p>Here I will show you how to get such granularity with just “ordinary” mtl-style transformer stack.</p>
-<p>Let’s say we would like to have two separate constraints: one allowing our component to read files, and another to write files. We would like to be able to use it in any stack (which implies in different types). Haskell’s answer for ad-hoc polymorphism are type classes, so we create two of them, with appropriate names and methods (<code>ReadFile</code> and <code>WriteFile</code>).</p>
-<p>Other thing we will use is <code class="sourceCode haskell"><span class="kw">newtype</span></code> wrappers for building transformers stacks (<code>ReadFileT</code> and <code>WriteFileT</code>). <code>GeneralizedNewtypeDeriving</code> will make things simpler for us there.</p>
-<p>Then, to be able to position our stacks arbitrarily, we will make instances for <code>MonadTrans</code> class.</p>
-<p>Once we have that we need to provide instances for our classes (constraints for reading and writing files), both for whole transformer stack and for particular <code class="sourceCode haskell"><span class="kw">newtype</span></code> wrappers. (I used overlapping instances. Maybe there is a way to do it without those?)</p>
-<p>And we are done. Included is simple example that demonstrates use of the code and integration with <code>MonadReader</code> from <code>mtl</code>.</p>
-<p>Feel free to play with it and try to sneak in some other <code class="sourceCode haskell"><span class="dt">IO</span></code> for example to <code>writeAction</code>, I dare you <abbr title="😉 :wink:"><code>;-)</code></abbr>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="ot">{-# LANGUAGE GeneralizedNewtypeDeriving #-}</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">module</span> <span class="dt">Main</span> (main) <span class="kw">where</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">import</span> <span class="dt">Control.Applicative</span> (<span class="dt">Applicative</span>)</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">import</span> <span class="dt">Control.Monad</span> (<span class="dt">Monad</span>, (&gt;&gt;=))</span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">import</span> <span class="dt">Data.Function</span> (($), (.), flip)</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">import</span> <span class="dt">Data.Functor</span> (<span class="dt">Functor</span>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">import</span> <span class="dt">Data.String</span> (<span class="dt">String</span>)</span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="kw">import</span> <span class="dt">System.IO</span> (<span class="dt">FilePath</span>, <span class="dt">IO</span>)</span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">System.IO</span> <span class="kw">as</span> <span class="dt">IO</span> (readFile, writeFile)</span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="kw">import</span> <span class="dt">Control.Monad.IO.Class</span> (<span class="dt">MonadIO</span>, liftIO)</span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">import</span> <span class="dt">Control.Monad.Reader</span> (<span class="dt">MonadReader</span>, asks, runReaderT)</span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="kw">import</span> <span class="dt">Control.Monad.Trans</span> (<span class="dt">MonadTrans</span>, lift)</span>
-<span id="cb1-18"><a href="#cb1-18"></a></span>
-<span id="cb1-19"><a href="#cb1-19"></a></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="co">-- CLASSES --------------------------------------</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="kw">class</span> <span class="dt">ReadFile</span> m <span class="kw">where</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a><span class="ot">    readFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> m <span class="dt">String</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a></span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="kw">class</span> <span class="dt">WriteFile</span> m <span class="kw">where</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a><span class="ot">    writeFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
-<span id="cb1-26"><a href="#cb1-26"></a></span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="co">-- NEWTYPES--------------------------------------</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="kw">newtype</span> <span class="dt">ReadFileT</span> m a <span class="ot">=</span> <span class="dt">ReadFile</span> {<span class="ot"> runReadFile ::</span> m a }</span>
-<span id="cb1-29"><a href="#cb1-29"></a>  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)</span>
-<span id="cb1-30"><a href="#cb1-30"></a></span>
-<span id="cb1-31"><a href="#cb1-31"></a><span class="kw">newtype</span> <span class="dt">WriteFileT</span> m a <span class="ot">=</span> <span class="dt">WriteFile</span> {<span class="ot"> runWriteFile ::</span> m a }</span>
-<span id="cb1-32"><a href="#cb1-32"></a>  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)</span>
-<span id="cb1-33"><a href="#cb1-33"></a></span>
-<span id="cb1-34"><a href="#cb1-34"></a><span class="co">-- INSTANCES ------------------------------------</span></span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">ReadFileT</span> <span class="kw">where</span></span>
-<span id="cb1-36"><a href="#cb1-36"></a>    lift <span class="ot">=</span> <span class="dt">ReadFile</span></span>
-<span id="cb1-37"><a href="#cb1-37"></a></span>
-<span id="cb1-38"><a href="#cb1-38"></a><span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">WriteFileT</span> <span class="kw">where</span></span>
-<span id="cb1-39"><a href="#cb1-39"></a>    lift <span class="ot">=</span> <span class="dt">WriteFile</span></span>
-<span id="cb1-40"><a href="#cb1-40"></a></span>
-<span id="cb1-41"><a href="#cb1-41"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (t m) <span class="kw">where</span></span>
-<span id="cb1-42"><a href="#cb1-42"></a>    <span class="fu">readFile</span> <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">readFile</span></span>
-<span id="cb1-43"><a href="#cb1-43"></a></span>
-<span id="cb1-44"><a href="#cb1-44"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (t m) <span class="kw">where</span></span>
-<span id="cb1-45"><a href="#cb1-45"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">writeFile</span> fp</span>
-<span id="cb1-46"><a href="#cb1-46"></a></span>
-<span id="cb1-47"><a href="#cb1-47"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (<span class="dt">ReadFileT</span> m) <span class="kw">where</span></span>
-<span id="cb1-48"><a href="#cb1-48"></a>    <span class="fu">readFile</span> <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">readFile</span></span>
-<span id="cb1-49"><a href="#cb1-49"></a></span>
-<span id="cb1-50"><a href="#cb1-50"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (<span class="dt">WriteFileT</span> m) <span class="kw">where</span></span>
-<span id="cb1-51"><a href="#cb1-51"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">writeFile</span> fp</span>
-<span id="cb1-52"><a href="#cb1-52"></a></span>
-<span id="cb1-53"><a href="#cb1-53"></a><span class="co">-- EXAMPLE --------------------------------------</span></span>
-<span id="cb1-54"><a href="#cb1-54"></a><span class="kw">data</span> <span class="dt">What</span> <span class="ot">=</span> <span class="dt">What</span></span>
-<span id="cb1-55"><a href="#cb1-55"></a>    {<span class="ot"> from ::</span> <span class="dt">FilePath</span></span>
-<span id="cb1-56"><a href="#cb1-56"></a>    ,<span class="ot"> to ::</span> <span class="dt">FilePath</span></span>
-<span id="cb1-57"><a href="#cb1-57"></a>    }</span>
-<span id="cb1-58"><a href="#cb1-58"></a></span>
-<span id="cb1-59"><a href="#cb1-59"></a><span class="ot">readAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> m <span class="dt">String</span></span>
-<span id="cb1-60"><a href="#cb1-60"></a>readAction <span class="ot">=</span> asks from <span class="op">&gt;&gt;=</span> <span class="fu">readFile</span></span>
-<span id="cb1-61"><a href="#cb1-61"></a></span>
-<span id="cb1-62"><a href="#cb1-62"></a><span class="ot">writeAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
-<span id="cb1-63"><a href="#cb1-63"></a>writeAction c <span class="ot">=</span> asks to <span class="op">&gt;&gt;=</span> <span class="fu">flip</span> <span class="fu">writeFile</span> c</span>
-<span id="cb1-64"><a href="#cb1-64"></a></span>
-<span id="cb1-65"><a href="#cb1-65"></a><span class="ot">combinedAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> m ()</span>
-<span id="cb1-66"><a href="#cb1-66"></a>combinedAction <span class="ot">=</span> readAction <span class="op">&gt;&gt;=</span> writeAction</span>
-<span id="cb1-67"><a href="#cb1-67"></a></span>
-<span id="cb1-68"><a href="#cb1-68"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
-<span id="cb1-69"><a href="#cb1-69"></a>main <span class="ot">=</span> runWriteFile <span class="op">.</span> runReadFile <span class="op">$</span> runReaderT combinedAction conf</span>
-<span id="cb1-70"><a href="#cb1-70"></a>  <span class="kw">where</span></span>
-<span id="cb1-71"><a href="#cb1-71"></a>    conf <span class="ot">=</span> <span class="dt">What</span> <span class="st">&quot;/etc/resolv.conf&quot;</span> <span class="st">&quot;/dev/stdout&quot;</span></span></code></pre></div>
-<p>And you can go much crazier than this. For example add tags to <code class="sourceCode haskell"><span class="kw">newtype</span></code>s, that would indicate, what files you can actually read and write… I leave this as an exercise for patient reader though <abbr title="😉 :wink:"><code>;-)</code></abbr>.</p>]]></summary>
+    <summary type="html"><![CDATA[<p>The <a href="https://hackage.haskell.org/package/mtl">mtl</a> library is very convenient
+to work with. What some do not like about it is that there is no granularity
+over <code>IO</code>, like solutions build on ideas of extensible effects (like
+<a href="https://github.com/IxpertaSolutions/freer-effects">freer-effects</a>). Or is
+there? (Or rather can there be?)</p>
+<p>Here I will show you how to get such granularity with just “ordinary”
+mtl-style transformer stack.</p>
+<p>Let’s say we would like to have two separate constraints: one allowing our
+component to read files, and another to write files. We would like to be able
+to use it in any stack (which implies in different types). Haskell’s answer for
+ad-hoc polymorphism are type classes, so we create two of them, with
+appropriate names and methods (<code>ReadFile</code> and <code>WriteFile</code>).</p>
+<p>Other thing we will use is <code class="sourceCode haskell"><span class="kw">newtype</span></code> wrappers for building transformers stacks
+(<code>ReadFileT</code> and <code>WriteFileT</code>). <code>GeneralizedNewtypeDeriving</code> will
+make things simpler for us there.</p>
+<p>Then, to be able to position our stacks arbitrarily, we will make instances
+for <code>MonadTrans</code> class.</p>
+<p>Once we have that we need to provide instances for our classes (constraints
+for reading and writing files), both for whole transformer stack and for
+particular <code class="sourceCode haskell"><span class="kw">newtype</span></code> wrappers. (I used overlapping instances. Maybe there is a
+way to do it without those?)</p>
+<p>And we are done. Included is simple example that demonstrates use of the code
+and integration with <code>MonadReader</code> from <code>mtl</code>.</p>
+<p>Feel free to play with it and try to sneak in some other <code class="sourceCode haskell"><span class="dt">IO</span></code> for example to
+<code>writeAction</code>, I dare you <abbr title="😉 :wink:"><code>;-)</code></abbr>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE GeneralizedNewtypeDeriving #-}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> (main) <span class="kw">where</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Applicative</span> (<span class="dt">Applicative</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad</span> (<span class="dt">Monad</span>, (&gt;&gt;=))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Function</span> (($), (.), flip)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Functor</span> (<span class="dt">Functor</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.String</span> (<span class="dt">String</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">System.IO</span> (<span class="dt">FilePath</span>, <span class="dt">IO</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">System.IO</span> <span class="kw">as</span> <span class="dt">IO</span> (readFile, writeFile)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad.IO.Class</span> (<span class="dt">MonadIO</span>, liftIO)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad.Reader</span> (<span class="dt">MonadReader</span>, asks, runReaderT)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad.Trans</span> (<span class="dt">MonadTrans</span>, lift)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">-- CLASSES --------------------------------------</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">ReadFile</span> m <span class="kw">where</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ot">    readFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> m <span class="dt">String</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">WriteFile</span> m <span class="kw">where</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ot">    writeFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">-- NEWTYPES--------------------------------------</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">ReadFileT</span> m a <span class="ot">=</span> <span class="dt">ReadFile</span> {<span class="ot"> runReadFile ::</span> m a }</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">WriteFileT</span> m a <span class="ot">=</span> <span class="dt">WriteFile</span> {<span class="ot"> runWriteFile ::</span> m a }</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">-- INSTANCES ------------------------------------</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">ReadFileT</span> <span class="kw">where</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    lift <span class="ot">=</span> <span class="dt">ReadFile</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">WriteFileT</span> <span class="kw">where</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    lift <span class="ot">=</span> <span class="dt">WriteFile</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (t m) <span class="kw">where</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">readFile</span> <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">readFile</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (t m) <span class="kw">where</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">writeFile</span> fp</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (<span class="dt">ReadFileT</span> m) <span class="kw">where</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">readFile</span> <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">readFile</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (<span class="dt">WriteFileT</span> m) <span class="kw">where</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">writeFile</span> fp</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">-- EXAMPLE --------------------------------------</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">What</span> <span class="ot">=</span> <span class="dt">What</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    {<span class="ot"> from ::</span> <span class="dt">FilePath</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    ,<span class="ot"> to ::</span> <span class="dt">FilePath</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ot">readAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> m <span class="dt">String</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>readAction <span class="ot">=</span> asks from <span class="op">&gt;&gt;=</span> <span class="fu">readFile</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ot">writeAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>writeAction c <span class="ot">=</span> asks to <span class="op">&gt;&gt;=</span> <span class="fu">flip</span> <span class="fu">writeFile</span> c</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="ot">combinedAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> m ()</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>combinedAction <span class="ot">=</span> readAction <span class="op">&gt;&gt;=</span> writeAction</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> runWriteFile <span class="op">.</span> runReadFile <span class="op">$</span> runReaderT combinedAction conf</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    conf <span class="ot">=</span> <span class="dt">What</span> <span class="st">&quot;/etc/resolv.conf&quot;</span> <span class="st">&quot;/dev/stdout&quot;</span></span></code></pre></div>
+<p>And you can go much crazier than this. For example add tags to <code class="sourceCode haskell"><span class="kw">newtype</span></code>s, that
+would indicate, what files you can actually read and write… I leave this
+as an exercise for patient reader though <abbr title="😉 :wink:"><code>;-)</code></abbr>.</p>]]></summary>
 </entry>
 <entry>
     <title>Bash in the UK</title>
@@ -397,7 +647,7 @@
     <id>https://xkollar.github.io/posts/2017-11-14-bash-in-the-uk.html</id>
     <published>2017-11-14T00:00:00Z</published>
     <updated>2017-11-14T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="bu">alias</span> pls=sudo</span></code></pre></div>
+    <summary type="html"><![CDATA[<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pls=sudo</span></code></pre></div>
 <p>See also <a href="https://hugleikurdagsson.tumblr.com/post/8778818671/anarchy-in-the-uk">anarchy in the uk</a>.</p>]]></summary>
 </entry>
 <entry>
@@ -407,94 +657,32 @@
     <published>2017-11-03T00:00:00Z</published>
     <updated>2017-11-03T00:00:00Z</updated>
     <summary type="html"><![CDATA[<p>Have you ever semi-automatically quasi-subconsciously run <code>:t</code> outside GHCi?</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="bu">type</span> :t</span>
-<span id="cb1-2"><a href="#cb1-2"></a>:<span class="ex">t</span> is a function</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">:t ()</span> </span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">{</span> </span>
-<span id="cb1-5"><a href="#cb1-5"></a>    <span class="ex">ghci</span> -v0 <span class="op">&lt;&lt;&lt;</span> <span class="st">&quot;:t </span><span class="va">${*:-</span>undefined<span class="va">}</span><span class="st">&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> type :t</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">:t</span> is a function</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">:t ()</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ghci</span> <span class="at">-v0</span> <span class="op">&lt;&lt;&lt;</span> <span class="st">&quot;:t </span><span class="va">${*</span><span class="op">:-</span>undefined<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 <p>What it can do:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ :<span class="ex">t</span> map</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">map</span> :: (a -<span class="op">&gt;</span> b) <span class="ex">-</span><span class="op">&gt;</span> [a] -<span class="op">&gt;</span> [b]</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>$ :<span class="ex">t</span> fold</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="op">&lt;</span><span class="ex">interactive</span><span class="op">&gt;</span>:1:1: error:</span>
-<span id="cb3-4"><a href="#cb3-4"></a>    • <span class="ex">Variable</span> not in scope: fold</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    • <span class="ex">Perhaps</span> you meant one of these:</span>
-<span id="cb3-6"><a href="#cb3-6"></a>        ‘<span class="ex">foldr</span>’ (imported from Prelude), ‘<span class="ex">foldl</span>’ (imported from Prelude)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> :t map</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">map</span> :: <span class="er">(</span><span class="ex">a</span> <span class="at">-</span><span class="op">&gt;</span> b<span class="kw">)</span> <span class="ex">-</span><span class="op">&gt;</span> [a] <span class="at">-</span><span class="op">&gt;</span> [b]</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> :t fold</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>interactive<span class="op">&gt;</span>:1:1: <span class="ex">error:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">•</span> Variable not in scope: fold</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">•</span> Perhaps you meant one of these:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">‘foldr’</span> <span class="er">(</span><span class="ex">imported</span> from Prelude<span class="kw">)</span><span class="ex">,</span> ‘foldl’ <span class="er">(</span><span class="ex">imported</span> from Prelude<span class="kw">)</span></span></code></pre></div>
 <p>Whops… what about</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>$ :<span class="ex">t</span> Data.Foldable.fold</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">Data.Foldable.fold</span> :: (Monoid m, Foldable t) =<span class="op">&gt;</span> <span class="ex">t</span> m -<span class="op">&gt;</span> m</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> :t Data.Foldable.fold</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Data.Foldable.fold</span> :: <span class="er">(</span><span class="ex">Monoid</span> m, Foldable t<span class="kw">)</span> <span class="ex">=</span><span class="op">&gt;</span> t m <span class="at">-</span><span class="op">&gt;</span> m</span></code></pre></div>
 <p>That is better. Maybe we can poke also other packages, not just base…</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>$ :<span class="ex">t</span> Data.Time.addUTCTime</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">Data.Time.addUTCTime</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>  :: <span class="ex">time-1.6.0.1</span>:Data.Time.Clock.UTC.NominalDiffTime</span>
-<span id="cb5-4"><a href="#cb5-4"></a>     <span class="ex">-</span><span class="op">&gt;</span> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime</span>
-<span id="cb5-5"><a href="#cb5-5"></a>     <span class="ex">-</span><span class="op">&gt;</span> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> :t Data.Time.addUTCTime</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Data.Time.addUTCTime</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">::</span> time-1.6.0.1:Data.Time.Clock.UTC.NominalDiffTime</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>     <span class="ex">-</span><span class="op">&gt;</span> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>     <span class="ex">-</span><span class="op">&gt;</span> time-1.6.0.1:Data.Time.Clock.UTC.UTCTime</span></code></pre></div>
 <p>Awesome <abbr title="☺️ :smiling_face:"><code>:-)</code></abbr>.</p>
 <p>In the next episode we will deal with accidental runs of <code class="sourceCode bash"><span class="fu">ls</span></code> in GHCi.</p>]]></summary>
-</entry>
-<entry>
-    <title>How to Show a Constructor</title>
-    <link href="https://xkollar.github.io/posts/2017-10-31-show-constructor.html" />
-    <id>https://xkollar.github.io/posts/2017-10-31-show-constructor.html</id>
-    <published>2017-10-31T00:00:00Z</published>
-    <updated>2017-10-31T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>How to show a (toplevel) constructor in a generic way? (Pun intended.)</p>
-<p>Not really a complicated thing but I thought that it might be nice, simple, and yet valuable example for generic programming in Haskell using <code>GHC.Generics</code>.</p>
-<p>Here is the code.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="ot">{-# LANGUAGE TypeOperators #-}</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">module</span> <span class="dt">Data.Generics.ShowConstructor</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>    ( showConstr</span>
-<span id="cb1-7"><a href="#cb1-7"></a>    ) <span class="kw">where</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">import</span> <span class="dt">Data.Function</span> ((.))</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">import</span> <span class="dt">Data.String</span> (<span class="dt">String</span>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">import</span> <span class="dt">GHC.Generics</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>       ((<span class="op">:+:</span>)(<span class="dt">L1</span>, <span class="dt">R1</span>), <span class="dt">C</span>, <span class="dt">Constructor</span>, <span class="dt">Generic</span>, <span class="dt">M1</span>(<span class="dt">M1</span>), <span class="dt">Rep</span>, conName,</span>
-<span id="cb1-13"><a href="#cb1-13"></a>        from)</span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">class</span> <span class="dt">ShowConstr</span> f <span class="kw">where</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="ot">    gShowConstr ::</span> f p <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="kw">instance</span> (<span class="dt">ShowConstr</span> a, <span class="dt">ShowConstr</span> b) <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (a <span class="op">:+:</span> b) <span class="kw">where</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a>    gShowConstr (<span class="dt">L1</span> x) <span class="ot">=</span> gShowConstr x</span>
-<span id="cb1-21"><a href="#cb1-21"></a>    gShowConstr (<span class="dt">R1</span> x) <span class="ot">=</span> gShowConstr x</span>
-<span id="cb1-22"><a href="#cb1-22"></a>    <span class="ot">{-# INLINE gShowConstr #-}</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a></span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> <span class="dt">ShowConstr</span> a <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (<span class="dt">M1</span> i c a) <span class="kw">where</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a>    gShowConstr (<span class="dt">M1</span> x) <span class="ot">=</span> gShowConstr x</span>
-<span id="cb1-26"><a href="#cb1-26"></a>    <span class="ot">{-# INLINE gShowConstr #-}</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="kw">instance</span> <span class="dt">Constructor</span> c <span class="ot">=&gt;</span> <span class="dt">ShowConstr</span> (<span class="dt">M1</span> <span class="dt">C</span> c a) <span class="kw">where</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a>    gShowConstr <span class="ot">=</span> conName</span>
-<span id="cb1-30"><a href="#cb1-30"></a>    <span class="ot">{-# INLINE gShowConstr #-}</span></span>
-<span id="cb1-31"><a href="#cb1-31"></a></span>
-<span id="cb1-32"><a href="#cb1-32"></a><span class="ot">showConstr ::</span> (<span class="dt">Generic</span> a, <span class="dt">ShowConstr</span> (<span class="dt">Rep</span> a)) <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a>showConstr <span class="ot">=</span> gShowConstr <span class="op">.</span> from</span>
-<span id="cb1-34"><a href="#cb1-34"></a><span class="ot">{-# INLINE showConstr #-}</span></span></code></pre></div>
-<p>Now let’s talk about it a little.</p>
-<p>Usual questions I get from people dipping their toes to <code>Generics</code> for the firs time are:</p>
-<ul>
-<li>Why do I need to create the class?</li>
-<li>Why are there so many instances?</li>
-<li>What are these types for which there are instance for?</li>
-<li>Why there is <code>ShowConstr (Rep a)</code> constraint in type of <code>showConstr</code>?</li>
-</ul>
-<p>Class <code>Generics</code> has not only associated functions <code class="sourceCode haskell"><span class="ot">from ::</span> a <span class="ot">-&gt;</span> <span class="dt">Rep</span> a x</code> and <code class="sourceCode haskell"><span class="ot">to ::</span> <span class="dt">Rep</span> a x <span class="ot">-&gt;</span> a</code> (ignore <code>x</code> for now), but also type (family) <code class="sourceCode haskell"><span class="dt">Rep</span> a</code>, representation of type <code>a</code>. This type is built out of only very few other types (see <a href="https://hackage.haskell.org/package/base/docs/GHC-Generics.html">Generics documentation on Hackage</a>). (Couple more than I have instances for, but I do not need them in my case.)</p>
-<p>To be able to traverse this type, we use Haskell-s ad-hoc polymorphism mechanism, type classes. Take for example Instance <code class="sourceCode haskell"><span class="dt">ShowConstr</span> (<span class="dt">M1</span> i c a)</code>. We do not know type of <code>x</code> in <code>M1 x</code>, and yet we want to process it. And type classes are Haskell-s answer for this sort of problem <abbr title="☺️ :smiling_face:"><code>:-)</code></abbr>.</p>
-<p>And just to wrap things up: if you have instances for <code class="sourceCode haskell"><span class="dt">Data.Data.Data</span></code>, you can indeed go for slightly simpler solution.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">import</span> <span class="dt">Data.Data</span> (<span class="dt">Data</span>, toConstr)</span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="ot">showConstr ::</span> <span class="dt">Data</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>showConstr <span class="ot">=</span> <span class="fu">show</span> <span class="op">.</span> toConstr</span></code></pre></div>
-<p>Or yet even (in some sense) simpler, requiring only <code class="sourceCode haskell"><span class="dt">Text.Show.Show</span></code> (but with some trouble-causing corner cases (Lists, Strings, and more generally types with custom Show instance, …)).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="ot">showConstr ::</span> <span class="dt">Show</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>showConstr <span class="ot">=</span> <span class="fu">takeWhile</span> (<span class="fu">not</span> <span class="op">.</span> <span class="fu">isSpace</span>) <span class="op">.</span> <span class="fu">show</span></span></code></pre></div>]]></summary>
 </entry>
 
 </feed>

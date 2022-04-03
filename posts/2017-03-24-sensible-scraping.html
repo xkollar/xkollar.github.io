@@ -8,82 +8,99 @@
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
-<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Sensible Scraping</h1><div class="info">Posted on 2017-03-24 by xkollar  <span class="tags">in <a href="../tags/Haskell.html">Haskell</a></span>.</div><p>Whether you are developing tool for accessing publicly provided API or accessing data in less official way (e.g. scraping) chances are service you are using will not appreciate larger amounts of requests that development of such tools tend to require.</p>
-<p>And to be honest, repeated identical requests are unpleasant even from the developer point of view as they unnecessarily stretch experimentation loops.</p>
-<p>Long story short, what one wants is caching. I remember writing something like that as a Python decorator, so I gave it a try also in Haskell.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">module</span> <span class="dt">Cached</span> (cached) <span class="kw">where</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">import</span> <span class="dt">Data.Monoid</span> ((&lt;&gt;))</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">import</span> <span class="dt">Crypto.Hash.SHA1</span> (hash)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.ByteString</span> <span class="kw">as</span> <span class="dt">BS</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.ByteString.Char8</span> <span class="kw">as</span> <span class="dt">BS8</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.ByteString.Lazy</span> <span class="kw">as</span> <span class="dt">BSL</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">import</span> <span class="dt">System.Directory</span> (createDirectoryIfMissing, doesFileExist)</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">import</span> <span class="dt">System.FilePath</span> ((&lt;/&gt;))</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">import</span> <span class="dt">Text.Printf</span> (printf)</span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="ot">toHex ::</span> <span class="dt">BS.ByteString</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>toHex bytes <span class="ot">=</span> BS.unpack bytes <span class="op">&gt;&gt;=</span> printf <span class="st">&quot;%02x&quot;</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a></span>
-<span id="cb1-17"><a href="#cb1-17"></a>cached</span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="ot">    ::</span> <span class="dt">FilePath</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a>    <span class="ot">-&gt;</span> (<span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">BSL.ByteString</span>)</span>
-<span id="cb1-20"><a href="#cb1-20"></a>    <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a>    <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">BSL.ByteString</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a>cached cacheDir action arg <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a>    <span class="kw">let</span> cacheFile <span class="ot">=</span> cacheDir <span class="op">&lt;/&gt;</span> (toHex <span class="op">.</span> hash <span class="op">$</span> BS8.pack arg)</span>
-<span id="cb1-24"><a href="#cb1-24"></a>    hit <span class="ot">&lt;-</span> doesFileExist cacheFile</span>
-<span id="cb1-25"><a href="#cb1-25"></a>    <span class="kw">if</span> hit</span>
-<span id="cb1-26"><a href="#cb1-26"></a>        <span class="kw">then</span> <span class="kw">do</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a>            <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Cached hit: &quot;</span> <span class="op">&lt;&gt;</span> arg</span>
-<span id="cb1-28"><a href="#cb1-28"></a>            BSL.readFile cacheFile</span>
-<span id="cb1-29"><a href="#cb1-29"></a>        <span class="kw">else</span> <span class="kw">do</span></span>
-<span id="cb1-30"><a href="#cb1-30"></a>            <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Cached miss: &quot;</span> <span class="op">&lt;&gt;</span> arg</span>
-<span id="cb1-31"><a href="#cb1-31"></a>            createDirectoryIfMissing <span class="dt">True</span> cacheDir</span>
-<span id="cb1-32"><a href="#cb1-32"></a>            <span class="fu">writeFile</span> (cacheFile <span class="op">&lt;&gt;</span> <span class="st">&quot;.arg&quot;</span>) arg</span>
-<span id="cb1-33"><a href="#cb1-33"></a>            c <span class="ot">&lt;-</span> action arg</span>
-<span id="cb1-34"><a href="#cb1-34"></a>            BSL.writeFile cacheFile c</span>
-<span id="cb1-35"><a href="#cb1-35"></a>            <span class="fu">pure</span> c</span></code></pre></div>
-<p>(More generic version with <code>Show</code>/<code>Read</code> or some other generic serialization/deserialization certainly is possible but I went with specific types because of my particular use case.)</p>
-<p>Having caching in place, one might still encounter some issues. Some sites lay down rules for using their API in terms of how many requests you can make per time unit to avoid being blacklisted.</p>
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Sensible Scraping</h1><div class="info">Posted on 2017-03-24 by xkollar  <span class="tags">in <a title="All pages tagged 'Haskell'." href="../tags/Haskell.html">Haskell</a></span>.</div><p>Whether you are developing tool for accessing publicly provided
+API or accessing data in less official way (e.g. scraping)
+chances are service you are using will not appreciate
+larger amounts of requests that development of such tools
+tend to require.</p>
+<p>And to be honest, repeated identical requests are unpleasant
+even from the developer point of view as they unnecessarily
+stretch experimentation loops.</p>
+<p>Long story short, what one wants is caching. I remember writing
+something like that as a Python decorator, so I gave it a try also
+in Haskell.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Cached</span> (cached) <span class="kw">where</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Monoid</span> ((&lt;&gt;))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Crypto.Hash.SHA1</span> (hash)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.ByteString</span> <span class="kw">as</span> <span class="dt">BS</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.ByteString.Char8</span> <span class="kw">as</span> <span class="dt">BS8</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.ByteString.Lazy</span> <span class="kw">as</span> <span class="dt">BSL</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">System.Directory</span> (createDirectoryIfMissing, doesFileExist)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">System.FilePath</span> ((&lt;/&gt;))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Text.Printf</span> (printf)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ot">toHex ::</span> <span class="dt">BS.ByteString</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>toHex bytes <span class="ot">=</span> BS.unpack bytes <span class="op">&gt;&gt;=</span> printf <span class="st">&quot;%02x&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>cached</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ot">    ::</span> <span class="dt">FilePath</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="ot">-&gt;</span> (<span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">BSL.ByteString</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">BSL.ByteString</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>cached cacheDir action arg <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> cacheFile <span class="ot">=</span> cacheDir <span class="op">&lt;/&gt;</span> (toHex <span class="op">.</span> hash <span class="op">$</span> BS8.pack arg)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    hit <span class="ot">&lt;-</span> doesFileExist cacheFile</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> hit</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="kw">then</span> <span class="kw">do</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Cached hit: &quot;</span> <span class="op">&lt;&gt;</span> arg</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            BSL.readFile cacheFile</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> <span class="kw">do</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Cached miss: &quot;</span> <span class="op">&lt;&gt;</span> arg</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>            createDirectoryIfMissing <span class="dt">True</span> cacheDir</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            <span class="fu">writeFile</span> (cacheFile <span class="op">&lt;&gt;</span> <span class="st">&quot;.arg&quot;</span>) arg</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>            c <span class="ot">&lt;-</span> action arg</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>            BSL.writeFile cacheFile c</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pure</span> c</span></code></pre></div>
+<p>(More generic version with <code>Show</code>/<code>Read</code> or some other generic
+serialization/deserialization certainly is possible but I went
+with specific types because of my particular use case.)</p>
+<p>Having caching in place, one might still encounter some issues.
+Some sites lay down rules for using their API in terms of how many
+requests you can make per time unit to avoid being blacklisted.</p>
 <p>Again very simple wrapper.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">module</span> <span class="dt">Delayed</span> (delayed) <span class="kw">where</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">import</span> <span class="dt">Control.Concurrent</span> (threadDelay)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">import</span> <span class="dt">Control.Concurrent.MVar</span> (<span class="dt">MVar</span>, newMVar, putMVar, takeMVar)</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="kw">import</span> <span class="dt">Control.Exception.Base</span> (evaluate)</span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="kw">import</span> <span class="dt">Data.Monoid</span> ((&lt;&gt;))</span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="kw">import</span> <span class="dt">System.IO.Unsafe</span> (unsafePerformIO)</span>
-<span id="cb2-8"><a href="#cb2-8"></a></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="kw">import</span> <span class="dt">Data.Time</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>    (<span class="dt">NominalDiffTime</span>, <span class="dt">UTCTime</span>, addUTCTime, diffUTCTime, getCurrentTime)</span>
-<span id="cb2-11"><a href="#cb2-11"></a></span>
-<span id="cb2-12"><a href="#cb2-12"></a></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="ot">nextAllowed ::</span> <span class="dt">MVar</span> <span class="dt">UTCTime</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>nextAllowed <span class="ot">=</span> unsafePerformIO <span class="op">$</span> getCurrentTime <span class="op">&gt;&gt;=</span> newMVar</span>
-<span id="cb2-15"><a href="#cb2-15"></a></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="ot">microSecondsRemains ::</span> <span class="dt">UTCTime</span> <span class="ot">-&gt;</span> <span class="dt">UTCTime</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a>microSecondsRemains t1 t2 <span class="ot">=</span> toMicroSeconds <span class="op">$</span> diffUTCTime t1 t2 <span class="op">*</span> <span class="dv">1000000</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a>  <span class="kw">where</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a>    toMicroSeconds <span class="ot">=</span> <span class="fu">max</span> <span class="dv">0</span> <span class="op">.</span> <span class="fu">round</span> <span class="op">.</span> <span class="fu">toRational</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="ot">delayed ::</span> <span class="dt">NominalDiffTime</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> a</span>
-<span id="cb2-22"><a href="#cb2-22"></a>delayed dt a <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a>    waitTime <span class="ot">&lt;-</span> microSecondsRemains <span class="op">&lt;$&gt;</span> takeMVar nextAllowed <span class="op">&lt;*&gt;</span> getCurrentTime</span>
-<span id="cb2-24"><a href="#cb2-24"></a>    <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Waiting &quot;</span> <span class="op">&lt;&gt;</span> <span class="fu">show</span> waitTime</span>
-<span id="cb2-25"><a href="#cb2-25"></a>    threadDelay <span class="op">$</span> waitTime</span>
-<span id="cb2-26"><a href="#cb2-26"></a>    res <span class="ot">&lt;-</span> a <span class="op">&gt;&gt;=</span> evaluate</span>
-<span id="cb2-27"><a href="#cb2-27"></a>    getCurrentTime <span class="op">&gt;&gt;=</span> putMVar nextAllowed <span class="op">.</span> addUTCTime dt</span>
-<span id="cb2-28"><a href="#cb2-28"></a>    <span class="fu">pure</span> res</span></code></pre></div>
-<p>Using <code>unsafePerformIO</code> is probably not the best practice, but the <code>nextAllowed</code> is kept hidden (not exported) and it makes use of the module much simpler.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Delayed</span> (delayed) <span class="kw">where</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Concurrent</span> (threadDelay)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Concurrent.MVar</span> (<span class="dt">MVar</span>, newMVar, putMVar, takeMVar)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Exception.Base</span> (evaluate)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Monoid</span> ((&lt;&gt;))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">System.IO.Unsafe</span> (unsafePerformIO)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Time</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dt">NominalDiffTime</span>, <span class="dt">UTCTime</span>, addUTCTime, diffUTCTime, getCurrentTime)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ot">nextAllowed ::</span> <span class="dt">MVar</span> <span class="dt">UTCTime</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>nextAllowed <span class="ot">=</span> unsafePerformIO <span class="op">$</span> getCurrentTime <span class="op">&gt;&gt;=</span> newMVar</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="ot">microSecondsRemains ::</span> <span class="dt">UTCTime</span> <span class="ot">-&gt;</span> <span class="dt">UTCTime</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>microSecondsRemains t1 t2 <span class="ot">=</span> toMicroSeconds <span class="op">$</span> diffUTCTime t1 t2 <span class="op">*</span> <span class="dv">1000000</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    toMicroSeconds <span class="ot">=</span> <span class="fu">max</span> <span class="dv">0</span> <span class="op">.</span> <span class="fu">round</span> <span class="op">.</span> <span class="fu">toRational</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ot">delayed ::</span> <span class="dt">NominalDiffTime</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> a</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>delayed dt a <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    waitTime <span class="ot">&lt;-</span> microSecondsRemains <span class="op">&lt;$&gt;</span> takeMVar nextAllowed <span class="op">&lt;*&gt;</span> getCurrentTime</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Waiting &quot;</span> <span class="op">&lt;&gt;</span> <span class="fu">show</span> waitTime</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    threadDelay <span class="op">$</span> waitTime</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> a <span class="op">&gt;&gt;=</span> evaluate</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    getCurrentTime <span class="op">&gt;&gt;=</span> putMVar nextAllowed <span class="op">.</span> addUTCTime dt</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pure</span> res</span></code></pre></div>
+<p>Using <code>unsafePerformIO</code> is probably not the best practice, but the <code>nextAllowed</code>
+is kept hidden (not exported) and it makes use of the module much simpler.</p>
 <h2 id="exercises-for-patient-reader">Exercises for patient reader</h2>
 <ul>
-<li>Make generic version of <code>cached</code> that would use some serialization/deserialization mechanism.</li>
-<li>Would <code>delayed</code> work for multi-threaded scraper? (Does it need to, considering our constraints?)</li>
+<li>Make generic version of <code>cached</code> that would use some
+serialization/deserialization mechanism.</li>
+<li>Would <code>delayed</code> work for multi-threaded scraper?
+(Does it need to, considering our constraints?)</li>
 <li>What would happen if supplied action throws exception? Try to fix it.</li>
-<li>Implement wrapper that would allow for bursts of requests, but without exceeding <code>n</code> in a given time unit. (Token bucket, leaky bucket, or whatever.)</li>
+<li>Implement wrapper that would allow for bursts of requests, but without
+exceeding <code>n</code> in a given time unit. (Token bucket, leaky bucket, or
+whatever.)</li>
 <li>Introduce randomness to the time.</li>
 <li>Make transformer version using <code>MonadIO</code> constraint.</li>
 <li>Make <code>freer-effects</code> version and instead of <code>putStrLn</code> use <code>trace</code>.</li>
