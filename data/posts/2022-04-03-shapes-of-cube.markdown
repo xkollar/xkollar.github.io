@@ -44,7 +44,7 @@ Click around.
   circ = [];
   for (const i in [0,1,2,3,4,5,6,7]) {
       p = (i/8*2+2/16)*Math.PI;
-      const radius = Math.sqrt(2)*150;
+      const radius = 150/Math.cos(Math.PI/8);
       circ.push(pt(-Math.cos(p)*radius+250, Math.sin(p)*radius+250));
   }
 
@@ -55,11 +55,11 @@ Click around.
 
   const shapes = {
       base:   [pt(100,400), pt(300,400), pt(300,200), pt(100,200), pt(200,300), pt(400,300), pt(400,100), pt(200,100)],
-      front:  [pt(200,300), pt(300,300), pt(300,200), pt(200,200), pt(100,400), pt(400,400), pt(400,100), pt(100,100)],
+      front:  [pt(100,400), pt(400,400), pt(400,100), pt(100,100), pt(150,350), pt(350,350), pt(350,150), pt(150,150)],
       octo1:  [circ[0], circ[1], circ[4], circ[5], circ[7], circ[2], circ[3], circ[6]],
       octo2:  [circ[0], circ[2], circ[4], circ[6], circ[1], circ[3], circ[5], circ[7]],
       octo3:  [circ[0], circ[1], circ[2], circ[3], circ[4], circ[5], circ[6], circ[7]],
-      bipart: [pt(100,400), pt(100,100), pt(200,400), pt(200,100), pt(300,100), pt(300,400), pt(400,100), pt(400,400)],
+      bipart: [pt(100,400), pt(300,100), pt(300,400), pt(100,100), pt(200,100), pt(400,400), pt(400,100), pt(200,400)],
       order:  [pt(250,400), pt(400,300), pt(250,200), pt(100,300), pt(250,300), pt(400,200), pt(250,100), pt(100,200)],
   };
 
@@ -144,7 +144,7 @@ Click around.
       ctx.stroke();
       ctx.restore();
       ctx.save();
-      for (const i in cube) {
+      for (var i = 7; i >= 0; i--) {
           ctx.beginPath();
           ctx.arc(current[i].x, current[i].y, 20, 0, 2*Math.PI, false);
           ctx.fillStyle = '#633';
