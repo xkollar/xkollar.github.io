@@ -252,7 +252,7 @@ to approximate curve of any degree.</p>
 <p>Also an interesting thing to notice is that
 modules and functions do not share a namespace
 so it is possible to have both a function and a module
-with the same time.</p>
+with the same name.</p>
 <p>Function <code>bezier_pt</code> recursively calculates point
 on a curve. Function <code>bezier</code> breaks down provided
 input based on the degree.</p>
