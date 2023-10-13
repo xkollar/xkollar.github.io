@@ -178,9 +178,9 @@ Layer 3 is when host opens one of remaining doors that has goat (there might
 be one or two such doors, if there are two host chooses randomly... As an
 exercise think about what would it mean if host did not choose uniformly). Red
 states are the ones where we win by keeping our door, green ones where we win
-by switching. Interesting thing to note that both at level of collapsed
-multiverse and uncollapsed one (whole layer) probabilities are stay 1/3 win
-and switch 2/3 with!
+by switching. Interestingly both global (whole layer) and all collapsed
+multiverses imply winning probabilities for staying and switching 1/3 and 2/3
+respectively!
 
 Last layer is an attempt at demonstration for one of cases where confusion is
 coming from. The question whether the car is behind left or right door is
@@ -193,10 +193,10 @@ collapsed. If our door is the left one of remaining ones, then it has only 1/3
 probability of hiding a car.
 
 The question is not whether it is behind left or right door (in the
-uncollapsed multiverse), but whether is is behind left or right door given our
+uncollapsed multiverse), but whether it is behind left or right door given our
 choice of door.
 
-It almost feel like confusion here is similar one to
+Perhaps confusion here is similar to
 [Gambler's_fallacy](https://en.wikipedia.org/wiki/Gambler's_fallacy) where
 people assume that after head flipping another head is less probable not
 realising that by first flip part of multiverse available to them has
