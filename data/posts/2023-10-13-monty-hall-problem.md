@@ -110,20 +110,20 @@ digraph G {
         color=blue;
     };
 
-    "[C]GG" -> "[C]XG" [label="1/2"];
-    "[C]GG" -> "[C]GX" [label="1/2"];
+    "[C]GG" -> "[C]XG" [label="1/2",color=red,fontcolor=red];
+    "[C]GG" -> "[C]GX" [label="1/2",color=red,fontcolor=red];
     "C[G]G" -> "C[G]X";
     "CG[G]" -> "CX[G]";
 
     "[G]CG" -> "[G]CX";
-    "G[C]G" -> "X[C]G" [label="1/2"];
-    "G[C]G" -> "G[C]X" [label="1/2"];
+    "G[C]G" -> "X[C]G" [label="1/2",color=red,fontcolor=red];
+    "G[C]G" -> "G[C]X" [label="1/2",color=red,fontcolor=red];
     "GC[G]" -> "XC[G]";
 
     "[G]GC" -> "[G]XC";
     "G[G]C" -> "X[G]C";
-    "GG[C]" -> "XG[C]" [label="1/2"];
-    "GG[C]" -> "GX[C]" [label="1/2"];
+    "GG[C]" -> "XG[C]" [label="1/2",color=red,fontcolor=red];
+    "GG[C]" -> "GX[C]" [label="1/2",color=red,fontcolor=red];
 
     subgraph cluster_4_1_1 {
         graph [bgcolor=lightblue];
