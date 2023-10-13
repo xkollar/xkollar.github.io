@@ -3,11 +3,12 @@ title: "Monty Hall Problem"
 author: xkollar
 tags: Math
 ---
-I'm writing this just to write down my own thoughts
-on the topic. The problem while seemingly simple is often
-source of confusion. I have recently encountered fresh debate
-on the topic on [Hacker News](https://news.ycombinator.com/item?id=37829926)
-that started quite innocently (and conversations there often do).
+
+I'm writing this just to help myself compose my own thoughts on the topic.
+The problem while seemingly simple is often source of confusion. I have
+recently encountered fresh debate on the topic on [Hacker
+News](https://news.ycombinator.com/item?id=37829926) that started quite
+innocently (as conversations there often do).
 
 For good (though somewhat lengthy) introduction to the problem (and all it's
 possible variants) see
@@ -193,6 +194,46 @@ probability of hiding a car.
 The question is not whether it is behind left or right door,
 but whether is is behind left or right door given our original
 choice of door.
+
+It almost feel like confusion behind here is similar one to
+[Gambler's_fallacy](https://en.wikipedia.org/wiki/Gambler's_fallacy), where
+people assume that after head flipping another head is less probable, not
+realising that by first flip part of multiverse available to them has
+collapsed and now it is 1/2 again.
+
+~~~ {.dot-render}
+digraph G {
+    graph [bgcolor=transparent];
+    node [style=filled;fillcolor=white];
+    edge [fontsize=10];
+    ranksep=1;
+
+    init[label="ε"];
+    init -> H [label="1/2"];
+    init -> T [label="1/2"];
+
+    subgraph cluster_1_a {
+        graph [bgcolor=lightblue];
+        "HH"; "HT"
+    };
+    subgraph cluster_1_b {
+        graph [bgcolor=lightblue];
+        "TH"; "TT"
+    };
+
+    H -> HH [label="1/2"];
+    H -> HT [label="1/2"];
+
+    T -> TH [label="1/2"];
+    T -> TT [label="1/2"];
+}
+~~~
+
+Maybe it is about how the question is phrased? A nice and concise answer is
+possible only because some symmetries present. If those were broken the answer
+might not be as simple as "always switch for 2/3 chance to win car" but more
+like (if you chose door 1 and host showed you door 2 then switch for chance P,
+but if 3 then stay for chance Q, if you choose door 2…).
 
 Interesting insights from the thread:
 
