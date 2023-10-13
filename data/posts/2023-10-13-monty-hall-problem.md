@@ -239,7 +239,7 @@ Q, if you choose door 2…).
 
 Interesting insights from the thread:
 
-* By choosing to swithc you are actually choosing two doors
+* By choosing to switch you are actually choosing two doors
   instead of one.
 * Try thinking how would things work with 100 doors.
 
