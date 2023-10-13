@@ -4,15 +4,15 @@ author: xkollar
 tags: Math
 ---
 
-I'm writing this just to help myself compose my own thoughts on the topic.
-The problem while seemingly simple is often source of confusion. I have
-recently encountered fresh debate on the topic on [Hacker
-News](https://news.ycombinator.com/item?id=37829926) that started quite
-innocently (as conversations there often do).
+I'm writing this to clarify my thoughts on the topic. The problem, while
+seemingly simple, is often source of confusion, amusement, and occasionally
+even arguments. I have recently encountered fresh debate on the topic on
+[Hacker News](https://news.ycombinator.com/item?id=37829926) that started
+quite innocently (as conversations there often do).
 
-For good (though somewhat lengthy) introduction to the problem (and all it's
-possible variants) see
-[Wikipedia](https://en.wikipedia.org/wiki/Monty_Hall_problem).
+For a comprehensive (though lengthy) introduction to the problem and its
+various forms see [Monty Hall problem on
+Wikipedia](https://en.wikipedia.org/wiki/Monty_Hall_problem).
 
 Here is re-creation of a scribble I made while thinking about the problem.
 
@@ -230,17 +230,18 @@ digraph G {
 }
 ~~~
 
-Maybe it is about how the question is phrased? A nice and concise answer is
-possible only because some symmetries present. If those were broken the answer
-might not be as simple as "always switch for 2/3 chance to win car" but more
-like (if you chose door 1 and host showed you door 2 then switch for chance P,
-but if 3 then stay for chance Q, if you choose door 2…).
+Could it be that the way the question is phrased is the issue? An elegant and
+concise answer is only possible due to the presence of symmetries in the
+problem. If those were broken the answer might not be as simple as "always
+switch for 2/3 chance to win the car" but more like (if you chose door 1 and
+host showed you door 2 then switch for chance P, but if 3 then stay for chance
+Q, if you choose door 2…).
 
 Interesting insights from the thread:
 
-* Try thinking how would it work with 100 doors.
-* By choosing the other door you are actually choosing two doors
+* By choosing to swithc you are actually choosing two doors
   instead of one.
+* Try thinking how would things work with 100 doors.
 
 Ideas:
 
