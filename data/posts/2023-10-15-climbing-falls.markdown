@@ -9,3 +9,5 @@ Visual aid for explaing the main problem with climbing falls…
 <figure>
 <img src="/images/climbing-fall.svg" />
 </figure>
+
+What she said: this graph would work for all kinds of things 🤔.
