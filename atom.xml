@@ -8,8 +8,19 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2023-10-13T00:00:00Z</updated>
+    <updated>2023-10-15T00:00:00Z</updated>
     <entry>
+    <title>Climbing Falls</title>
+    <link href="https://xkollar.github.io/posts/2023-10-15-climbing-falls.html" />
+    <id>https://xkollar.github.io/posts/2023-10-15-climbing-falls.html</id>
+    <published>2023-10-15T00:00:00Z</published>
+    <updated>2023-10-15T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Visual aid for explaing the main problem with climbing falls…</p>
+<figure>
+<img src="/images/climbing-fall.svg" />
+</figure>]]></summary>
+</entry>
+<entry>
     <title>Monty Hall Problem</title>
     <link href="https://xkollar.github.io/posts/2023-10-13-monty-hall-problem.html" />
     <id>https://xkollar.github.io/posts/2023-10-13-monty-hall-problem.html</id>
@@ -725,15 +736,6 @@ and integration with <code>MonadReader</code> from <code>mtl</code>.</p>
 <p>And you can go much crazier than this. For example add tags to <code class="sourceCode haskell"><span class="kw">newtype</span></code>s, that
 would indicate, what files you can actually read and write… I leave this
 as an exercise for patient reader though <abbr title="😉 :wink:"><code>;-)</code></abbr>.</p>]]></summary>
-</entry>
-<entry>
-    <title>Bash in the UK</title>
-    <link href="https://xkollar.github.io/posts/2017-11-14-bash-in-the-uk.html" />
-    <id>https://xkollar.github.io/posts/2017-11-14-bash-in-the-uk.html</id>
-    <published>2017-11-14T00:00:00Z</published>
-    <updated>2017-11-14T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pls=sudo</span></code></pre></div>
-<p>See also <a href="https://hugleikurdagsson.tumblr.com/post/8778818671/anarchy-in-the-uk">anarchy in the uk</a>.</p>]]></summary>
 </entry>
 
 </feed>

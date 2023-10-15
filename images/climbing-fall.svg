@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="220mm"
+   height="220mm"
+   viewBox="0 0 220 220"
+   version="1.1"
+   id="svg185"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="climbing-fall.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview187"
+     pagecolor="#ffffff"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.8151596"
+     inkscape:cx="401.61758"
+     inkscape:cy="534.66373"
+     inkscape:window-width="2380"
+     inkscape:window-height="2125"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs182">
+    <marker
+       style="overflow:visible"
+       id="marker1260"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow2"
+       markerWidth="7.6999998"
+       markerHeight="5.5999999"
+       viewBox="0 0 7.7 5.6"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="path1258" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1178"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow2"
+       markerWidth="7.6999998"
+       markerHeight="5.5999999"
+       viewBox="0 0 7.7 5.6"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="path1176" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker2128"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow2"
+       markerWidth="7.6999998"
+       markerHeight="5.5999999"
+       viewBox="0 0 7.7 5.6"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="path2126" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1976"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow2"
+       markerWidth="7.6999998"
+       markerHeight="5.5999999"
+       viewBox="0 0 7.7 5.6"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="path1974" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow2"
+       markerWidth="7.6999998"
+       markerHeight="5.5999999"
+       viewBox="0 0 7.7 5.6"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="arrow2L" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:;marker-start:url(#Arrow2)"
+       d="M 18.918839,29.70812 V 213.10915"
+       id="path380" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker1976)"
+       d="M 9.1720653,202.64744 H 210.82793"
+       id="path382" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
+       x="-127.79032"
+       y="13.904021"
+       id="text1158"
+       transform="rotate(-90)"><tspan
+         sodipodi:role="line"
+         id="tspan1156"
+         style="stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-family:sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+         x="-127.79032"
+         y="13.904021">Fun</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
+       x="102.22047"
+       y="216.23915"
+       id="text1162"><tspan
+         sodipodi:role="line"
+         id="tspan1160"
+         style="stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-family:sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+         x="102.22047"
+         y="216.23915">Size</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker2128)"
+       d="m 18.976495,202.65598 c 0,0 17.240204,-0.1003 25.371255,-2.57977 9.600417,-2.92753 19.156438,-7.50187 26.771526,-14.04014 11.39288,-9.78185 19.253116,-23.19784 26.992926,-36.06554 8.187688,-13.61231 14.965618,-28.15015 20.320908,-43.10522 7.17174,-20.02764 3.5098,-44.386676 15.61605,-61.878931 3.73244,-5.392971 9.60107,-11.338384 16.15872,-11.226438 5.82207,0.09939 11.47061,3.845513 13.38819,7.983481 5.51099,11.892227 4.40534,45.196656 6.79942,86.829498 2.39407,41.63284 4.3859,82.55291 4.3859,82.55291"
+       id="path2028"
+       sodipodi:nodetypes="cssssssssc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#88aa00;fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
+       x="24.315552"
+       y="195.38744"
+       id="text2236"><tspan
+         sodipodi:role="line"
+         id="tspan2234"
+         style="fill:#88aa00;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-family:sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+         x="24.315552"
+         y="195.38744">Meh</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#88aa00;fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
+       x="-85.55117"
+       y="156.25732"
+       id="text2240"
+       transform="rotate(-61.48901)"><tspan
+         sodipodi:role="line"
+         id="tspan2238"
+         style="fill:#88aa00;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-family:sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+         x="-85.55117"
+         y="156.25732">Weee!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#88aa00;fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
+       x="67.549309"
+       y="-161.80656"
+       id="text2244"
+       transform="rotate(81.246727)"><tspan
+         sodipodi:role="line"
+         id="tspan2242"
+         style="fill:#88aa00;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-family:sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+         x="67.549309"
+         y="-161.80656">WeeeEE?</tspan></text>
+    <g
+       id="g1633"
+       transform="translate(0,8.9763693)">
+      <path
+         style="fill:none;stroke:#7c7c7c;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:4, 2;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 124.23925,66.545896 V 13.298335"
+         id="path333" />
+      <path
+         style="fill:none;stroke:#7c7c7c;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:4, 2;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 168.8049,66.545896 V 13.298335"
+         id="path333-3" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker1178);marker-end:url(#marker1260)"
+         d="m 131.18326,16.746006 30.80513,-0.176533"
+         id="path983"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
+         x="92.507919"
+         y="11.85388"
+         id="text1532"><tspan
+           sodipodi:role="line"
+           id="tspan1530"
+           style="stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-family:sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+           x="92.507919"
+           y="11.85388">Self-preservation band</tspan></text>
+    </g>
+    <circle
+       style="fill:#ffffff;stroke:#ff0000;stroke-width:1;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
+       id="path1729"
+       cx="124.2863"
+       cy="76.73101"
+       r="1.7285378" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
+       x="190.69748"
+       y="186.25536"
+       id="text2049"><tspan
+         sodipodi:role="line"
+         id="tspan2047"
+         style="stroke-width:0.264583;-inkscape-font-specification:sans-serif;font-family:sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+         x="190.69748"
+         y="186.25536" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="76.457504"
+       y="74.662552"
+       id="text1089"><tspan
+         sodipodi:role="line"
+         style="text-align:center;text-anchor:middle;fill:#ff0000;stroke-width:0.264583"
+         x="76.457504"
+         y="74.662552"
+         id="tspan1091">Self-preservation</tspan><tspan
+         sodipodi:role="line"
+         style="text-align:center;text-anchor:middle;fill:#ff0000;stroke-width:0.264583"
+         x="76.457504"
+         y="87.891678"
+         id="tspan1095">inflection point</tspan></text>
+  </g>
+</svg>
