@@ -8,8 +8,22 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2023-10-15T00:00:00Z</updated>
+    <updated>2024-01-24T00:00:00Z</updated>
     <entry>
+    <title>Tax Effective and Perceived</title>
+    <link href="https://xkollar.github.io/posts/2024-01-24-tax-effective-and-perceived.html" />
+    <id>https://xkollar.github.io/posts/2024-01-24-tax-effective-and-perceived.html</id>
+    <published>2024-01-24T00:00:00Z</published>
+    <updated>2024-01-24T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>How taxes feel as your earnings grow.</p>
+<figure>
+<img src="/images/tax-effective-and-perceived-2023-2024.png" alt="Rendered example" /><figcaption aria-hidden="true">Rendered example</figcaption>
+</figure>
+<p>Taxes are described in somewhat confusing way but I think this is what it
+usually ends up being. When you hear people talking about 60+% tax, now you
+know what they are talking about.</p>]]></summary>
+</entry>
+<entry>
     <title>Climbing Falls</title>
     <link href="https://xkollar.github.io/posts/2023-10-15-climbing-falls.html" />
     <id>https://xkollar.github.io/posts/2023-10-15-climbing-falls.html</id>
@@ -631,112 +645,6 @@ grey of acceptance.</p>
 * Paint black -> grey
 * … and the sky is grey…
 -->]]></summary>
-</entry>
-<entry>
-    <title>Fine-grained IO with mtl</title>
-    <link href="https://xkollar.github.io/posts/2018-01-25-fine-grained-io-with-mtl.html" />
-    <id>https://xkollar.github.io/posts/2018-01-25-fine-grained-io-with-mtl.html</id>
-    <published>2018-01-25T00:00:00Z</published>
-    <updated>2018-01-25T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>The <a href="https://hackage.haskell.org/package/mtl">mtl</a> library is very convenient
-to work with. What some do not like about it is that there is no granularity
-over <code>IO</code>, like solutions build on ideas of extensible effects (like
-<a href="https://github.com/IxpertaSolutions/freer-effects">freer-effects</a>). Or is
-there? (Or rather can there be?)</p>
-<p>Here I will show you how to get such granularity with just “ordinary”
-mtl-style transformer stack.</p>
-<p>Let’s say we would like to have two separate constraints: one allowing our
-component to read files, and another to write files. We would like to be able
-to use it in any stack (which implies in different types). Haskell’s answer for
-ad-hoc polymorphism are type classes, so we create two of them, with
-appropriate names and methods (<code>ReadFile</code> and <code>WriteFile</code>).</p>
-<p>Other thing we will use is <code class="sourceCode haskell"><span class="kw">newtype</span></code> wrappers for building transformers stacks
-(<code>ReadFileT</code> and <code>WriteFileT</code>). <code>GeneralizedNewtypeDeriving</code> will
-make things simpler for us there.</p>
-<p>Then, to be able to position our stacks arbitrarily, we will make instances
-for <code>MonadTrans</code> class.</p>
-<p>Once we have that we need to provide instances for our classes (constraints
-for reading and writing files), both for whole transformer stack and for
-particular <code class="sourceCode haskell"><span class="kw">newtype</span></code> wrappers. (I used overlapping instances. Maybe there is a
-way to do it without those?)</p>
-<p>And we are done. Included is simple example that demonstrates use of the code
-and integration with <code>MonadReader</code> from <code>mtl</code>.</p>
-<p>Feel free to play with it and try to sneak in some other <code class="sourceCode haskell"><span class="dt">IO</span></code> for example to
-<code>writeAction</code>, I dare you <abbr title="😉 :wink:"><code>;-)</code></abbr>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleContexts #-}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE GeneralizedNewtypeDeriving #-}</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> (main) <span class="kw">where</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Applicative</span> (<span class="dt">Applicative</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad</span> (<span class="dt">Monad</span>, (&gt;&gt;=))</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Function</span> (($), (.), flip)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Functor</span> (<span class="dt">Functor</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.String</span> (<span class="dt">String</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">System.IO</span> (<span class="dt">FilePath</span>, <span class="dt">IO</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">System.IO</span> <span class="kw">as</span> <span class="dt">IO</span> (readFile, writeFile)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad.IO.Class</span> (<span class="dt">MonadIO</span>, liftIO)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad.Reader</span> (<span class="dt">MonadReader</span>, asks, runReaderT)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad.Trans</span> (<span class="dt">MonadTrans</span>, lift)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">-- CLASSES --------------------------------------</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">ReadFile</span> m <span class="kw">where</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ot">    readFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> m <span class="dt">String</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">WriteFile</span> m <span class="kw">where</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ot">    writeFile ::</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">-- NEWTYPES--------------------------------------</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">ReadFileT</span> m a <span class="ot">=</span> <span class="dt">ReadFile</span> {<span class="ot"> runReadFile ::</span> m a }</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">WriteFileT</span> m a <span class="ot">=</span> <span class="dt">WriteFile</span> {<span class="ot"> runWriteFile ::</span> m a }</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Functor</span>, <span class="dt">Applicative</span>, <span class="dt">Monad</span>, <span class="dt">MonadIO</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">-- INSTANCES ------------------------------------</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">ReadFileT</span> <span class="kw">where</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    lift <span class="ot">=</span> <span class="dt">ReadFile</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">MonadTrans</span> <span class="dt">WriteFileT</span> <span class="kw">where</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    lift <span class="ot">=</span> <span class="dt">WriteFile</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (t m) <span class="kw">where</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">readFile</span> <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">readFile</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPPABLE #-}</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (t m) <span class="kw">where</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> lift <span class="op">.</span> <span class="fu">writeFile</span> fp</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">ReadFile</span> (<span class="dt">ReadFileT</span> m) <span class="kw">where</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">readFile</span> <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">readFile</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="ot">{-# OVERLAPS #-}</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">WriteFile</span> (<span class="dt">WriteFileT</span> m) <span class="kw">where</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeFile</span> fp <span class="ot">=</span> liftIO <span class="op">.</span> <span class="dt">IO</span><span class="op">.</span><span class="fu">writeFile</span> fp</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">-- EXAMPLE --------------------------------------</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">What</span> <span class="ot">=</span> <span class="dt">What</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    {<span class="ot"> from ::</span> <span class="dt">FilePath</span></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    ,<span class="ot"> to ::</span> <span class="dt">FilePath</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ot">readAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m) <span class="ot">=&gt;</span> m <span class="dt">String</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>readAction <span class="ot">=</span> asks from <span class="op">&gt;&gt;=</span> <span class="fu">readFile</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ot">writeAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> m ()</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>writeAction c <span class="ot">=</span> asks to <span class="op">&gt;&gt;=</span> <span class="fu">flip</span> <span class="fu">writeFile</span> c</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="ot">combinedAction ::</span> (<span class="dt">MonadReader</span> <span class="dt">What</span> m, <span class="dt">ReadFile</span> m, <span class="dt">WriteFile</span> m) <span class="ot">=&gt;</span> m ()</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>combinedAction <span class="ot">=</span> readAction <span class="op">&gt;&gt;=</span> writeAction</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> runWriteFile <span class="op">.</span> runReadFile <span class="op">$</span> runReaderT combinedAction conf</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    conf <span class="ot">=</span> <span class="dt">What</span> <span class="st">&quot;/etc/resolv.conf&quot;</span> <span class="st">&quot;/dev/stdout&quot;</span></span></code></pre></div>
-<p>And you can go much crazier than this. For example add tags to <code class="sourceCode haskell"><span class="kw">newtype</span></code>s, that
-would indicate, what files you can actually read and write… I leave this
-as an exercise for patient reader though <abbr title="😉 :wink:"><code>;-)</code></abbr>.</p>]]></summary>
 </entry>
 
 </feed>
