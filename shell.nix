@@ -4,6 +4,7 @@ in pkgs.mkShell {
     pkgs.abcm2ps
     pkgs.ghc
     pkgs.graphviz
+    pkgs.gnuplot
     pkgs.stack
     pkgs.zlib
   ];
