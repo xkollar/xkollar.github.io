@@ -8,8 +8,56 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2024-01-24T00:00:00Z</updated>
+    <updated>2024-01-30T00:00:00Z</updated>
     <entry>
+    <title>Function pre- and post-hooks in Bash</title>
+    <link href="https://xkollar.github.io/posts/2024-01-30-pre-and-post-hooks-in-bash.html" />
+    <id>https://xkollar.github.io/posts/2024-01-30-pre-and-post-hooks-in-bash.html</id>
+    <published>2024-01-30T00:00:00Z</published>
+    <updated>2024-01-30T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Perhaps you have also found yourself in a situation when you needed to run
+something pre or post invocation of a function in Bash? (A pre- or post-hook if
+you wish.)</p>
+<p>Let me show you a trick:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> __wrap()</span> <span class="kw">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$(</span> <span class="bu">type</span> <span class="at">-t</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span> <span class="va">)</span><span class="st">&quot;</span> <span class="ot">!=</span> <span class="st">&#39;function&#39;</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">&quot;Function &#39;</span><span class="va">${1}</span><span class="st">&#39; does not exist.&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$(</span> <span class="bu">type</span> <span class="at">-t</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">.wrapped&quot;</span> <span class="va">)</span><span class="st">&quot;</span> <span class="ot">==</span> <span class="st">&#39;function&#39;</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">&quot;Function &#39;</span><span class="va">${1}</span><span class="st">.wrapped&#39; already exists.&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">source</span> <span class="op">&lt;(</span> <span class="bu">typeset</span> <span class="at">-f</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;1s/^\([^ ]\+\)/\1.wrapped/&#39;</span> <span class="op">)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> omg()</span> <span class="kw">{</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> omg: <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">__wrap</span> omg</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># At this point we have two identical function omg and omg.wrapped,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># former one to be re-defined next.</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> omg()</span> <span class="kw">{</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;pre-hook&quot;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># manipulate arguments</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">omg.wrapped</span> extra_arg <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">ret</span><span class="op">=</span><span class="va">${?}</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;post-hook&quot;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and possibly change the result</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;</span><span class="va">${ret}</span><span class="st">&quot;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ex">omg</span> 1 2 3</span></code></pre></div>
+<p>On some level we are getting closer to metaprogramming as we are manipulatig
+the code that is running/being executed.</p>
+<p>Obviously <code>__wrap</code> can be extended further, for example to allow for custom
+name transformation in complicated and diffult to navigate environments.</p>
+<p>Now go and have fun!</p>]]></summary>
+</entry>
+<entry>
     <title>Tax Effective and Perceived</title>
     <link href="https://xkollar.github.io/posts/2024-01-24-tax-effective-and-perceived.html" />
     <id>https://xkollar.github.io/posts/2024-01-24-tax-effective-and-perceived.html</id>
@@ -604,48 +652,6 @@ and provide all instances for this particular wrapper.</p>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> runSimpleRunner <span class="op">$</span> runReaderT combinedAction conf</span>
 <span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    conf <span class="ot">=</span> <span class="dt">What</span> <span class="st">&quot;/etc/resolv.conf&quot;</span> <span class="st">&quot;/dev/stdout&quot;</span></span></code></pre></div>]]></summary>
-</entry>
-<entry>
-    <title>Shift to Grey</title>
-    <link href="https://xkollar.github.io/posts/2018-01-29-shift-to-gray.html" />
-    <id>https://xkollar.github.io/posts/2018-01-29-shift-to-gray.html</id>
-    <published>2018-01-29T00:00:00Z</published>
-    <updated>2018-01-29T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>Colour. Is it? Not everyone thinks so. Maybe the only one there is.</p>
-<p>It used to be black. Well trained eye could have seen the whole spectrum in black.
-Black is still nice but somehow grey seems more appropriate. Grey is not new
-black. It never will be. It never could. It is grey after all. Neutral. Without
-emotion. Safe. Soothing. Protecting… One can dissolve themselves within grey.
-Their identity. Fears. Hopes. Assumptions. Ideas. Intelligence. Ego. Sexuality.
-Desires. Emotions. Pain…</p>
-<p>Accept grey and become undistinguishable part of environment, almost cease to
-be, at least for all intents and purposes. There is no mystery, there is no
-light. Just grey nothing. If nothing had a colour, it would be grey. It is so
-tempting to become part of nothing. Elusive. Too good to be true. Is it?</p>
-<p>Colour of unimportant. All grey mice living their lives in the traps of
-cubicles, dreaming of all colours of cheese. Boring? One does not care. One has
-accepted grey.</p>
-<p>Colour of city sky. Beautiful. If one likes that kind of thing.
-One does. The only colour that makes sense, that is true, unpretending.</p>
-<p>Colour of being alone, even when surrounded by others. Ultimate hideout where
-no-one dares to follow, neither friends, nor foes. Emotional desert, where only
-nomads go and they know better than interrupting each other’s solitude.
-They embrace grey.</p>
-<p>Colour of minimal energy. Not as wasteful as energetic and overpowering white,
-yet revealing enough so that it is clear there is nothing, not leaving
-anything for imagination, unlike black. It is truly colour of death. Neither
-black, mysterious and promising, nor white, inviting and pure. Just realistic
-grey of acceptance.</p>
-<p>One used to believe eyes can not be grey. One was mistaken.</p>
-<!--
-* Monochromatic photopgraphy
-* Colorblind
-* Ash
-* Dusk
-* Black raven -> Grey wolf
-* Paint black -> grey
-* … and the sky is grey…
--->]]></summary>
 </entry>
 
 </feed>
