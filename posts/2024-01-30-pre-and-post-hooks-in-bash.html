@@ -3,47 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>xkollar - Function pre- and post-hooks in Bash</title>
+<title>xkollar - Pre-hooks and post-hooks for Bash functions</title>
 <link rel="feed" type="application/atom+xml" href="../atom.xml" title="Atom Feed">
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
-<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Function pre- and post-hooks in Bash</h1><div class="info">Posted on 2024-01-30 by xkollar  <span class="tags">in <a title="All pages tagged 'Bash'." href="../tags/Bash.html">Bash</a></span>.</div><p>Perhaps you have also found yourself in a situation where you needed to run
-something pre or post invocation of a function in Bash? (A pre- or post-hook if
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Pre-hooks and post-hooks for Bash functions</h1><div class="info">Posted on 2024-01-30 by xkollar  <span class="tags">in <a title="All pages tagged 'Bash'." href="../tags/Bash.html">Bash</a></span>.</div><p>Perhaps you have also found yourself in a situation where you needed to run
+something pre or post invocation of a function in Bash? (A pre-hook or post-hook if
 you wish.)</p>
 <p>Let me show you a trick:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> __wrap()</span> <span class="kw">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$(</span> <span class="bu">type</span> <span class="at">-t</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span> <span class="va">)</span><span class="st">&quot;</span> <span class="ot">!=</span> <span class="st">'function'</span> <span class="kw">]];</span> <span class="cf">then</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">&quot;Function '</span><span class="va">${1}</span><span class="st">' does not exist.&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$(</span> <span class="bu">type</span> <span class="at">-t</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">.wrapped&quot;</span> <span class="va">)</span><span class="st">&quot;</span> <span class="ot">==</span> <span class="st">'function'</span> <span class="kw">]];</span> <span class="cf">then</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">&quot;Function '</span><span class="va">${1}</span><span class="st">.wrapped' already exists.&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">source</span> <span class="op">&lt;(</span> <span class="bu">typeset</span> <span class="at">-f</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'1s/^\([^ ]\+\)/\1.wrapped/'</span> <span class="op">)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> omg()</span> <span class="kw">{</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> omg: <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">__wrap</span> omg</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="at">-r</span> <span class="va">from</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${1</span><span class="er">?FUNCTION_NAME</span><span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="at">-r</span> <span class="va">to</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${2</span><span class="er">-${from</span><span class="va">}</span><span class="st">.wrapped}&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$(</span> <span class="bu">type</span> <span class="at">-t</span> <span class="st">&quot;</span><span class="va">${from}</span><span class="st">&quot;</span> <span class="va">)</span><span class="st">&quot;</span> <span class="ot">!=</span> <span class="st">'function'</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">&quot;Function '</span><span class="va">${from}</span><span class="st">' does not exist.&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$(</span> <span class="bu">type</span> <span class="at">-t</span> <span class="st">&quot;</span><span class="va">${to}</span><span class="st">&quot;</span> <span class="va">)</span><span class="st">&quot;</span> <span class="ot">==</span> <span class="st">'function'</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">&quot;Function '</span><span class="va">${to}</span><span class="st">' already exists.&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">source</span> <span class="op">&lt;(</span> <span class="bu">typeset</span> <span class="at">-f</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="at">-v</span> <span class="st">&quot;to=</span><span class="va">${to}</span><span class="st">&quot;</span> <span class="st">'NR==1{$1=to}{print}'</span> <span class="op">)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> omg()</span> <span class="kw">{</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> omg: <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># At this point we have two identical functions omg and omg.wrapped,</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># former one to be re-defined next.</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> omg()</span> <span class="kw">{</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;pre-hook&quot;</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># manipulate arguments</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">omg.wrapped</span> extra_arg <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">ret</span><span class="op">=</span><span class="va">${?}</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;post-hook&quot;</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and possibly change the result</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;</span><span class="va">${ret}</span><span class="st">&quot;</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ex">omg</span> 1 2 3</span></code></pre></div>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ex">__wrap</span> omg</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># At this point we have two identical functions omg and omg.wrapped,</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># former one to be re-defined next.</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> omg()</span> <span class="kw">{</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;pre-hook&quot;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># manipulate arguments</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="ex">omg.wrapped</span> extra_arg <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">ret</span><span class="op">=</span><span class="va">${?}</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;post-hook&quot;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and possibly change the result</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;</span><span class="va">${ret}</span><span class="st">&quot;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ex">omg</span> 1 2 3</span></code></pre></div>
 <p>On some level we are getting closer to metaprogramming as we are manipulatig
 the code that is running/being executed.</p>
 <p>Obviously <code>__wrap</code> can be extended further, for example to allow for custom
