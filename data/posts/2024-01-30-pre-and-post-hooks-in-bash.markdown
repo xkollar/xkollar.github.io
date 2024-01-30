@@ -1,25 +1,27 @@
 ---
-title: "Function pre- and post-hooks in Bash"
+title: "Pre-hooks and post-hooks for Bash functions"
 author: xkollar
 tags: Bash
 ---
 Perhaps you have also found yourself in a situation where you needed to run
-something pre or post invocation of a function in Bash? (A pre- or post-hook if
+something pre or post invocation of a function in Bash? (A pre-hook or post-hook if
 you wish.)
 
 Let me show you a trick:
 
 ```bash
 function __wrap() {
-    if [[ "$( type -t "${1}" )" != 'function' ]]; then
-        echo "Function '${1}' does not exist." >&2
+    local -r from="${1?FUNCTION_NAME}"
+    local -r to="${2-${from}.wrapped}"
+    if [[ "$( type -t "${from}" )" != 'function' ]]; then
+        echo "Function '${from}' does not exist." >&2
         return 1
     fi
-    if [[ "$( type -t "${1}.wrapped" )" == 'function' ]]; then
-        echo "Function '${1}.wrapped' already exists." >&2
+    if [[ "$( type -t "${to}" )" == 'function' ]]; then
+        echo "Function '${to}' already exists." >&2
         return 1
     fi
-    source <( typeset -f "${1}" | sed '1s/^\([^ ]\+\)/\1.wrapped/' )
+    source <( typeset -f "${1}" | awk -v "to=${to}" 'NR==1{$1=to}{print}' )
 }
 
 function omg() {
