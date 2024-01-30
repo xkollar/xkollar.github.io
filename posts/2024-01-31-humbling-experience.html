@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xkollar - Humbling Experience</title>
+<link rel="feed" type="application/atom+xml" href="../atom.xml" title="Atom Feed">
+<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Humbling Experience</h1><div class="info">Posted on 2024-01-31 by xkollar  <span class="tags">in <a title="All pages tagged 'Bash'." href="../tags/Bash.html">Bash</a>, <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a></span>.</div><p>I’m relatively comfortable with Bash but when the other day I saw <a href="https://stackoverflow.com/questions/6250698/how-to-decode-url-encoded-string-in-shell/37840948#37840948">this Stack
+Overflow answer on how to decode URL-encoded string in
+shell</a>
+my brain took a moment to process it.</p>
+<figure>
+<img src="https://i.imgflip.com/h4gba.jpg" alt="What?" /><figcaption aria-hidden="true">What?</figcaption>
+</figure>
+<p>Let me copy it here just to appreciate it.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> urldecode()</span> <span class="kw">{</span> <span class="bu">:</span> <span class="st">&quot;</span><span class="va">${*</span><span class="op">//</span><span class="ss">+</span><span class="op">/</span> <span class="va">}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="bu">echo</span> <span class="at">-e</span> <span class="st">&quot;</span><span class="va">${_</span><span class="op">//</span><span class="ss">%</span><span class="op">/</span><span class="dt">\\</span>x<span class="va">}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">}</span></span></code></pre></div>
+<p>My brain took a moment to process. Here is explanation.</p>
+<p>Let’s try to explain what is going on here. Here it is again in a form that
+will be hopefully easier to talk about:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> urldecode()</span> <span class="kw">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">:</span> <span class="st">&quot;</span><span class="va">${*</span><span class="op">//</span><span class="ss">+</span><span class="op">/</span> <span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">&quot;</span><span class="va">${_</span><span class="op">//</span><span class="ss">%</span><span class="op">/</span><span class="dt">\\</span>x<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>First part is using builtin <code class="sourceCode bash"><span class="bu">:</span></code> and as the (single) argument expanding
+all the arguments to the function into a single string <code class="sourceCode bash"><span class="va">${*}</span></code> while
+replacing all occurrences of <code>+</code> with space.</p>
+<p>Confusing part is, that <code class="sourceCode bash"><span class="bu">:</span></code> building kinda does nothing (except for
+exiting with 0, many of you probably invoked spell of shape <code>while :; do domething; done</code>). While this looks like
+<a href="https://en.wikipedia.org/wiki/NOP_(code)"><code>nop</code></a>/pass/… it is not.</p>
+<p>The magic is revealed when we inspect the following line where special
+variable <code class="sourceCode bash"><span class="va">${_}</span></code> is used. From <a href="https://www.gnu.org/software/bash/manual/bash.html#index-_005f">Bash
+documentation</a>
+in this case it</p>
+<blockquote>
+<p>expands to the last argument to the previous simple command executed in the
+foreground, after expansion.</p>
+</blockquote>
+<p>Therefore meaning of the previous line was just to set <code>${_}</code>. There all
+percent signs get replaced with <code>\x</code> (double backslash for escaping in <code>"</code>) and
+pass that to <code>echo -e</code> for evaluation.</p>
+<p>Obviously, people who <a href="2020-11-23-bash-interview-echo.html">read me</a> know
+there is a bug: <code>urldecode -e</code> will return nothing. It is still very elegant way to
+solve task at hand on command line.</p>
+</div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
+</html>
