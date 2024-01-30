@@ -15,7 +15,7 @@
     <id>https://xkollar.github.io/posts/2024-01-30-pre-and-post-hooks-in-bash.html</id>
     <published>2024-01-30T00:00:00Z</published>
     <updated>2024-01-30T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>Perhaps you have also found yourself in a situation when you needed to run
+    <summary type="html"><![CDATA[<p>Perhaps you have also found yourself in a situation where you needed to run
 something pre or post invocation of a function in Bash? (A pre- or post-hook if
 you wish.)</p>
 <p>Let me show you a trick:</p>
@@ -37,7 +37,7 @@ you wish.)</p>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">__wrap</span> omg</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># At this point we have two identical function omg and omg.wrapped,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># At this point we have two identical functions omg and omg.wrapped,</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># former one to be re-defined next.</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> omg()</span> <span class="kw">{</span></span>
