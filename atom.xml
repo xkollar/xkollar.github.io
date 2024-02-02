@@ -8,8 +8,25 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2024-01-31T00:00:00Z</updated>
+    <updated>2024-02-03T00:00:00Z</updated>
     <entry>
+    <title>Reflection</title>
+    <link href="https://xkollar.github.io/posts/2024-02-03-reflection.html" />
+    <id>https://xkollar.github.io/posts/2024-02-03-reflection.html</id>
+    <published>2024-02-03T00:00:00Z</published>
+    <updated>2024-02-03T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<figure>
+<img src="/images/reflection.png" alt="Looking at things past through numbers coincidentally collected" /><figcaption aria-hidden="true">Looking at things past through numbers coincidentally collected</figcaption>
+</figure>
+<p>On an occasion it is good to turn around, look at things past, and reflect.
+Ponder on how things went and what can be learned for the future.
+Contemplate what was good and where things changed the direction.
+Perhaps there are things that were impossible to notice up-close.
+Meditate on what knowledge can be extracted from collected data.</p>
+<p>But don’t spend too much time turn to past. When there is time to let go do
+so, just keep things worth keeping.</p>]]></summary>
+</entry>
+<entry>
     <title>Humbling Experience</title>
     <link href="https://xkollar.github.io/posts/2024-01-31-humbling-experience.html" />
     <id>https://xkollar.github.io/posts/2024-01-31-humbling-experience.html</id>
@@ -29,11 +46,13 @@ my brain took a moment to process it.</p>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">:</span> <span class="st">&quot;</span><span class="va">${*</span><span class="op">//</span><span class="ss">+</span><span class="op">/</span> <span class="va">}</span><span class="st">&quot;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">&quot;</span><span class="va">${_</span><span class="op">//</span><span class="ss">%</span><span class="op">/</span><span class="dt">\\</span>x<span class="va">}</span><span class="st">&quot;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
-<p>First part is using builtin <code class="sourceCode bash"><span class="bu">:</span></code> and as the (single) argument expanding
-all the arguments to the function into a single string <code class="sourceCode bash"><span class="va">${*}</span></code> while
-replacing all occurrences of <code>+</code> with space.</p>
-<p>Confusing part is, that <code class="sourceCode bash"><span class="bu">:</span></code> building kinda does nothing (except for
-exiting with 0, many of you probably invoked spell of shape <code>while :; do domething; done</code>). While this looks like
+<p>First part is using built-in <code class="sourceCode bash"><span class="bu">:</span></code> and as the (single) argument expanding
+all the arguments to the function into a single string <code class="sourceCode bash"><span class="st">&quot;</span><span class="va">${*}</span><span class="st">&quot;</span></code> while
+replacing all occurrences of <code>+</code> with space (double forward slash pattern
+substitution).</p>
+<p>Confusing part is that <code class="sourceCode bash"><span class="bu">:</span></code> build-in kinda does nothing (except for
+exiting with 0, many of you probably invoked spell of shape <code>while :; do domething; done</code> or as a part of comment/documentation combined with here
+document). While this looks like
 <a href="https://en.wikipedia.org/wiki/NOP_(code)"><code>nop</code></a>/pass/… it is not.</p>
 <p>The magic is revealed when we inspect the following line where special
 variable <code class="sourceCode bash"><span class="va">${_}</span></code> is used. From <a href="https://www.gnu.org/software/bash/manual/bash.html#index-_005f">Bash
@@ -43,7 +62,7 @@ in this case it</p>
 <p>expands to the last argument to the previous simple command executed in the
 foreground, after expansion.</p>
 </blockquote>
-<p>Therefore meaning of the previous line was just to set <code>${_}</code>. There all
+<p>Therefore meaning of the previous line was “just” to set <code>${_}</code>. There all
 percent signs get replaced with <code>\x</code> (double backslash for escaping in <code>"</code>) and
 pass that to <code>echo -e</code> for evaluation.</p>
 <p>Obviously, people who <a href="2020-11-23-bash-interview-echo.html">read me</a> know
@@ -96,8 +115,6 @@ you wish.)</p>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ex">omg</span> 1 2 3</span></code></pre></div>
 <p>On some level we are getting closer to metaprogramming as we are manipulatig
 the code that is running/being executed.</p>
-<p>Obviously <code>__wrap</code> can be extended further, for example to allow for custom
-name transformation in complicated and diffult to navigate environments.</p>
 <p>Now go and have fun!</p>]]></summary>
 </entry>
 <entry>
@@ -562,14 +579,6 @@ first question. You can ask it once you think the candidate is good enough
 and want to have a bit more of a interesting conversation with them.</p>
 <p>If anything, I hope that reader got some intuition into why defensive
 programming in Bash is important.</p>]]></summary>
-</entry>
-<entry>
-    <title>Some Types</title>
-    <link href="https://xkollar.github.io/posts/2018-03-13-some-types.html" />
-    <id>https://xkollar.github.io/posts/2018-03-13-some-types.html</id>
-    <published>2018-03-13T00:00:00Z</published>
-    <updated>2018-03-13T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>Some types are coproducts.</p>]]></summary>
 </entry>
 
 </feed>
