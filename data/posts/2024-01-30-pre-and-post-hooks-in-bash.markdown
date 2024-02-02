@@ -49,7 +49,4 @@ omg 1 2 3
 On some level we are getting closer to metaprogramming as we are manipulatig
 the code that is running/being executed.
 
-Obviously `__wrap` can be extended further, for example to allow for custom
-name transformation in complicated and diffult to navigate environments.
-
 Now go and have fun!
