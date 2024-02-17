@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xkollar - Comprehensions in Python</title>
+<link rel="feed" type="application/atom+xml" href="../atom.xml" title="Atom Feed">
+<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Comprehensions in Python</h1><div class="info">Posted on 2024-02-18 by xkollar  <span class="tags">in <a title="All pages tagged 'Python'." href="../tags/Python.html">Python</a>, <a title="All pages tagged 'Haskell'." href="../tags/Haskell.html">Haskell</a></span>.</div><p>Python’s comprehensions (list, generator, dictionarry) are neat,
+however coming from Haskell I miss <code>let</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>funItems <span class="ot">=</span> [ item <span class="op">|</span> itemId <span class="ot">&lt;-</span> ids, <span class="kw">let</span> item <span class="ot">=</span> getItem itemId, isFun item ]</span></code></pre></div>
+<p>In the meantime, I have seen in python</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fun_items <span class="op">=</span> [ get_item(item_id) <span class="cf">for</span> item_id <span class="kw">in</span> ids <span class="cf">if</span> is_fun(get_item(item_id)) ]</span></code></pre></div>
+<p>Needless to say, even without <code>get_item</code> being an expensive operation,
+this feels bad. After thinking about it for a while I came up with and
+alternative.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fun_items <span class="op">=</span> [ item <span class="cf">for</span> item_id <span class="kw">in</span> ids <span class="cf">for</span> item <span class="kw">in</span> (get_item(item_id),) <span class="cf">if</span> is_fun(item) ]</span></code></pre></div>
+<p>Though it is a bit longer 🤔. You win some, you lose some, I guess. 🤷</p>
+</div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
+</html>

@@ -8,8 +8,25 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2024-02-03T00:00:00Z</updated>
+    <updated>2024-02-18T00:00:00Z</updated>
     <entry>
+    <title>Comprehensions in Python</title>
+    <link href="https://xkollar.github.io/posts/2024-02-18-comprehension.html" />
+    <id>https://xkollar.github.io/posts/2024-02-18-comprehension.html</id>
+    <published>2024-02-18T00:00:00Z</published>
+    <updated>2024-02-18T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<p>Python’s comprehensions (list, generator, dictionarry) are neat,
+however coming from Haskell I miss <code>let</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>funItems <span class="ot">=</span> [ item <span class="op">|</span> itemId <span class="ot">&lt;-</span> ids, <span class="kw">let</span> item <span class="ot">=</span> getItem itemId, isFun item ]</span></code></pre></div>
+<p>In the meantime, I have seen in python</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fun_items <span class="op">=</span> [ get_item(item_id) <span class="cf">for</span> item_id <span class="kw">in</span> ids <span class="cf">if</span> is_fun(get_item(item_id)) ]</span></code></pre></div>
+<p>Needless to say, even without <code>get_item</code> being an expensive operation,
+this feels bad. After thinking about it for a while I came up with and
+alternative.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fun_items <span class="op">=</span> [ item <span class="cf">for</span> item_id <span class="kw">in</span> ids <span class="cf">for</span> item <span class="kw">in</span> (get_item(item_id),) <span class="cf">if</span> is_fun(item) ]</span></code></pre></div>
+<p>Though it is a bit longer 🤔. You win some, you lose some, I guess. 🤷</p>]]></summary>
+</entry>
+<entry>
     <title>Reflection</title>
     <link href="https://xkollar.github.io/posts/2024-02-03-reflection.html" />
     <id>https://xkollar.github.io/posts/2024-02-03-reflection.html</id>
@@ -497,89 +514,6 @@ input based on the degree.</p>
 <figure>
 <img src="/images/post-map.svg" />
 </figure>]]></summary>
-</entry>
-<entry>
-    <title>Bash Interview: echo</title>
-    <link href="https://xkollar.github.io/posts/2020-11-23-bash-interview-echo.html" />
-    <id>https://xkollar.github.io/posts/2020-11-23-bash-interview-echo.html</id>
-    <published>2020-11-23T00:00:00Z</published>
-    <updated>2020-11-23T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<p>Interviews are funny. You have only very little time
-to find out whether participating sides are a good match or not.
-On many different levels: from personal to technical.
-Traditionally it is established by series of questions
-and answers (ideally not one sided…).</p>
-<p>Good questions are not necessarily about correct answer but they will
-let you see someone’s thought process, will allow for a conversation about it,
-and also will enable you to estimate candidate’s experience level. (So the
-information gained from the interaction is not just binary.) Bonus points
-if the question will show the candidate that you are a cool place to be.</p>
-<p>For example, interviewing someone for a position that involves Linux,
-I like to ask:</p>
-<blockquote>
-<p>Using <code class="sourceCode bash"><span class="bu">echo</span></code>, print <code>-e</code> (<abbr title="ASCII HEX 2D">minus</abbr> e) on a line.</p>
-</blockquote>
-<p>Candidate would be ideally provided with a terminal to play with. Actually, try
-it yourself before reading any further, it is quite fun (if you are into that
-kind of thing <abbr title="😉 :wink:"><code>;-)</code></abbr>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span></span></code></pre></div>
-<p>Lol. But no. Hopefully they are just trolling.
-(I consider being confident enough to make a joke a good sign.)</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="at">-e</span></span></code></pre></div>
-<p>Nice try, candidate started to think, but no.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">--</span> <span class="at">-e</span></span></code></pre></div>
-<p>Okay, candidate knows about <code class="sourceCode bash"><span class="ex">--</span></code> convention, but no.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">\echo</span> <span class="at">--</span> <span class="at">-e</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
-<p>Trying some of previous variants with executable echo rather than builtin one,
-but no.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;-e&quot;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;-e&#39;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">\-</span>e</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">\\</span>-e</span></code></pre></div>
-<p>Candidate started to panic, interviewer needs to calm them down.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-n</span> <span class="at">-</span><span class="kw">;</span> <span class="bu">echo</span> e</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="at">--</span> <span class="st">&#39;-e\n&#39;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt;&lt;</span> -e</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> –e</span></code></pre></div>
-<p>Fair enough, it is important skill to be able to realize that one is being
-tricked (and try to trick in response). Interviewer needs to re-assure the
-candidate that it is indeed possible, with single echo. And that they meant
-ASCII character <abbr title="HEX 2D">-</abbr>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">$&#39;</span><span class="dt">\x2D</span><span class="st">e&#39;</span></span></code></pre></div>
-<p>Candidate realized that they need to be sneaky somehow, but
-still no. Somewhat impressive though as not everyone knows <code class="sourceCode bash"><span class="st">$&#39;&#39;</span></code>.</p>
-<p>Hopefully from there it is not far to get to the following.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">&#39;\x2De&#39;</span></span></code></pre></div>
-<p>If candidate on top of getting to the correct answer have
-a big grin on their face (signifying they had fun), I’m happy.</p>
-<h2 id="alternativessimilar">Alternatives/similar</h2>
-<blockquote>
-<p>You run <code class="sourceCode bash"><span class="bu">echo</span> <span class="pp">*</span></code> yet nothing gets printed. Can you explain?</p>
-</blockquote>
-<p>Hint: directory is not empy. Hidden files are irrelevant.</p>
-<blockquote>
-<p>There is a directory called <code>~</code> in current directory. Remove it and
-all it contains.</p>
-</blockquote>
-<p>Hint: maybe don’t give them terminal to try this one.</p>
-<p>Or slightly more obvious version:</p>
-<blockquote>
-<p>There is a file called <code>file; rm -rf ~</code> in current directory. Remove it.</p>
-</blockquote>
-<p>Also fun thing to ponder:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="st">&#39;\e[31mhello&#39;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="st">&#39;\e[33mworld&#39;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> ./-e</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#clear</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="pp">*</span></span></code></pre></div>
-<h2 id="final-note">Final note</h2>
-<p>If it is not clear from the tags, this article was not meant to be serious. If
-you however decide to use this in a real interview, please don’t make it the
-first question. You can ask it once you think the candidate is good enough
-and want to have a bit more of a interesting conversation with them.</p>
-<p>If anything, I hope that reader got some intuition into why defensive
-programming in Bash is important.</p>]]></summary>
 </entry>
 
 </feed>
