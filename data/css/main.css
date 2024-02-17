@@ -196,7 +196,7 @@ code span.vs { color: #22ffff; } /* VerbatimString */
 code span.ss { color: #22ffff; } /* SpecialString */
 code span.im { } /* Import */
 code span.va { color: #88ff88; } /* Variable */
-code span.cf { } /* ControlFlow */
+code span.cf { color: #ff88ff; } /* ControlFlow */
 code span.op { color: #ff0; } /* Operator */
 code span.bu { color: #ff0; } /* BuiltIn */
 code span.ex { } /* Extension */
