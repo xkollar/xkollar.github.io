@@ -75,7 +75,7 @@ nix:
   pure: false
   packages:
   - cairo
-  - pkgconfig
+  - pkg-config
   - tzdata
   - zlib
   - gcc

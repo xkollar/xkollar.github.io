@@ -23,6 +23,10 @@ alternative.
 
 ```python
 fun_items = [ item for item_id in ids for item in (get_item(item_id),) if is_fun(item) ]
+# or with nesting
+fun_items = [ item for item in (get_item(item_id) for item_id in ids) if is_fun(item) ]
 ```
 
 Though it is a bit longer 🤔. You win some, you lose some, I guess. 🤷
+
+Still feels better than nesting.
