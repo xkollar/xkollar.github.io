@@ -78,9 +78,9 @@ of the red region are equal to <span class="math inline">ℙ(<em>A</em>)</span>.
 simultaneously also horrible as it stretches your brain to think about
 probability as a length (one-dimensional) and as an area (two-dimensional),
 which it is neither of, since it is just a ratio (dimensionless). Anyway, if
-you stomach that, you can use to draw pictures that can help you reason about
-probabilities.</p>
-<p>Now let’s look at the following picture.</p>
+you stomach that, you can use it to draw pictures that can help you reason
+about probabilities.</p>
+<p>Let’s look at a demonstrative example in the following picture.</p>
 <svg viewBox="0 0 300 150" fill="white">
 <style>
   text {
@@ -106,7 +106,7 @@ probabilities.</p>
 </g>
 <g transform="translate(100,0) rotate(90)">
 <text x="16" y="-8" text-anchor="middle">ℙ(A)</text>
-<path d="M -0.5 -1.5 c 0 -1, 1 -2, 2 -2 l 13.75 0 c 1 0, 2 -1, 2 -2 c 0 1, 1 2, 2 2 l 13.75 0 c 1 0, 2 1, 2 2" fill="none" stroke="black" stroke-width="1" />
+<path d="M -0.5 -1.5 c 0 -1, 1 -2, 2 -2 l 16.25 0 c 1 0, 2 -1, 2 -2 c 0 1, 1 2, 2 2 l 16.25 0 c 1 0, 2 1, 2 2" fill="none" stroke="black" stroke-width="1" />
 </g>
 <text x="70" y="23" text-anchor="middle">ℙ(A&amp;B)</text>
 </g>
@@ -125,8 +125,8 @@ probabilities.</p>
 <path d="M -0.5 -1.5 c 0 -1, 1 -2, 2 -2 l 17.25 0 c 1 0, 2 -1, 2 -2 c 0 1, 1 2, 2 2 l 17.25 0 c 1 0, 2 1, 2 2" fill="none" stroke="black" stroke-width="1" />
 </g>
 <g transform="translate(100,0) rotate(90)">
-<text x="16" y="-8" text-anchor="middle">ℙ(A|B)</text>
-<path d="M -0.5 -1.5 c 0 -1, 1 -2, 2 -2 l 13.75 0 c 1 0, 2 -1, 2 -2 c 0 1, 1 2, 2 2 l 13.75 0 c 1 0, 2 1, 2 2" fill="none" stroke="black" stroke-width="1" />
+<text x="22.6" y="-8" text-anchor="middle">ℙ(A|B)</text>
+<path d="M -0.5 -1.5 c 0 -1, 1 -2, 2 -2 l 18.75 0 c 1 0, 2 -1, 2 -2 c 0 1, 1 2, 2 2 l 18.75 0 c 1 0, 2 1, 2 2" fill="none" stroke="black" stroke-width="1" />
 </g>
 <text x="79" y="25" text-anchor="middle">ℙ(A&amp;B)</text>
 </g>
