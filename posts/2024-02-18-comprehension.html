@@ -16,7 +16,10 @@ however coming from Haskell I miss <code>let</code>.</p>
 <p>Needless to say, even without <code>get_item</code> being an expensive operation,
 this feels bad. After thinking about it for a while I came up with and
 alternative.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fun_items <span class="op">=</span> [ item <span class="cf">for</span> item_id <span class="kw">in</span> ids <span class="cf">for</span> item <span class="kw">in</span> (get_item(item_id),) <span class="cf">if</span> is_fun(item) ]</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fun_items <span class="op">=</span> [ item <span class="cf">for</span> item_id <span class="kw">in</span> ids <span class="cf">for</span> item <span class="kw">in</span> (get_item(item_id),) <span class="cf">if</span> is_fun(item) ]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or with nesting</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fun_items <span class="op">=</span> [ item <span class="cf">for</span> item <span class="kw">in</span> (get_item(item_id) <span class="cf">for</span> item_id <span class="kw">in</span> ids) <span class="cf">if</span> is_fun(item) ]</span></code></pre></div>
 <p>Though it is a bit longer 🤔. You win some, you lose some, I guess. 🤷</p>
+<p>Still feels better than nesting.</p>
 </div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
 </html>
