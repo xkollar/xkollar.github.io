@@ -22,6 +22,11 @@ But what if you haven't found any errors? You'd probably like
 to be able to express what have you learned in terms of probabilities
 that there are errors.
 
+Or perhaps you'd like to be able to talk to rest of the business
+allowing them to understand the relationship between
+the resource allocation on testing and likelihood of
+there being undetected errors in the system.
+
 ## The First Attempt (Stumbling in the Dark)
 
 To make things more simple, let's say we have 5 elements in total and are
