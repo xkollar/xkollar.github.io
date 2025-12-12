@@ -1,7 +1,7 @@
 ---
 title: "Teaching Probability"
 author: xkollar
-tags: Math
+tags: Math, Probability
 ---
 
 Here is a crude representation of what I use as a visual aid for explaining probability: Unit Square.
