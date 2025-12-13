@@ -702,7 +702,8 @@ Compare with and without precision correction.
 
 ## Exploring
 
-Let's try to find answers to some fun questions!
+Now that we have build some basic building blocks,
+let's try to find answers to some fun questions!
 
 > Given dataset of size n, what is the smallest number of errors we are
 > c-confident we would have discovered an error by k samples?
@@ -710,9 +711,9 @@ Let's try to find answers to some fun questions!
 ```python
 def min_errors(total: int, samples: int, confidence_threshold: float) -> int:
     """
-    Calculates number of erros we are at least `confidence_threshold`
-    confident would discover by checking `samples` samples out of
-    `total` elements.
+    Finds minimal number of erros we are at least `confidence_threshold`
+    confident we would discover an error by checking `samples` samples
+    out of `total` elements.
     """
     left = 0
     right = total - samples + 1
@@ -734,8 +735,9 @@ def min_errors(total: int, samples: int, confidence_threshold: float) -> int:
 ```python
 def min_samples(total: int, errors: int, confidence_threshold: float) -> int:
     """
-    Calculates minimal number of samples to be at least `confidence_threshold`
-    confident we would have discovered.
+    Finds minimal number of samples to be at least `confidence_threshold`
+    confident we would have discovered an error if there were
+    `errors` errors in `total` elements.
     """
     left = 0
     right = total - errors + 1
@@ -762,6 +764,9 @@ that is kinda okay.
 ```
 
 ## Conclusion/Afterword
+
+We got to the point where, even without knowing much about probabilities of
+the underlying issue, we were able to to gain some insights!
 
 Consider this my journal on a journey trying to figure out some fun things!
 There might be errors/imprecisions/typos, ... I might have committed even
