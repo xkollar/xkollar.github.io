@@ -5,32 +5,34 @@ tags: Math, Probability
 ---
 
 In the real world there are many cases where we would like
-all members of a set/population/... to satisfy a certain property
-but it not practical (or possible) to test them all.
+all members of a set/population/... to satisfy certain property
+but it is not practical (or possible) to test them all.
 
-Set might be too big, individual test might take too long,
-or it might be too expensive.
+The set might be too big, individual test might take too long,
+or it might be too expensive is some other way. Or
+perhaps testing is destructive and after testing all the
+elements you would have nothing left.
 
 As an example it might be a huge database with lots of entries.
 Or an airport and deep searches.
 
 In any case, you take your budget (whether that is money,
 time, API calls, ...) and max it out running your tests.
-If you found your error, you have your answer: the system is compromised.
+If you found an error, you have your answer: the system is compromised.
 
 But what if you haven't found any errors? You'd probably like
 to be able to express what have you learned in terms of probabilities
 that there are errors.
 
-Or perhaps you'd like to be able to talk to rest of the business
-allowing them to understand the relationship between
-the resource allocation on testing and likelihood of
-there being undetected errors in the system.
+Or perhaps you'd like to be able to talk to rest of the business allowing them
+to understand the relationship between the resource allocation on testing and
+likelihood of there being undetected errors in the system.
 
 ## The First Attempt (Stumbling in the Dark)
 
-To make things more simple, let's say we have 5 elements in total and are
-able to test only 2. It might be tempting to attempt the following analysis:
+To make things more simple, let's say we have 5 elements in total and are able
+to test only 2 of them. It might be tempting to attempt the following
+analysis:
 
 ```txt
  Untested | Tested   | Cumulative Probability
@@ -45,8 +47,9 @@ able to test only 2. It might be tempting to attempt the following analysis:
     . . . | . .      |
 ```
 
-However, unless the probability of an individual element being faulty is 0.5, this is not the case!
-Imagine probability of an individual fault is 0.1. The following table captures the probabilities.
+However, unless the probability of an individual element being faulty is 0.5,
+this is not the case! Imagine probability of an individual fault is 0.1. The
+following table captures the probabilities.
 
 ```txt
  Untested | Probability | Cumulative
@@ -70,7 +73,8 @@ Luckily, there is something we can do! We can ask:
 
 > If there were `n` errors, what is the probability that we missed all of them?
 
-For the purposes of our analysis we can fix which elements are checked without loss of generality. 👋👋
+For the purposes of our analysis we can fix which elements are checked without
+loss of generality. 👋👋
 
 ```txt
  Errs | Untesed | Tested | Miss | P(seen=0|e=Errs) | Confidence Thresohld
@@ -115,25 +119,29 @@ For the purposes of our analysis we can fix which elements are checked without l
 ```
 
 Notice that this is okay to do, as all rows in a given group have the same
-probability regardless of what is probability of an individual element being
-faulty! (Assuming that probability is same on every position.) Also notice
-that we know for sure that there are not 4 nor 5 errors (as we would have
-observed a faulty element).
+probability regardless of what is the probability of an individual element
+being faulty! (Assuming that probability is same on every position.) Also
+notice that we know for sure that there are not 4 nor 5 errors (as we would
+have observed a faulty element).
 
 Now we can start asking questions:
 
-> What is the smallest number of errors we are 100% sure we would have discovered?
+> What is the smallest number of errors we are 100% sure we would have
+> found at least one?
 
 Well... 4. While this one is not very exiting, we can go further:
 
-> What is the smallest number of errors we are at least 90% confident we would have discovered?
+> What is the smallest number of errors we are at least 90% confident we would
+> have found at least one?
 
 Looking at our analysis: 3. And how would you answer:
 
-> What is the smallest number of errors we are at least 95% confident we would have discovered?
+> What is the smallest number of errors we are at least 95% confident we would
+> have fount at least one?
 
-Again, 4. Thinking about these cases will allow us to notice patterns with possibility to generalize.
-(And hopefully now the `P(seen=0|e=0) = 1` makes sense too.)
+Again: 4. Thinking about these cases will allow us to notice patterns with
+possibility to generalize. (And hopefully now the `P(seen=0|e=0) = 1` makes
+sense too.)
 
 ## General Case 🫡💼
 
@@ -180,11 +188,14 @@ how to have errors on all positions, or in <abbr title="mathematics (inside joke
 ## Complexity
 
 Pure mathematician would perhaps be happy here and consider the problem
-solved. However, the premise of this article is that size of the set is large,
-so calculating large factorials is not ideal... Consider the following
-monstrosity before simplification! ([Check Wikipedia for the complexity of
-factorial](https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations)
-which is better than naive multiplication of numbers from `1` to `n`.)
+solved. (Apologies to ones that would not.) However, the premise of this
+article is that the size of the set is large, and calculating large factorials
+brings its own challenges. Consider the following monstrosity before
+simplification!
+([Check Wikipedia for the complexity of factorial](https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations)
+which is better than naive multiplication of numbers from `1` to `n`.
+Python's `math.factorial`{.python} uses [Divide-and-conquer factorial algorithm](https://github.com/python/cpython/blob/main/Modules/mathintegermodule.c)
+based on <http://www.luschny.de/math/factorial/binarysplitfact.html>.)
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mi>P</mi>
@@ -485,8 +496,8 @@ Logarithms are cool because:
   </mrow>
 </math>.
 
-One might be tempted to add logs all they way through
-our previous equation and that way alleviate some
+One might be tempted to add `log`s all they way through
+our previous equations and that way alleviate some
 pains we were experiencing. However, we'll do one
 more funky side-step.
 
@@ -573,10 +584,12 @@ more funky side-step.
   </mrow>
 </math>
 
-At this point you might be a bit confused about what is going on.
-You might think there might be some way how to
-calculate `log(n!)` faster... and you'd be right:
-[Stirling's approximation](https://en.wikipedia.org/wiki/Stirling%27s_approximation).
+At this point you might be thinking:
+
+> What is going on? Maybe there is some way to
+calculate `log(n!)` faster... 🤔
+
+And you'd be right: [Stirling's approximation](https://en.wikipedia.org/wiki/Stirling%27s_approximation).
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mi>log</mi>
@@ -703,7 +716,7 @@ Compare with and without precision correction.
 ## Exploring
 
 Now that we have build some basic building blocks,
-let's try to find answers to some fun questions!
+let's try to find answers to some frivolous questions!
 
 > Given dataset of size n, what is the smallest number of errors we are
 > c-confident we would have discovered an error by k samples?
@@ -769,6 +782,6 @@ We got to the point where, even without knowing much about probabilities of
 the underlying issue, we were able to to gain some insights!
 
 Consider this my journal on a journey trying to figure out some fun things!
-There might be errors/imprecisions/typos, ... I might have committed even
+There might be errors/imprecisions/typos, ... I might have even committed
 couple of horrible things here. If you have noticed something and care enough:
 please let me know!
