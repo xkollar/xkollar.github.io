@@ -16,25 +16,27 @@
     <published>2025-12-14T00:00:00Z</published>
     <updated>2025-12-14T00:00:00Z</updated>
     <summary type="html"><![CDATA[<p>In the real world there are many cases where we would like
-all members of a set/population/… to satisfy a certain property
-but it not practical (or possible) to test them all.</p>
-<p>Set might be too big, individual test might take too long,
-or it might be too expensive.</p>
+all members of a set/population/… to satisfy certain property
+but it is not practical (or possible) to test them all.</p>
+<p>The set might be too big, individual test might take too long,
+or it might be too expensive is some other way. Or
+perhaps testing is destructive and after testing all the
+elements you would have nothing left.</p>
 <p>As an example it might be a huge database with lots of entries.
 Or an airport and deep searches.</p>
 <p>In any case, you take your budget (whether that is money,
 time, API calls, …) and max it out running your tests.
-If you found your error, you have your answer: the system is compromised.</p>
+If you found an error, you have your answer: the system is compromised.</p>
 <p>But what if you haven’t found any errors? You’d probably like
 to be able to express what have you learned in terms of probabilities
 that there are errors.</p>
-<p>Or perhaps you’d like to be able to talk to rest of the business
-allowing them to understand the relationship between
-the resource allocation on testing and likelihood of
-there being undetected errors in the system.</p>
+<p>Or perhaps you’d like to be able to talk to rest of the business allowing them
+to understand the relationship between the resource allocation on testing and
+likelihood of there being undetected errors in the system.</p>
 <h2 id="the-first-attempt-stumbling-in-the-dark">The First Attempt (Stumbling in the Dark)</h2>
-<p>To make things more simple, let’s say we have 5 elements in total and are
-able to test only 2. It might be tempting to attempt the following analysis:</p>
+<p>To make things more simple, let’s say we have 5 elements in total and are able
+to test only 2 of them. It might be tempting to attempt the following
+analysis:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> Untested | Tested   | Cumulative Probability</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>----------+----------+-----------------</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    X X X | . .      | P(e=3|c=2) = 1/8 (just this line)</span>
@@ -45,8 +47,9 @@ able to test only 2. It might be tempting to attempt the following analysis:</p>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    . X . | . .      |</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    . . X | . .      | P(e&gt;=1|c=2) = 7/8 (this and all previous lines)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    . . . | . .      |</span></code></pre></div>
-<p>However, unless the probability of an individual element being faulty is 0.5, this is not the case!
-Imagine probability of an individual fault is 0.1. The following table captures the probabilities.</p>
+<p>However, unless the probability of an individual element being faulty is 0.5,
+this is not the case! Imagine probability of an individual fault is 0.1. The
+following table captures the probabilities.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> Untested | Probability | Cumulative</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>----------+-------------+------------</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    X X X |       0.001 | P(e=3)  = 0.001</span>
@@ -64,7 +67,8 @@ can’t say much.</p>
 <blockquote>
 <p>If there were <code>n</code> errors, what is the probability that we missed all of them?</p>
 </blockquote>
-<p>For the purposes of our analysis we can fix which elements are checked without loss of generality. 👋👋</p>
+<p>For the purposes of our analysis we can fix which elements are checked without
+loss of generality. 👋👋</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> Errs | Untesed | Tested | Miss | P(seen=0|e=Errs) | Confidence Thresohld</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>------+---------+--------+------+------------------+------------</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    0 |   . . . | . .    |      | 1                | 0</span>
@@ -105,24 +109,28 @@ can’t say much.</p>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>------+---------+--------+------+------------------+------------</span>
 <span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    5 |   X X X | X X    |      | 0                | 1</span></code></pre></div>
 <p>Notice that this is okay to do, as all rows in a given group have the same
-probability regardless of what is probability of an individual element being
-faulty! (Assuming that probability is same on every position.) Also notice
-that we know for sure that there are not 4 nor 5 errors (as we would have
-observed a faulty element).</p>
+probability regardless of what is the probability of an individual element
+being faulty! (Assuming that probability is same on every position.) Also
+notice that we know for sure that there are not 4 nor 5 errors (as we would
+have observed a faulty element).</p>
 <p>Now we can start asking questions:</p>
 <blockquote>
-<p>What is the smallest number of errors we are 100% sure we would have discovered?</p>
+<p>What is the smallest number of errors we are 100% sure we would have
+found at least one?</p>
 </blockquote>
 <p>Well… 4. While this one is not very exiting, we can go further:</p>
 <blockquote>
-<p>What is the smallest number of errors we are at least 90% confident we would have discovered?</p>
+<p>What is the smallest number of errors we are at least 90% confident we would
+have found at least one?</p>
 </blockquote>
 <p>Looking at our analysis: 3. And how would you answer:</p>
 <blockquote>
-<p>What is the smallest number of errors we are at least 95% confident we would have discovered?</p>
+<p>What is the smallest number of errors we are at least 95% confident we would
+have fount at least one?</p>
 </blockquote>
-<p>Again, 4. Thinking about these cases will allow us to notice patterns with possibility to generalize.
-(And hopefully now the <code>P(seen=0|e=0) = 1</code> makes sense too.)</p>
+<p>Again: 4. Thinking about these cases will allow us to notice patterns with
+possibility to generalize. (And hopefully now the <code>P(seen=0|e=0) = 1</code> makes
+sense too.)</p>
 <h2 id="general-case">General Case 🫡💼</h2>
 <p>In general, probability for not having seen any error after taking <code>k</code> samples
 from set of total size <code>n</code> given there are <code>e</code> errors in the set is number of
@@ -164,11 +172,14 @@ how to have errors on all positions, or in <abbr title="mathematics (inside joke
 </math></p>
 <h2 id="complexity">Complexity</h2>
 <p>Pure mathematician would perhaps be happy here and consider the problem
-solved. However, the premise of this article is that size of the set is large,
-so calculating large factorials is not ideal… Consider the following
-monstrosity before simplification! (<a href="https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations">Check Wikipedia for the complexity of
-factorial</a>
-which is better than naive multiplication of numbers from <code>1</code> to <code>n</code>.)</p>
+solved. (Apologies to ones that would not.) However, the premise of this
+article is that the size of the set is large, and calculating large factorials
+brings its own challenges. Consider the following monstrosity before
+simplification!
+(<a href="https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations">Check Wikipedia for the complexity of factorial</a>
+which is better than naive multiplication of numbers from <code>1</code> to <code>n</code>.
+Python’s <code class="sourceCode python">math.factorial</code> uses <a href="https://github.com/python/cpython/blob/main/Modules/mathintegermodule.c">Divide-and-conquer factorial algorithm</a>
+based on <a href="http://www.luschny.de/math/factorial/binarysplitfact.html" class="uri">http://www.luschny.de/math/factorial/binarysplitfact.html</a>.)</p>
 <p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 <mi>P</mi>
 <mo>=</mo>
@@ -460,8 +471,8 @@ we’ll use log to mean logarithm with base e.)</p>
 </mrow>
 </math>.</li>
 </ul>
-<p>One might be tempted to add logs all they way through
-our previous equation and that way alleviate some
+<p>One might be tempted to add <code>log</code>s all they way through
+our previous equations and that way alleviate some
 pains we were experiencing. However, we’ll do one
 more funky side-step.</p>
 <p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
@@ -546,10 +557,12 @@ more funky side-step.</p>
 <mo>!</mo>
 </mrow>
 </math></p>
-<p>At this point you might be a bit confused about what is going on.
-You might think there might be some way how to
-calculate <code>log(n!)</code> faster… and you’d be right:
-<a href="https://en.wikipedia.org/wiki/Stirling%27s_approximation">Stirling’s approximation</a>.</p>
+<p>At this point you might be thinking:</p>
+<blockquote>
+<p>What is going on? Maybe there is some way to
+calculate <code>log(n!)</code> faster… 🤔</p>
+</blockquote>
+<p>And you’d be right: <a href="https://en.wikipedia.org/wiki/Stirling%27s_approximation">Stirling’s approximation</a>.</p>
 <p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 <mi>log</mi>
 <mo data-mjx-texclass="NONE">⁡</mo>
@@ -661,7 +674,7 @@ a quick test!</p>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>0.21591357887611928</span></code></pre></div>
 <h2 id="exploring">Exploring</h2>
 <p>Now that we have build some basic building blocks,
-let’s try to find answers to some fun questions!</p>
+let’s try to find answers to some frivolous questions!</p>
 <blockquote>
 <p>Given dataset of size n, what is the smallest number of errors we are
 c-confident we would have discovered an error by k samples?</p>
@@ -715,7 +728,7 @@ that is kinda okay.</p>
 <p>We got to the point where, even without knowing much about probabilities of
 the underlying issue, we were able to to gain some insights!</p>
 <p>Consider this my journal on a journey trying to figure out some fun things!
-There might be errors/imprecisions/typos, … I might have committed even
+There might be errors/imprecisions/typos, … I might have even committed
 couple of horrible things here. If you have noticed something and care enough:
 please let me know!</p>]]></summary>
 </entry>
