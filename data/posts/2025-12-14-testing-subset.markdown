@@ -8,8 +8,8 @@ In the real world there are many cases where we would like
 all members of a set/population/... to satisfy certain property
 but it is not practical (or possible) to test them all.
 
-The set might be too big, individual test might take too long,
-or it might be too expensive is some other way. Or
+The set might be too big, individual tests might take too long,
+or it might be too expensive in some other way. Or
 perhaps testing is destructive and after testing all the
 elements you would have nothing left.
 
@@ -129,7 +129,7 @@ Now we can start asking questions:
 > What is the smallest number of errors we are 100% sure we would have
 > found at least one?
 
-Well... 4. While this one is not very exiting, we can go further:
+Well... 4. While this one is not very exciting, we can go further:
 
 > What is the smallest number of errors we are at least 90% confident we would
 > have found at least one?
@@ -488,9 +488,8 @@ Logarithms are cool because:
     <mi>x</mi>
   </mrow>
   <mo>&#x2264;</mo>
-  <mi>l</mi>
-  <mi>o</mi>
-  <mi>g</mi>
+  <mi>log</mi>
+  <mo data-mjx-texclass="NONE">&#x2061;</mo>
   <mrow data-mjx-texclass="ORD">
     <mi>y</mi>
   </mrow>
@@ -779,7 +778,7 @@ that is kinda okay.
 ## Conclusion/Afterword
 
 We got to the point where, even without knowing much about probabilities of
-the underlying issue, we were able to to gain some insights!
+the underlying issue, we were able to gain some curious insights!
 
 Consider this my journal on a journey trying to figure out some fun things!
 There might be errors/imprecisions/typos, ... I might have even committed
