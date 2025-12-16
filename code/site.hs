@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main (main) where
 
-import Control.Monad ((>=>))
+import Control.Monad (forM_, (>=>))
 import Data.Function (on)
 import Data.List (intercalate, isSuffixOf)
 import Data.Ord (Down(Down))
@@ -13,7 +13,7 @@ import Data.Text (Text)
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text (decodeUtf8, encodeUtf8)
 import Hakyll
-import System.Directory (getDirectoryContents)
+import System.Directory (getDirectoryContents, copyFile)
 import System.IO.Temp (withSystemTempDirectory)
 import System.Process
 import Text.Blaze.Html.Renderer.String (renderHtml)
@@ -189,6 +189,7 @@ awesomeCompiler = transformativePandoc $ unsafeCompiler . comps where
     comps = foldr ((>=>) . walkM) return
         [ dotToImage
         , abcToImage
+        , pythonToImage
         ]
 
 encodeSvg :: Text -> Text
@@ -236,3 +237,31 @@ abcToImage (CodeBlock (_, cs, _) d)
     | "abc-render" `elem` cs = Para . map (mkSvgImage . purgeAbcOutput) <$> abcProc (Text.unpack d)
 abcToImage x = return x
 -- }}} ABC Music --------------------------------------------------------------
+
+-- {{{ Python ---------------------------------------------------------------
+getCopyList :: Text -> ([FilePath], Text)
+getCopyList = f []
+    where
+    f :: [FilePath] -> Text -> ([FilePath], Text)
+    f acc i = case Text.break (=='\n') <$> Text.stripPrefix "# copy: " i of
+        Just (fn, rest) -> f (Text.unpack fn:acc) $ Text.dropWhile (=='\n') rest
+        Nothing -> (acc, i)
+
+basename :: FilePath -> FilePath
+basename = reverse . takeWhile (/='/') . reverse
+
+pythonProc :: Text -> IO Text
+pythonProc i = withSystemTempDirectory "python-processor" $ \ tmp -> do
+    let (fs, t) = getCopyList i
+    forM_ fs $ \ f -> do
+        copyFile f (tmp <> "/" <> basename f)
+    fromString . fst <$> runCmdIn tmp
+        "python" [] (Text.unpack t)
+
+pythonToImage :: Block -> IO Block
+pythonToImage (CodeBlock (_, cs, _) d)
+    | "python-render" `elem` cs = do
+        s <- pythonProc d
+        return (Para [mkSvgImage s])
+pythonToImage x = return x
+-- }}} python ---------------------------------------------------------------

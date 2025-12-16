@@ -7,6 +7,9 @@ in pkgs.mkShell {
     pkgs.gnuplot
     pkgs.stack
     pkgs.zlib
+    (pkgs.python3.withPackages (python-pkgs: [
+      python-pkgs.matplotlib
+    ]))
   ];
   shellHook = ''
   '';
