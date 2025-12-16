@@ -801,7 +801,7 @@ def min_samples(total: int, errors: int, confidence_threshold: float) -> int:
     return left
 ```
 
-## Note
+## Note on Precission
 
 Thanks to small rounding errors some threshold values won't work exactly,
 but we are more likely to run this code for large numbers where
@@ -812,16 +812,41 @@ that is kinda okay.
 0.10000000000000002
 ```
 
+## Severity of a Bug
+
+One more interesting thing I'd like to leave you with is a though on what is a
+bug and how do I feel about "not knowing whether there is an error lurking
+just around the corner".
+
+Under "normal" circumstances, "system has a problem" is a binary thing; either
+yes or no. But here, unless an issue was discovered within chosen samples, we
+don't know.
+
+Let's say we have set of size `1_000_000`, and we have found out that after we
+have tested `1_000` members without finding an issue, we are 95% confident
+that if there were `min_errors(1_000_000, 1_000, 0.95) = 2_990` errors, we
+would have found at least 1.
+
+One way to think about it is, that we are 95% confident
+that if there was a systemic error (a bug) that would
+impact ~3% of members, we would have noticed it.
+
+And while this is not the only possible way to measure
+impact of the bug, it is certainly an interesting one.
+
 ## Conclusion
 
 We got to the point where, even without knowing much about probabilities of
 the underlying issue, we were able to gain some curious insights!
 
 **Takeaways**:
-*. Combinatorial analysis gives confidence bounds *without* knowing individual failure rates.
-*. Stirling's approximation enables computation at scale.
-*. Test design: Use `min_samples` to justify resource allocation.
-*. Reporting: Use `min_errors` to state "We're 95% confident undetected errors < X",
+
+* Combinatorial analysis gives confidence bounds *without* knowing individual failure rates.
+* Stirling's approximation enables computation at scale.
+* Test design: Use `min_samples` to justify resource allocation.
+* Reporting: Use `min_errors` to state "We're 95% confident undetected errors < X",
+* What fraction of elements (users/products/...) are impacted by a bug
+  can be an interesting measure of severity.
 
 ## Afterword
 
