@@ -1,5 +1,5 @@
 ---
-title: "Testing Subsets"
+title: "When you can't test everything"
 author: xkollar
 tags: Math, Probability
 ---
@@ -8,25 +8,24 @@ In the real world there are many cases where we would like
 all members of a set/population/... to satisfy certain property
 but it is not practical (or possible) to test them all.
 
-The set might be too big, individual tests might take too long,
-or it might be too expensive in some other way. Or
-perhaps testing is destructive and after testing all the
-elements you would have nothing left.
+The set might be too big, individual tests themselves too time consuming, or
+too expensive in some other way. Or perhaps testing is destructive and after
+testing all the elements you would have nothing left.
 
 As an example it might be a huge database with lots of entries.
 Or an airport and deep searches.
 
-In any case, you take your budget (whether that is money,
-time, API calls, ...) and max it out running your tests.
-If you found an error, you have your answer: the system is compromised.
+In any case, you take your budget (whether that is money, time, API calls,
+...) and max it out running your tests. If you found an error, you have your
+answer: the system is not error-free.
 
-But what if you haven't found any errors? You'd probably like
-to be able to express what have you learned in terms of probabilities
-that there are errors.
+But what if no errors are found? Was it a pure luck and the rest of the system
+is full of errors? We can't be certain, but hopefully we can have at least
+some kind of probabilistic confidence.
 
-Or perhaps you'd like to be able to talk to rest of the business allowing them
-to understand the relationship between the resource allocation on testing and
-likelihood of there being undetected errors in the system.
+Or perhaps you'd like to be able to talk to the rest of the business allowing
+them to understand the relationship between the resource allocation on testing
+and likelihood of there being undetected errors in the system.
 
 ## The First Attempt (Stumbling in the Dark)
 
@@ -77,52 +76,52 @@ For the purposes of our analysis we can fix which elements are checked without
 loss of generality. 👋👋
 
 ```txt
- Errs | Untesed | Tested | Miss | P(seen=0|e=Errs) | Confidence Thresohld
-------+---------+--------+------+------------------+------------
-    0 |   . . . | . .    |      | 1                | 0
-------+---------+--------+------+------------------+------------
-    1 |   . . . | . X    |      | 3/5              | 2/5
-      |   . . . | X .    |      | = 6/10           | = 4/10
-      |   . . X | . .    | !    |                  |
-      |   . X . | . .    | !    |                  |
-      |   X . . | . .    | !    |                  |
-------+---------+--------+------+------------------+------------
-    2 |   . . . | X X    |      | 3/10             | 7/10
-      |   . . X | . X    |      |                  |
-      |   . . X | X .    |      |                  |
-      |   . X . | . X    |      |                  |
-      |   . X . | X .    |      |                  |
-      |   . X X | . .    | !    |                  |
-      |   X . . | . X    |      |                  |
-      |   X . . | X .    |      |                  |
-      |   X . X | . .    | !    |                  |
-      |   X X . | . .    | !    |                  |
-------+---------+--------+------+------------------+------------
-    3 |   . . X | X X    |      | 1/10             | 9/10
-      |   . X . | X X    |      |                  |
-      |   . X X | . X    |      |                  |
-      |   . X X | X .    |      |                  |
-      |   X . . | X X    |      |                  |
-      |   X . X | . X    |      |                  |
-      |   X . X | X .    |      |                  |
-      |   X X . | . X    |      |                  |
-      |   X X . | X .    |      |                  |
-      |   X X X | . .    | !    |                  |
-------+---------+--------+------+------------------+------------
-    4 |   . X X | X X    |      | 0                | 1
-      |   X . X | X X    |      |                  |
-      |   X X . | X X    |      |                  |
-      |   X X X | . X    |      |                  |
-      |   X X X | X .    |      |                  |
-------+---------+--------+------+------------------+------------
-    5 |   X X X | X X    |      | 0                | 1
+ Errs | Untested | Tested | Miss | P(seen=0|e=Errs) | Confidence Threshold
+------+----------+--------+------+------------------+------------
+    0 |    . . . | . .    |      | 1                | 0
+------+----------+--------+------+------------------+------------
+    1 |    . . . | . X    |      | 3/5              | 2/5
+      |    . . . | X .    |      | = 6/10           | = 4/10
+      |    . . X | . .    | !    |                  |
+      |    . X . | . .    | !    |                  |
+      |    X . . | . .    | !    |                  |
+------+----------+--------+------+------------------+------------
+    2 |    . . . | X X    |      | 3/10             | 7/10
+      |    . . X | . X    |      |                  |
+      |    . . X | X .    |      |                  |
+      |    . X . | . X    |      |                  |
+      |    . X . | X .    |      |                  |
+      |    . X X | . .    | !    |                  |
+      |    X . . | . X    |      |                  |
+      |    X . . | X .    |      |                  |
+      |    X . X | . .    | !    |                  |
+      |    X X . | . .    | !    |                  |
+------+----------+--------+------+------------------+------------
+    3 |    . . X | X X    |      | 1/10             | 9/10
+      |    . X . | X X    |      |                  |
+      |    . X X | . X    |      |                  |
+      |    . X X | X .    |      |                  |
+      |    X . . | X X    |      |                  |
+      |    X . X | . X    |      |                  |
+      |    X . X | X .    |      |                  |
+      |    X X . | . X    |      |                  |
+      |    X X . | X .    |      |                  |
+      |    X X X | . .    | !    |                  |
+------+----------+--------+------+------------------+------------
+    4 |    . X X | X X    |      | 0                | 1
+      |    X . X | X X    |      |                  |
+      |    X X . | X X    |      |                  |
+      |    X X X | . X    |      |                  |
+      |    X X X | X .    |      |                  |
+------+----------+--------+------+------------------+------------
+    5 |    X X X | X X    |      | 0                | 1
 ```
 
 Notice that this is okay to do, as all rows in a given group have the same
 probability regardless of what is the probability of an individual element
-being faulty! (Assuming that probability is same on every position.) Also
-notice that we know for sure that there are not 4 nor 5 errors (as we would
-have observed a faulty element).
+being faulty! **Assumption: Errors are randomly distributed across all elements
+with equal probability.** Also notice that we know for sure that there are not
+4 nor 5 errors (as we would have observed a faulty element).
 
 Now we can start asking questions:
 
@@ -147,8 +146,8 @@ sense too.)
 
 In general, probability for not having seen any error after taking `k` samples
 from set of total size `n` given there are `e` errors in the set is number of
-ways how to have errors on unobserved `(n-k)` positions divided by number of
-how to have errors on all positions, or in <abbr title="mathematics (inside joke)">mafs</abbr>:
+ways how place `e` errors in untested (`n-k`) positions divided by the number
+of ways to place `e` errors in all positions, or in <abbr title="mathematics (inside joke)">mafs</abbr>:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mi>P</mi>
@@ -184,6 +183,44 @@ how to have errors on all positions, or in <abbr title="mathematics (inside joke
     </mrow>
   </mfrac>
 </math>
+
+And here are some graphs in case it helps you understand
+things. Symmetry is not coincidental.
+
+```python-render
+# copy: testing-sub-sample/confidence.py
+import matplotlib.pyplot as plt
+
+from confidence import alpha
+
+n = 1000
+
+fig, axs = plt.subplots(1,2)
+fig.suptitle(f"Detection Confidence: {n=}")
+
+ax1, ax2 = axs
+
+for e in [1,10,100]:
+    samples = range(n+1)
+    prob_miss = [alpha(n, k, e) for k in samples]
+    ax1.plot(samples, prob_miss, label=f"{e} actual errors")
+
+ax1.set(xlabel="Samples (k)")
+
+for k in [1,10,100]:
+    errors = range(0, n+1)
+    prob_miss = [alpha(n, k, e) for e in errors]
+    ax2.plot(errors, prob_miss, label=f"{k} samples")
+
+ax2.set(xlabel="Actual Errors (e)")
+
+for ax in axs.flat:
+    ax.legend(loc='best')
+    ax.set(ylabel="P(Miss All Errors)")
+    ax.label_outer()
+
+plt.savefig("/dev/stdout", format="svg")
+```
 
 ## Complexity
 
@@ -585,8 +622,8 @@ more funky side-step.
 
 At this point you might be thinking:
 
-> What is going on? Maybe there is some way to
-calculate `log(n!)` faster... 🤔
+> What is going on? Maybe there is a faster way to
+calculate `log(n!)` ... 🤔
 
 And you'd be right: [Stirling's approximation](https://en.wikipedia.org/wiki/Stirling%27s_approximation).
 
@@ -775,12 +812,21 @@ that is kinda okay.
 0.10000000000000002
 ```
 
-## Conclusion/Afterword
+## Conclusion
 
 We got to the point where, even without knowing much about probabilities of
 the underlying issue, we were able to gain some curious insights!
+
+**Takeaways**:
+*. Combinatorial analysis gives confidence bounds *without* knowing individual failure rates.
+*. Stirling's approximation enables computation at scale.
+*. Test design: Use `min_samples` to justify resource allocation.
+*. Reporting: Use `min_errors` to state "We're 95% confident undetected errors < X",
+
+## Afterword
 
 Consider this my journal on a journey trying to figure out some fun things!
 There might be errors/imprecisions/typos, ... I might have even committed
 couple of horrible things here. If you have noticed something and care enough:
 please let me know!
+
