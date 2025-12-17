@@ -5,7 +5,7 @@ tags: Math, Probability
 ---
 
 In the real world there are many cases where we would like
-all members of a set/population/... to satisfy certain property
+all members of a set/population/... to satisfy a certain property
 but it is not practical (or possible) to test them all.
 
 The set might be too big, individual tests themselves too time consuming, or
@@ -19,7 +19,7 @@ In any case, you take your budget (whether that is money, time, API calls,
 ...) and max it out running your tests. If you found an error, you have your
 answer: the system is not error-free.
 
-But what if no errors are found? Was it a pure luck and the rest of the system
+But what if no errors are found? Was it pure luck and the rest of the system
 is full of errors? We can't be certain, but hopefully we can have at least
 some kind of probabilistic confidence.
 
@@ -29,7 +29,7 @@ and likelihood of there being undetected errors in the system.
 
 ## The First Attempt (Stumbling in the Dark)
 
-To make things more simple, let's say we have 5 elements in total and are able
+To start simple, let's say we have 5 elements in total and are able
 to test only 2 of them. It might be tempting to attempt the following
 analysis:
 
@@ -136,7 +136,7 @@ Well... 4. While this one is not very exciting, we can go further:
 Looking at our analysis: 3. And how would you answer:
 
 > What is the smallest number of errors we are at least 95% confident we would
-> have fount at least one?
+> have found at least one?
 
 Again: 4. Thinking about these cases will allow us to notice patterns with
 possibility to generalize. (And hopefully now the `P(seen=0|e=0) = 1` makes
@@ -146,7 +146,7 @@ sense too.)
 
 In general, probability of not having seen any error after taking `k` samples
 without replacement from set of total size `n` given there are `e` errors in
-the set is the number of ways how place `e` errors in untested (`n-k`)
+the set is the number of ways how to place `e` errors in untested (`n-k`)
 positions divided by the number of ways how to place `e` errors in all
 positions, or in <abbr title="mathematics (inside joke)">mafs</abbr>:
 
@@ -544,7 +544,7 @@ Logarithms are cool because:
   </mrow>
 </math>.
 
-One might be tempted to add `log`s all they way through our previous equations
+One might be tempted to add `log`s all the way through our previous equations
 and that way alleviate some pains we were experiencing. However, we'll stop
 sooner and make one more funky side-step.
 
@@ -717,7 +717,7 @@ def log_fac(n: int) -> float:
 def log_alpha(total: int, samples: int, errors: int) -> float:
     assert total > 0
     assert samples <= total, "Samples more than total?"
-    assert errors <= total, "Erros more than total?"
+    assert errors <= total, "Errors more than total?"
     if errors + samples > total:
         return float("-inf")
     return (
@@ -771,7 +771,7 @@ let's try to find answers to some frivolous questions!
 ```python
 def min_errors(total: int, samples: int, confidence_threshold: float) -> int:
     """
-    Finds minimal number of erros we are at least `confidence_threshold`
+    Finds minimal number of errors we are at least `confidence_threshold`
     confident we would discover an error by checking `samples` samples
     out of `total` elements.
     """
@@ -812,7 +812,7 @@ def min_samples(total: int, errors: int, confidence_threshold: float) -> int:
     return left
 ```
 
-## Note on Precission
+## Note on Precision
 
 Thanks to small rounding errors some threshold values won't work exactly,
 but we are more likely to run this code for large numbers where
@@ -825,7 +825,7 @@ that is kinda okay.
 
 ## Severity of a Bug
 
-One more interesting thing I'd like to leave you with is a though on what is a
+One more interesting thing I'd like to leave you with is a thought on what is a
 bug and how do I feel about "not knowing whether there is an error lurking
 just around the corner".
 
