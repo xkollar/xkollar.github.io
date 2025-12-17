@@ -144,10 +144,11 @@ sense too.)
 
 ## General Case 🫡💼
 
-In general, probability for not having seen any error after taking `k` samples
-from set of total size `n` given there are `e` errors in the set is number of
-ways how place `e` errors in untested (`n-k`) positions divided by the number
-of ways to place `e` errors in all positions, or in <abbr title="mathematics (inside joke)">mafs</abbr>:
+In general, probability of not having seen any error after taking `k` samples
+without replacement from set of total size `n` given there are `e` errors in
+the set is the number of ways how place `e` errors in untested (`n-k`)
+positions divided by the number of ways how to place `e` errors in all
+positions, or in <abbr title="mathematics (inside joke)">mafs</abbr>:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mi>P</mi>
@@ -190,34 +191,49 @@ things. Symmetry is not coincidental.
 ```python-render
 # copy: testing-sub-sample/confidence.py
 import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
 
 from confidence import alpha
 
 n = 1000
 
-fig, axs = plt.subplots(1,2)
+def pl(n:int) -> str:
+    return "" if n == 1 else "s"
+
+fig = plt.figure(layout="constrained")
 fig.suptitle(f"Detection Confidence: {n=}")
 
-ax1, ax2 = axs
+gs = GridSpec(2, 2, figure=fig)
+ax1 = fig.add_subplot(gs[0,0])
+ax2 = fig.add_subplot(gs[0,1])
+ax3 = fig.add_subplot(gs[1,:])
+axs = ax1, ax2, ax3
 
+ax1.set(xlabel="Samples (k)")
+ax1.set(ylabel="P(Miss All Errors)")
 for e in [1,10,100]:
     samples = range(n+1)
     prob_miss = [alpha(n, k, e) for k in samples]
-    ax1.plot(samples, prob_miss, label=f"{e} actual errors")
+    ax1.plot(samples, prob_miss, label=f"{e} actual error{pl(e)}")
 
-ax1.set(xlabel="Samples (k)")
 
+ax2.set(xlabel="Actual Errors (e)")
 for k in [1,10,100]:
     errors = range(0, n+1)
     prob_miss = [alpha(n, k, e) for e in errors]
-    ax2.plot(errors, prob_miss, label=f"{k} samples")
+    ax2.plot(errors, prob_miss, label=f"{k} sample{pl(k)}")
+ax2.yaxis.set_tick_params(labelleft=False)
 
-ax2.set(xlabel="Actual Errors (e)")
 
-for ax in axs.flat:
+ax3.set(xlabel="lol")
+
+for ax in axs:
     ax.legend(loc='best')
-    ax.set(ylabel="P(Miss All Errors)")
-    ax.label_outer()
+
+# for ax in axs.flat:
+#     ax.legend(loc='best')
+#     ax.set(ylabel="P(Miss All Errors)")
+#     ax.label_outer()
 
 plt.savefig("/dev/stdout", format="svg")
 ```
@@ -532,10 +548,9 @@ Logarithms are cool because:
   </mrow>
 </math>.
 
-One might be tempted to add `log`s all they way through
-our previous equations and that way alleviate some
-pains we were experiencing. However, we'll do one
-more funky side-step.
+One might be tempted to add `log`s all they way through our previous equations
+and that way alleviate some pains we were experiencing. However, we'll stop
+sonner ane make one more funky side-step.
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mi>log</mi>
@@ -751,7 +766,7 @@ Compare with and without precision correction.
 
 ## Exploring
 
-Now that we have build some basic building blocks,
+Now that we have these basic building blocks,
 let's try to find answers to some frivolous questions!
 
 > Given dataset of size n, what is the smallest number of errors we are
@@ -829,7 +844,7 @@ would have found at least 1.
 
 One way to think about it is, that we are 95% confident
 that if there was a systemic error (a bug) that would
-impact ~3% of members, we would have noticed it.
+impact ~0.3% of members, we would have noticed it.
 
 And while this is not the only possible way to measure
 impact of the bug, it is certainly an interesting one.
