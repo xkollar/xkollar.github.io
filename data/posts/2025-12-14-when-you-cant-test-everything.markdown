@@ -546,7 +546,7 @@ Logarithms are cool because:
 
 One might be tempted to add `log`s all they way through our previous equations
 and that way alleviate some pains we were experiencing. However, we'll stop
-sonner ane make one more funky side-step.
+sooner and make one more funky side-step.
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mi>log</mi>
@@ -843,7 +843,7 @@ that if there was a systemic error (a bug) that would
 impact ~0.3% of members, we would have noticed it.
 
 And while this is not the only possible way to measure
-impact of the bug, it is certainly an interesting one.
+impact of a bug, it is certainly an interesting one.
 
 ## Conclusion
 
