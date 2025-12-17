@@ -200,40 +200,36 @@ n = 1000
 def pl(n:int) -> str:
     return "" if n == 1 else "s"
 
-fig = plt.figure(layout="constrained")
+fig = plt.figure(layout="constrained", figsize=(9,5))
 fig.suptitle(f"Detection Confidence: {n=}")
 
-gs = GridSpec(2, 2, figure=fig)
+gs = GridSpec(1, 2, figure=fig)
 ax1 = fig.add_subplot(gs[0,0])
 ax2 = fig.add_subplot(gs[0,1])
-ax3 = fig.add_subplot(gs[1,:])
-axs = ax1, ax2, ax3
+# ax3 = fig.add_subplot(gs[1,:])
+axs = ax1, ax2, # ax3
 
 ax1.set(xlabel="Samples (k)")
-ax1.set(ylabel="P(Miss All Errors)")
+ax1.set(ylabel="1-P(Miss All Errors)")
 for e in [1,10,100]:
     samples = range(n+1)
-    prob_miss = [alpha(n, k, e) for k in samples]
+    prob_miss = [1-alpha(n, k, e) for k in samples]
     ax1.plot(samples, prob_miss, label=f"{e} actual error{pl(e)}")
 
 
 ax2.set(xlabel="Actual Errors (e)")
 for k in [1,10,100]:
     errors = range(0, n+1)
-    prob_miss = [alpha(n, k, e) for e in errors]
+    prob_miss = [1-alpha(n, k, e) for e in errors]
     ax2.plot(errors, prob_miss, label=f"{k} sample{pl(k)}")
 ax2.yaxis.set_tick_params(labelleft=False)
 
 
-ax3.set(xlabel="lol")
+# ax3.set(xlabel="lol")
 
 for ax in axs:
     ax.legend(loc='best')
-
-# for ax in axs.flat:
-#     ax.legend(loc='best')
-#     ax.set(ylabel="P(Miss All Errors)")
-#     ax.label_outer()
+    ax.grid(True, axis='both', color='#fafafa')
 
 plt.savefig("/dev/stdout", format="svg")
 ```
