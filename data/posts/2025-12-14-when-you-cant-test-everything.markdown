@@ -8,12 +8,12 @@ In the real world there are many cases where we would like
 all members of a set/population/... to satisfy a certain property
 but it is not practical (or possible) to test them all.
 
-The set might be too big, individual tests themselves too time consuming, or
+The set might be too big, individual tests themselves too time-consuming, or
 too expensive in some other way. Or perhaps testing is destructive and after
 testing all the elements you would have nothing left.
 
-As an example it might be a huge database with lots of entries.
-Or an airport and deep searches.
+As an example, it might be a huge database with lots of entries.
+Or an airport conducting deep security searches.
 
 In any case, you take your budget (whether that is money, time, API calls,
 ...) and max it out running your tests. If you found an error, you have your
@@ -47,8 +47,8 @@ analysis:
 ```
 
 However, unless the probability of an individual element being faulty is 0.5,
-this is not the case! Imagine probability of an individual fault is 0.1. The
-following table captures the probabilities.
+this is not the case! Imagine the probability of an individual fault is 0.1.
+The following table captures the probabilities.
 
 ```txt
  Untested | Probability | Cumulative
@@ -63,7 +63,7 @@ following table captures the probabilities.
     . . . |       0.729 | Total   = 1
 ```
 
-So without a prior knowledge of probability of an individual failure, we
+So without prior knowledge of the probability of an individual failure, we
 can't say much.
 
 ## The Better Way
@@ -144,10 +144,10 @@ sense too.)
 
 ## General Case 🫡💼
 
-In general, probability of not having seen any error after taking `k` samples
-without replacement from set of total size `n` given there are `e` errors in
-the set is the number of ways how to place `e` errors in untested (`n-k`)
-positions divided by the number of ways how to place `e` errors in all
+In general, the probability of not having seen any error after taking `k`
+samples without replacement from set of total size `n` given there are `e`
+errors in the set is the number of ways how to place `e` errors in untested
+(`n-k`) positions divided by the number of ways how to place `e` errors in all
 positions, or in <abbr title="mathematics (inside joke)">mafs</abbr>:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
@@ -236,11 +236,11 @@ plt.savefig("/dev/stdout", format="svg")
 
 ## Complexity
 
-Pure mathematician would perhaps be happy here and consider the problem
-solved. (Apologies to ones that would not.) However, the premise of this
-article is that the size of the set is large, and calculating large factorials
-brings its own challenges. Consider the following monstrosity before
-simplification!
+A pure mathematician would perhaps be happy here and consider the problem
+solved. (Apologies to those that do not find this funny.) However, the premise
+of this article is that the size of the set is large, and calculating large
+factorials brings its own challenges. Consider the following monstrosity
+before simplification!
 ([Check Wikipedia for the complexity of factorial](https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations)
 which is better than naive multiplication of numbers from `1` to `n`.
 Python's `math.factorial`{.python} uses [Divide-and-conquer factorial algorithm](https://github.com/python/cpython/blob/main/Modules/mathintegermodule.c)
@@ -500,14 +500,14 @@ inf
 
 Not very useful. And at this scale we also need to take into account even the
 complexity of the multiplication itself! (Because arbitrary precision
-numbers.) Maybe we could do some smart pairing to keep that at minimum, but
+numbers.) Maybe we could do some smart pairing to keep that to a minimum, but
 let's try something more fun!
 
 ## A Log-ical Sidestep
 
-In the wild we won't care about absolute precision (and later on we'll be just
-comparing things during searches for various things), so there is a fun side
-step we can do: move to a logarithmic space! (For the rest of the article
+In the wild, we won't care about absolute precision (and later on we'll just
+be comparing things during searches for various things), so there is a fun
+sidestep we can do: move to a logarithmic space! (For the rest of the article
 we'll use log to mean logarithm with base e.)
 
 Logarithms are cool because:
@@ -545,8 +545,8 @@ Logarithms are cool because:
 </math>.
 
 One might be tempted to add `log`s all the way through our previous equations
-and that way alleviate some pains we were experiencing. However, we'll stop
-sooner and make one more funky side-step.
+and that way alleviate some of the pains we were experiencing. However, we'll stop
+sooner and make one more funky sidestep.
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mi>log</mi>
@@ -814,7 +814,7 @@ def min_samples(total: int, errors: int, confidence_threshold: float) -> int:
 
 ## Note on Precision
 
-Thanks to small rounding errors some threshold values won't work exactly,
+Thanks to small rounding errors, some threshold values won't work exactly,
 but we are more likely to run this code for large numbers where
 that is kinda okay.
 
@@ -838,7 +838,7 @@ have tested `1_000` members without finding an issue, we are 95% confident
 that if there were `min_errors(1_000_000, 1_000, 0.95) = 2_990` errors, we
 would have found at least 1.
 
-One way to think about it is, that we are 95% confident
+One way to think about it is that we are 95% confident
 that if there was a systemic error (a bug) that would
 impact ~0.3% of members, we would have noticed it.
 
@@ -863,6 +863,6 @@ the underlying issue, we were able to gain some curious insights!
 
 Consider this my journal on a journey trying to figure out some fun things!
 There might be errors/imprecisions/typos, ... I might have even committed
-couple of horrible things here. If you have noticed something and care enough:
+a couple of horrible things here. If you have noticed something and care enough:
 please let me know!
 
