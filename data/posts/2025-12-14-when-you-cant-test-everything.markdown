@@ -1,5 +1,5 @@
 ---
-title: "When you can't test everything"
+title: "When You Can’t Test Everything"
 author: xkollar
 tags: Math, Probability
 ---

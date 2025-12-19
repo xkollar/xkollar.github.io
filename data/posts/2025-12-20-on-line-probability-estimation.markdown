@@ -1,5 +1,5 @@
 ---
-title: "On-line probability"
+title: "On-line Probability Estimation"
 author: xkollar
 tags: Math, Probability, Stub
 ---
