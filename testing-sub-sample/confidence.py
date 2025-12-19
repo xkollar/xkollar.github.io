@@ -14,7 +14,7 @@ def log_fac(n: int) -> float:
 def log_alpha(total: int, samples: int, errors: int) -> float:
     assert total > 0
     assert samples <= total, "Samples more than total?"
-    assert errors <= total, "Erros more than total?"
+    assert errors <= total, "Errors more than total?"
     if errors + samples > total:
         return float("-inf")
     return (
@@ -35,7 +35,7 @@ def alpha(total: int, samples: int, errors: int) -> float:
 
 def min_errors(total: int, samples: int, confidence_threshold: float) -> int:
     """
-    Finds minimal number of erros we are at least `confidence_threshold`
+    Finds minimal number of errors we are at least `confidence_threshold`
     confident we would discover an error by checking `samples` samples
     out of `total` elements.
     """
