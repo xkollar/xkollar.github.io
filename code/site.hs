@@ -13,6 +13,7 @@ import Data.Text (Text)
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text (decodeUtf8, encodeUtf8)
 import Hakyll
+import Hakyll.Core.Compiler.Internal
 import System.Directory (getDirectoryContents, copyFile)
 import System.IO.Temp (withSystemTempDirectory)
 import System.Process
@@ -36,7 +37,9 @@ rules = do
 
     tags <- buildTags "posts/*" (fromCapture "tags/*.html")
 
-    let menuTagsCtxPart = menuTagsField "menutags" . takeTags 3 $ tagsByFrequency tags
+    let chew = takeTags 3 . removeStubs
+
+    let menuTagsCtxPart = menuTagsField "menutags" . chew $ tagsByFrequency tags
         finalize ctx =
             loadAndApplyTemplate "templates/default.html" (menuTagsCtxPart <> ctx)
             >=> relativizeUrls
@@ -77,7 +80,7 @@ rules = do
     create ["tags/index.html"] $ do
         route idRoute
         compile $ do
-            renderedTags <- renderTagList $ tagsByFrequency tags
+            renderedTags <- renderTagList . removeStubs $ tagsByFrequency tags
             let ctx = constField "title" "Tags" <> defaultContext
             makeItem renderedTags
                 >>= finalize ctx
@@ -125,8 +128,14 @@ tagsByFrequency :: Tags -> Tags
 tagsByFrequency = sortTagsBy cmp where
     cmp = compare `on` Down . length . snd
 
+applyTags :: ([(String, [Identifier])] -> [(String, [Identifier])]) -> Tags -> Tags
+applyTags f t = t { tagsMap = f $ tagsMap t }
+
 takeTags :: Int -> Tags -> Tags
-takeTags n t = t {tagsMap = take n $ tagsMap t}
+takeTags = applyTags . take
+
+removeStubs :: Tags -> Tags
+removeStubs = applyTags $ filter ((/=) "Stub" . fst)
 
 menuTagsField :: String -> Tags -> Context a
 menuTagsField key tags = field key $ \_ -> renderTags makeLink (intercalate separator) tags where

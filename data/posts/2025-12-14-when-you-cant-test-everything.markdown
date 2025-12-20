@@ -201,7 +201,7 @@ def pl(n:int) -> str:
     return "" if n == 1 else "s"
 
 fig = plt.figure(layout="constrained", figsize=(9,5))
-fig.suptitle(f"Detection Confidence: {n=}")
+fig.suptitle(f"Detection Confidence for {n=}")
 
 gs = GridSpec(1, 2, figure=fig)
 ax1 = fig.add_subplot(gs[0,0])
