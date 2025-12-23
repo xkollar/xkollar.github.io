@@ -208,3 +208,48 @@ code span.cv { color: #808080; font-weight: bold; font-style: italic; } /* Comme
 code span.in { color: #808080; font-weight: bold; font-style: italic; } /* Information */
 
 /* }}} Code */
+
+.speaker {
+    position: relative;
+    border-radius: 5pt;
+    margin-bottom: 1ex;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+.speaker > * {
+  padding: 1ex 0;
+}
+.a {
+    border: 1px solid #632;
+    background-color: #421;
+    margin-left: 2em;
+}
+.a:after {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 0pt solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid #421;
+  border-bottom: 15px solid transparent;
+  right: -14px;
+  top: 5pt;
+}
+.b {
+    border: 1px solid #363;
+    background-color: #242;
+    margin-right: 2em;
+}
+.b:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 15px solid transparent;
+  border-right: 0px solid transparent;
+  border-top: 15px solid #242;
+  border-bottom: 15px solid transparent;
+  left: -14px;
+  top: 5pt;
+}
