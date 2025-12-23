@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xkollar - Interview</title>
+<link rel="feed" type="application/atom+xml" href="../atom.xml" title="Atom Feed">
+<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Interview</h1><div class="info">Posted on 2025-12-25 by xkollar  <span class="tags">in <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a>, <a title="All pages tagged 'Interview'." href="../tags/Interview.html">Interview</a></span>.</div><p>Today is the day. After sitting for a few minutes
+in a comfy chair in a lobby of an unassuming office building
+with very calming art on the wall and pretending you are
+interested in magazines available, you are called into
+what feels like a for-two-people-oversized meeting room
+where a smiling person with an outfit as if generated
+to a prompt “unassuming geek with glasses” is ready for you.</p>
+<div class="speaker a">
+<p>Hello and welcome. I hope your wait was a pleasant one.
+Just to make sure, you are here for an interview for a
+position with ███ █████ where you’d be expected to do
+computer stuff. Is that what you expect?</p>
+</div>
+<p>…the person says gesturing towards a chair where there
+is already some paper, few pens and whiteboard markers,
+a glass, and a bottle of water.</p>
+<div class="speaker b">
+<p>Hi, nice to meet you, and yes, this is my expectation for today’s meeting.</p>
+</div>
+<p>As you sit down, the person continues:</p>
+<div class="speaker a">
+<p>Session with me will be somewhat technical, interactive, and hopefully fun.</p>
+<p>I’ve been with the company for <em>time period</em> and I’m part of
+a <em>cryptic and not much saying name of a team possibly
+referencing some niche-culture thing</em> where I work on
+<em>some technical stuff</em>. We mostly use <em>programming language</em>
+and <em>storage backend</em> on top of <em>operating system</em> running in
+<em>deployment technology</em> that runs in <em>some cloud stuff or on-prem
+or something</em>, but also use <em>list of almost every other language,
+storage technology, way of deployment, operating system, and whatnot</em>.</p>
+</div>
+<div class="speaker b">
+<p>Nice. I have heard some of those words.</p>
+</div>
+<div class="speaker a">
+<p>Haha. Anyway. Let’s get to the fun part. Given an area on a unit-square grid
+and some <a href="https://en.wikipedia.org/wiki/Polyomino">polyominos</a>, how would you
+go about determining whether it is possible to use these (possibly with
+repetition) to fill the given area.</p>
+</div>
+<p>After quick pause to wonder about how the interviewer managed to include a
+hyperlink in his speech you return back to your role of an interviewee and
+start thinking. The question is a bit vague, but I know what the question is
+asking. Or at least I think I do. Perhaps I should ask some clarifying
+questions?</p>
+<p>After a short moment you say:</p>
+<div class="speaker b">
+<p>Well, In general case I would just brute-force it. Start with one square
+in the area, and iterate over the shapes trying to place them there
+(and all rotations x flips if that is desired too), and then recursively…</p>
+</div>
+<div class="speaker a">
+<p>Sounds good, what would be the complexity of this algorithm?</p>
+</div>
+<p>You are bit startled by the interruption but decide it is okay.
+Perhaps it is a part of test? To be able to quickly adapt and
+to think on your feet is important…</p>
+<div class="speaker b">
+<p>Exponential in terms of …</p>
+</div>
+<p>But again before you manage to finish your answer you get interrupted.</p>
+<div class="speaker a">
+<p>Sounds like you are saying it is a hard problem. Let me make it simpler.</p>
+</div>
+<p>You want to say something, but the only thing that comes out is</p>
+<div class="speaker b">
+<p>…</p>
+</div>
+<div class="speaker a">
+<p>Let’s make it a rectangular area with sides <code>M</code> and <code>N</code> and you need to tile
+it with dominoes.</p>
+</div>
+<p>Hoping that at least this time you’ll get to finish your thought you start.</p>
+<div class="speaker b">
+<p>Every domino fills two squares. So I definitely can’t do rectangle with odd
+area. Now the question is, whether I can do all possible even areas. Even area
+of <code>MxN</code> has even <code>M</code> or <code>N</code>. Without loss of generality say it is <code>M</code>. Then
+we have <code>N</code> lines (<code>N</code> can be also even), that has <code>M = 2*X</code> unit squares,
+which we can trivially tile with <code>X</code> dominoes. Therefore: we can tile
+rectangular area of <code>MxN</code> unit squares with dominoes if and only if at least
+one of <code>M, N</code> is an even number.</p>
+</div>
+<div class="speaker a">
+<p>You mention Haskell on your CV. Can you write your solution in Haskell?</p>
+</div>
+<div class="speaker b">
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Bool</span> ((||))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Function</span> (on)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Numeric.Natural</span> (<span class="dt">Natural</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ot">canPack ::</span> <span class="dt">Natural</span> <span class="ot">-&gt;</span> <span class="dt">Natural</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>canPack <span class="ot">=</span> (<span class="op">||</span>) <span class="ot">`on`</span> <span class="fu">even</span></span></code></pre></div>
+</div>
+<p>You surprised yourself with your ability to speak with syntax highlighting but
+decide to just roll with it like nothing happened. At least you demonstrated
+that Haskell on your CV is not just decorative, and with chilled point-free
+style at that!</p>
+<div class="speaker a">
+<p>So you are saying that for example rectangle <code>2xN</code> can be tiled
+with dominoes for any <code>N</code>?</p>
+</div>
+<div class="speaker b">
+<p>Yes.</p>
+</div>
+<div class="speaker a">
+<p>In how many ways?</p>
+</div>
+<p>You feel this is a good moment for a clarifying question.</p>
+<div class="speaker b">
+<p>Excuse me?</p>
+</div>
+<div class="speaker a">
+<p>How many unique domio-tilings of <code>2xN</code> rectangular area are there?</p>
+</div>
+<p>For a bit you think about whether some off-by-one arrangements
+are possible and how to make sure you won’t count same cases
+multiple times, when you decide to try to build things on that
+brute-force idea from earlier and see where it goes from there…</p>
+<p>You look with question in your eyes at whiteboard markers
+and then into the eyes of the interviewer. The interviewer
+only briefly breaks the eye-contact to look at the whiteboard
+giving you the answer.</p>
+<div class="speaker b">
+<p>Let’s have a grid of <code>2xN</code>. Let’s break it down to several cases.</p>
+<svg viewBox="0 0 120 70" fill="white">
+<style>
+  text {
+    font: 5px sans-serif;
+    fill: black;
+  }
+  </style>
+<defs>
+<pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+<rect width="10" height="10" fill="none" stroke="black" stroke-width="0.5"></rect>
+</pattern>
+</defs>
+<!-- Background -->
+<rect x="0" y="0" width="150" height="100" fill="white"></rect>
+<!-- N=0 -->
+<rect x="15" y="10" width="0.001" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"></rect>
+<text x="15" y="8" text-anchor="middle">N=0</text>
+<!-- N=1 -->
+<rect x="10" y="40" width="10" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"></rect>
+<text x="15" y="38" text-anchor="middle">N=1</text>
+<!-- General case -->
+<g transform="translate(40 10)">
+<rect x="0" y="0" width="40" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"></rect>
+<g transform="translate(40 0)">
+<path stroke-dasharray="2,2" d="M0  0 l10 0" stroke="black" stroke-width="0.5"></path>
+<path stroke-dasharray="2,2" d="M0 10 l10 0" stroke="black" stroke-width="0.5"></path>
+<path stroke-dasharray="2,2" d="M0 20 l10 0" stroke="black" stroke-width="0.5"></path>
+</g>
+<rect x="50" y="0" width="10" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"></rect>
+<rect x="1" y="1" width="8" height="18" fill="#f999" stroke="#f99c" stroke-width="1"></rect>
+</g>
+<text x="70" y="8" text-anchor="middle">N</text>
+<g transform="translate(40 40)">
+<rect x="0" y="0" width="40" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"></rect>
+<g transform="translate(40 0)">
+<path stroke-dasharray="2,2" d="M0  0 l10 0" stroke="black" stroke-width="0.5"></path>
+<path stroke-dasharray="2,2" d="M0 10 l10 0" stroke="black" stroke-width="0.5"></path>
+<path stroke-dasharray="2,2" d="M0 20 l10 0" stroke="black" stroke-width="0.5"></path>
+</g>
+<rect x="50" y="0" width="10" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"></rect>
+<rect x="1" y="1" width="18" height="8" fill="#f999" stroke="#f99c" stroke-width="1"></rect>
+<rect x="1" y="11" width="18" height="8" fill="#99f9" stroke="#99fc" stroke-width="1"></rect>
+</g>
+</svg>
+<p>Let’s denote <code>count n</code> number of ways things are tiled.</p>
+<ul>
+<li>Trivially <code>count 0 = 1</code>.</li>
+<li>Similarly <code>count 1 = 1</code>.</li>
+<li>For cases when <code>N&gt;=2</code>, there are two sub-cases, stemming from
+how we cover the top-left corner:
+<ul>
+<li>In case we cover it with horizontal domino, then we need to
+tile <code>n-1</code> so there are <code>count (n-1)</code> ways to tile like this.</li>
+<li>In case we start with vertical domino, then we <em>have to</em> put
+one below, and we are left with <code>n-2</code>, so there are <code>count (n-2)</code>
+ways to tile like this.</li>
+</ul></li>
+</ul>
+<p>Or in Haskell</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">count ::</span> <span class="dt">Natural</span> <span class="ot">-&gt;</span> <span class="dt">Natural</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>count <span class="dv">0</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>count <span class="dv">1</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>count n <span class="ot">=</span> count (n<span class="op">-</span><span class="dv">1</span>) <span class="op">+</span> count (n<span class="op">-</span><span class="dv">2</span>)</span></code></pre></div>
+</div>
+<div class="speaker a">
+<p>👀</p>
+</div>
+<div class="speaker b">
+<p>… … … Those are Fibonacci numbers! 🤯</p>
+</div>
+<div class="speaker a">
+<p>Indeed 😌. Even though I like my Fibonacci numbers starting from 0.
+Now this implementation is not very computationally efficient, is it?
+Can we do any better?</p>
+</div>
+<p>Easy-peasy, let’s just build it from bottom up, and name the function
+properly.</p>
+<div class="speaker b">
+<p>Indeed, that is exponential-ish (well, technically the time
+complexity is also Fibonacci).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fib <span class="ot">=</span> (<span class="op">!!</span>) fibs</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    fibs <span class="ot">=</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">1</span> <span class="op">:</span> <span class="fu">zipWith</span> (<span class="op">+</span>) fibs (<span class="fu">tail</span> fibs)</span></code></pre></div>
+<p>And now we are linear… well, except for complexity of multiplication because
+as the value grows quite fasts the complexity of multiplication can not really
+be considered constant.</p>
+</div>
+<p>The interviewer seems pleased. Almost as if your answer brought up some
+pleasant memory from good-old uni times. You lost the track of time but
+somehow you know you are not done yet.</p>
+<div class="speaker a">
+<p>Can we do any better? And yes, numbers would be way too big.
+What if I told you we need only last 5 digits?</p>
+</div>
+<p>Now you finally feel the interview is getting to the interesting parts. From
+depths of your memory you try to pull that
+<a href="https://wiki.haskell.org/The_Fibonacci_sequence#Fastest_Fib_in_the_West">Fastest Fib in the West</a>.
+It is unlikely that you’ll manage to do that exact thing from the top of your
+head, but getting to logarithmic complexity should not be too difficult with
+the logarithmic-complexity exponentiation trick!</p>
+<div class="speaker b">
+<p>Let’s first make explicit what is happening as we calculate
+the Fibonacci number from the bottom up:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fib <span class="ot">=</span> go <span class="dv">1</span> <span class="dv">1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    go a _ <span class="dv">0</span> <span class="ot">=</span> a</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    go a b n <span class="ot">=</span> go b (a<span class="op">+</span>b) (n<span class="op">-</span><span class="dv">1</span>)</span></code></pre></div>
+<p>In every step we remember two neighbouring numbers in the sequence
+starting from (<code>1</code>, <code>1</code>) and then on each iteration we move up one step.
+This can be done with matrix multiplication! If given pair of <code>[a b]</code>
+we get to the next step easily.</p>
+<p><math display="block" class="tml-display" style="display:block math;">
+<mrow>
+<mrow>
+<mo fence="true" form="prefix">[</mo>
+<mtable>
+<mtr>
+<mtd style="padding-left:0em;padding-right:5.9776pt;">
+<mi>a</mi>
+</mtd>
+<mtd style="padding-left:5.9776pt;padding-right:0em;">
+<mi>b</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" form="postfix">]</mo>
+</mrow>
+<mo>×</mo>
+<mrow>
+<mo fence="true" form="prefix">[</mo>
+<mtable>
+<mtr>
+<mtd style="padding-left:0em;padding-right:5.9776pt;">
+<mn>0</mn>
+</mtd>
+<mtd style="padding-left:5.9776pt;padding-right:0em;">
+<mn>1</mn>
+</mtd>
+</mtr>
+<mtr>
+<mtd style="padding-left:0em;padding-right:5.9776pt;">
+<mn>1</mn>
+</mtd>
+<mtd style="padding-left:5.9776pt;padding-right:0em;">
+<mn>1</mn>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" form="postfix">]</mo>
+</mrow>
+<mo>=</mo>
+<mrow>
+<mo fence="true" form="prefix">[</mo>
+<mtable>
+<mtr>
+<mtd style="padding-left:0em;padding-right:5.9776pt;">
+<mi>b</mi>
+</mtd>
+<mtd style="padding-left:5.9776pt;padding-right:0em;">
+<mrow>
+<mi>a</mi>
+<mo>+</mo>
+<mi>b</mi>
+</mrow>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" form="postfix">]</mo>
+</mrow>
+</mrow>
+</math></p>
+<p>And now we just start from <code>[1 1]</code> and multiply it by power of our
+update matrix.</p>
+<p><math display="block" class="tml-display" style="display:block math;">
+<mrow>
+<mrow>
+<mo fence="true" form="prefix">[</mo>
+<mtable>
+<mtr>
+<mtd style="padding-left:0em;padding-right:5.9776pt;">
+<mn>1</mn>
+</mtd>
+<mtd style="padding-left:5.9776pt;padding-right:0em;">
+<mn>1</mn>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" form="postfix">]</mo>
+</mrow>
+<mo>×</mo>
+<msup>
+<mrow>
+<mo fence="true" form="prefix">[</mo>
+<mtable>
+<mtr>
+<mtd style="padding-left:0em;padding-right:5.9776pt;">
+<mn>0</mn>
+</mtd>
+<mtd style="padding-left:5.9776pt;padding-right:0em;">
+<mn>1</mn>
+</mtd>
+</mtr>
+<mtr>
+<mtd style="padding-left:0em;padding-right:5.9776pt;">
+<mn>1</mn>
+</mtd>
+<mtd style="padding-left:5.9776pt;padding-right:0em;">
+<mn>1</mn>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" form="postfix">]</mo>
+</mrow>
+<mi>n</mi>
+</msup>
+<mo>=</mo>
+<mrow>
+<mo fence="true" form="prefix">[</mo>
+<mtable>
+<mtr>
+<mtd style="padding-left:0em;padding-right:5.9776pt;">
+<mrow>
+<mpadded lspace="0">
+<mi>fib</mi>
+</mpadded>
+<mo form="prefix" stretchy="false">(</mo>
+<mi>n</mi>
+<mo form="postfix" stretchy="false">)</mo>
+</mrow>
+</mtd>
+<mtd style="padding-left:5.9776pt;padding-right:0em;">
+<mrow>
+<mpadded lspace="0">
+<mi>fib</mi>
+</mpadded>
+<mo form="prefix" stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo form="postfix" stretchy="false">)</mo>
+</mrow>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" form="postfix">]</mo>
+</mrow>
+</mrow>
+</math></p>
+<p>Which allows us to use “The Exponentiation Trick”™ and drive the
+complexity to logarithmic. And if we need only last 5 numbers,
+we can run it all in numbers factored <code>mod (10^5)</code>. Would you like
+me to elaborate on that?</p>
+</div>
+<div class="speaker a">
+<p>No. But I would like to see an implementation that avoids
+some duplicated calculations that matrix-based implementation
+has, and make it parametric with number of digits, please.</p>
+</div>
+<p>TBD… 🤷</p>
+</div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
+</html>
