@@ -448,3 +448,7 @@ has, and make it parametric with number of digits, please.
 </div>
 
 TBD... 🤷
+
+What will happen next? Will we see some type-level
+magic? Will they get to Pisano period? Will that help?
+Only time will show... stay tuned.
