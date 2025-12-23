@@ -71,7 +71,7 @@ in the area, and iterate over the shapes trying to place them there
 Sounds good, what would be the complexity of this algorithm?
 </div>
 
-You are bit startled by the interruption but decide it is okay.
+You are a bit startled by the interruption but decide it is okay.
 Perhaps it is a part of test? To be able to quickly adapt and
 to think on your feet is important...
 
@@ -149,7 +149,7 @@ Excuse me?
 
 
 <div class="speaker a">
-How many unique domio-tilings of `2xN` rectangular area are there?
+How many unique domino-tilings of `2xN` rectangular area are there?
 </div>
 
 For a bit you think about whether some off-by-one arrangements
@@ -261,7 +261,7 @@ fib = (!!) fibs
 ```
 
 And now we are linear... well, except for complexity of multiplication because
-as the value grows quite fasts the complexity of multiplication can not really
+as the value grows quite fast the complexity of multiplication can not really
 be considered constant.
 </div>
 
