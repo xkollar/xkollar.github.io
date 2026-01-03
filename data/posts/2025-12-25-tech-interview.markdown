@@ -1,5 +1,5 @@
 ---
-title: "Interview"
+title: "Tech Interview"
 author: xkollar
 tags: Fun, Interview
 ---
