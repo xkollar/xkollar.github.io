@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>xkollar - Interview</title>
+<title>xkollar - Tech Interview</title>
 <link rel="feed" type="application/atom+xml" href="../atom.xml" title="Atom Feed">
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
-<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Interview</h1><div class="info">Posted on 2025-12-25 by xkollar  <span class="tags">in <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a>, <a title="All pages tagged 'Interview'." href="../tags/Interview.html">Interview</a></span>.</div><p>Today is the day. After sitting for a few minutes
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Tech Interview</h1><div class="info">Posted on 2025-12-25 by xkollar  <span class="tags">in <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a>, <a title="All pages tagged 'Interview'." href="../tags/Interview.html">Interview</a></span>.</div><p>Today is the day. After sitting for a few minutes
 in a comfy chair in a lobby of an unassuming office building
 with very calming art on the wall and pretending you are
 interested in magazines available, you are called into
@@ -203,18 +203,18 @@ ways to tile like this.</li>
 <p>… … … Those are Fibonacci numbers! 🤯</p>
 </div>
 <div class="speaker a">
-<p>Indeed 😌. Even though I like my Fibonacci numbers starting from 0.
-Now this implementation is not very computationally efficient, is it?
-Can we do any better?</p>
+<p>Indeed 😌. Even though I like my Fibonacci numbers starting from 0.Now this
+implementation is not very computationally efficient, is it? Can we do any
+better?</p>
 </div>
-<p>Easy-peasy, let’s just build it from bottom up, and name the function
-properly.</p>
+<p>Easy-peasy, let’s just build it from bottom up, start from 0, and name the
+function properly.</p>
 <div class="speaker b">
 <p>Indeed, that is exponential-ish (well, technically the time
 complexity is also Fibonacci).</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fib <span class="ot">=</span> (<span class="op">!!</span>) fibs</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    fibs <span class="ot">=</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">1</span> <span class="op">:</span> <span class="fu">zipWith</span> (<span class="op">+</span>) fibs (<span class="fu">tail</span> fibs)</span></code></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    fibs <span class="ot">=</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">1</span> <span class="op">:</span> <span class="fu">zipWith</span> (<span class="op">+</span>) fibs (<span class="fu">tail</span> fibs)</span></code></pre></div>
 <p>And now we are linear… well, except for complexity of multiplication because
 as the value grows quite fast the complexity of multiplication can not really
 be considered constant.</p>
@@ -223,8 +223,31 @@ be considered constant.</p>
 pleasant memory from good-old uni times. You lost the track of time but
 somehow you know you are not done yet.</p>
 <div class="speaker a">
-<p>Can we do any better? And yes, numbers would be way too big.
-What if I told you we need only last 5 digits?</p>
+<p>Yes, numbers would be way too big way too fast, but we’ll deal with that
+later.</p>
+<p>Let’s first have a look at size of the stack. Your recursive definition of
+Fibonacci numbers list would work pretty well for purposes of printing all of
+them, but used like this, if I have decided to use your function while
+limiting my stack with something like <code>+RTS -K64k</code> I probably would not be able
+to get to <code>fib 2000</code> without a <code>*** Exception: stack overflow</code>.</p>
+</div>
+<div class="speaker b">
+<p>I see what you are hinting at. Issue is not with the recursion as recursive
+calls are tail calls. I this case it is the same laziness that allows us to
+define an infinite list of Fibonacci numbers defers the evaluation of addition
+and once we force evaluation at the end to be able to show the value, it
+causes the stack to explode. We can force the evaluation with <code>seq</code>, or we can
+just use
+<a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/strict.html#bang-patterns-informal">bang batterns</a>
+to sprinkle in some strictness.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fib <span class="ot">=</span> go <span class="dv">0</span> <span class="dv">1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    go <span class="op">!</span>a <span class="op">!</span>_ <span class="dv">0</span> <span class="ot">=</span> a</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    go a b n <span class="ot">=</span> go b (a<span class="op">+</span>b) (n<span class="op">-</span><span class="dv">1</span>)</span></code></pre></div>
+</div>
+<div class="speaker a">
+<p>Sweet. That is a pretty decent linear(ish) implementation… can we do any
+better?</p>
 </div>
 <p>Now you finally feel the interview is getting to the interesting parts. From
 depths of your memory you try to pull that
@@ -233,14 +256,10 @@ It is unlikely that you’ll manage to do that exact thing from the top of your
 head, but getting to logarithmic complexity should not be too difficult with
 the logarithmic-complexity exponentiation trick!</p>
 <div class="speaker b">
-<p>Let’s first make explicit what is happening as we calculate
-the Fibonacci number from the bottom up:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fib <span class="ot">=</span> go <span class="dv">1</span> <span class="dv">1</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    go a _ <span class="dv">0</span> <span class="ot">=</span> a</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    go a b n <span class="ot">=</span> go b (a<span class="op">+</span>b) (n<span class="op">-</span><span class="dv">1</span>)</span></code></pre></div>
+<p>The last implementation makes it quite explicit what is happening as we
+calculate the Fibonacci number from the bottom up:</p>
 <p>In every step we remember two neighbouring numbers in the sequence
-starting from (<code>1</code>, <code>1</code>) and then on each iteration we move up one step.
+starting from (<code>0</code>, <code>1</code>) and then on each iteration we move up one step.
 This can be done with matrix multiplication! If given pair of <code>[a b]</code>
 we get to the next step easily.</p>
 <p><math display="block" class="tml-display" style="display:block math;">
@@ -312,7 +331,7 @@ update matrix.</p>
 <mtable>
 <mtr>
 <mtd style="padding-left:0em;padding-right:5.9776pt;">
-<mn>1</mn>
+<mn>0</mn>
 </mtd>
 <mtd style="padding-left:5.9776pt;padding-right:0em;">
 <mn>1</mn>
@@ -381,12 +400,10 @@ update matrix.</p>
 </mrow>
 </math></p>
 <p>Which allows us to use “The Exponentiation Trick”™ and drive the
-complexity to logarithmic. And if we need only last 5 numbers,
-we can run it all in numbers factored <code>mod (10^5)</code>. Would you like
-me to elaborate on that?</p>
+complexity to logarithmic.</p>
 </div>
 <div class="speaker a">
-<p>No. But I would like to see an implementation that avoids
+<p>I would like to see an implementation that avoids
 some duplicated calculations that matrix-based implementation
 has, and make it parametric with number of digits, please.</p>
 </div>
