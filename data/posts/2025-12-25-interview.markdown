@@ -242,13 +242,13 @@ count n = count (n-1) + count (n-2)
 </div>
 
 <div class="speaker a">
-Indeed 😌. Even though I like my Fibonacci numbers starting from 0.
-Now this implementation is not very computationally efficient, is it?
-Can we do any better?
+Indeed 😌. Even though I like my Fibonacci numbers starting from 0.Now this
+implementation is not very computationally efficient, is it? Can we do any
+better?
 </div>
 
-Easy-peasy, let's just build it from bottom up, and name the function
-properly.
+Easy-peasy, let's just build it from bottom up, start from 0, and name the
+function properly.
 
 <div class="speaker b">
 Indeed, that is exponential-ish (well, technically the time
@@ -257,7 +257,7 @@ complexity is also Fibonacci).
 ```haskell
 fib = (!!) fibs
   where
-    fibs = 1 : 1 : zipWith (+) fibs (tail fibs)
+    fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
 ```
 
 And now we are linear... well, except for complexity of multiplication because
@@ -270,8 +270,37 @@ pleasant memory from good-old uni times. You lost the track of time but
 somehow you know you are not done yet.
 
 <div class="speaker a">
-Can we do any better? And yes, numbers would be way too big.
-What if I told you we need only last 5 digits?
+Yes, numbers would be way too big way too fast, but we'll deal with that
+later.
+
+Let's first have a look at size of the stack. Your recursive definition of
+Fibonacci numbers list would work pretty well for purposes of printing all of
+them, but used like this, if I have decided to use your function while
+limiting my stack with something like `+RTS -K64k` I probably would not be able
+to get to `fib 2000` without a `*** Exception: stack overflow`.
+</div>
+
+<div class="speaker b">
+I see what you are hinting at. Issue is not with the recursion as recursive
+calls are tail calls. I this case it is the same laziness that allows us to
+define an infinite list of Fibonacci numbers defers the evaluation of addition
+and once we force evaluation at the end to be able to show the value, it
+causes the stack to explode. We can force the evaluation with `seq`, or we can
+just use
+[bang batterns](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/strict.html#bang-patterns-informal)
+to sprinkle in some strictness.
+
+```haskell
+fib = go 0 1
+  where
+    go !a !_ 0 = a
+    go a b n = go b (a+b) (n-1)
+```
+</div>
+
+<div class="speaker a">
+Sweet. That is a pretty decent linear(ish) implementation... can we do any
+better?
 </div>
 
 Now you finally feel the interview is getting to the interesting parts. From
@@ -282,16 +311,11 @@ head, but getting to logarithmic complexity should not be too difficult with
 the logarithmic-complexity exponentiation trick!
 
 <div class="speaker b">
-Let's first make explicit what is happening as we calculate
-the Fibonacci number from the bottom up:
-```haskell
-fib = go 1 1
-  where
-    go a _ 0 = a
-    go a b n = go b (a+b) (n-1)
-```
+The last implementation makes it quite explicit what is happening as we
+calculate the Fibonacci number from the bottom up:
+
 In every step we remember two neighbouring numbers in the sequence
-starting from (`1`, `1`) and then on each iteration we move up one step.
+starting from (`0`, `1`) and then on each iteration we move up one step.
 This can be done with matrix multiplication! If given pair of `[a b]`
 we get to the next step easily.
 
@@ -366,7 +390,7 @@ update matrix.
       <mtable>
         <mtr>
           <mtd style="padding-left:0em;padding-right:5.9776pt;">
-            <mn>1</mn>
+            <mn>0</mn>
           </mtd>
           <mtd style="padding-left:5.9776pt;padding-right:0em;">
             <mn>1</mn>
@@ -436,13 +460,11 @@ update matrix.
 </math>
 
 Which allows us to use "The Exponentiation Trick"™ and drive the
-complexity to logarithmic. And if we need only last 5 numbers,
-we can run it all in numbers factored `mod (10^5)`. Would you like
-me to elaborate on that?
+complexity to logarithmic.
 </div>
 
 <div class="speaker a">
-No. But I would like to see an implementation that avoids
+I would like to see an implementation that avoids
 some duplicated calculations that matrix-based implementation
 has, and make it parametric with number of digits, please.
 </div>
