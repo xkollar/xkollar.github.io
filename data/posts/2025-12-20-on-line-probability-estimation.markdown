@@ -19,7 +19,7 @@ but for now here are just some points and a picture:
 * Logs are again useful.
 
 ```txt
- Errs | Samples   | Pobability    | Comment
+ Errs | Samples   | Probability   | Comment
 ------+-----------+---------------+------------------
     0 | . . . . . | (1-P_err)^5   | <- You are here!
 ------+-----------+---------------+-----------------
