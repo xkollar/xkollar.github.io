@@ -1,0 +1,6 @@
+---
+title: "Tick-Tock"
+author: xkollar
+tags: Fun
+---
+How many seconds are there in 6 weeks? 10!
