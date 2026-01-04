@@ -1,7 +1,7 @@
 ---
 title: "Reflection"
 author: xkollar
-tags: soc
+tags: SoC
 ---
 
 ![Looking at things past through numbers coincidentally collected](/images/reflection.png)

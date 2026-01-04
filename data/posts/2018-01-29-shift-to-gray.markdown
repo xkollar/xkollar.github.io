@@ -1,7 +1,7 @@
 ---
 title: Shift to Grey
 author: xkollar
-tags: soc
+tags: SoC
 ---
 
 Colour. Is it? Not everyone thinks so. Maybe the only one there is.

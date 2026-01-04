@@ -1,7 +1,7 @@
 ---
 title: "Tech Interview"
 author: xkollar
-tags: Fun, Interview
+tags: Fun, Interview, Haskell
 ---
 
 Today is the day. After sitting for a few minutes
