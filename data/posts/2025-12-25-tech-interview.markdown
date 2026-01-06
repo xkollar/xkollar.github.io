@@ -476,4 +476,5 @@ TBD... 🤷
 
 What will happen next? Will we see some type-level
 magic? Will they get to Pisano period? Will that help?
+Will our candidate turn out to be a "can do that" or "can't do that"?
 Only time will show... stay tuned.
