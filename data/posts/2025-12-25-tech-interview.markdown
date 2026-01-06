@@ -72,7 +72,7 @@ Sounds good, what would be the complexity of this algorithm?
 </div>
 
 You are a bit startled by the interruption but decide it is okay.
-Perhaps it is a part of test? To be able to quickly adapt and
+Perhaps it is part of the test? To be able to quickly adapt and
 to think on your feet is important...
 
 <div class="speaker b">
@@ -242,7 +242,7 @@ count n = count (n-1) + count (n-2)
 </div>
 
 <div class="speaker a">
-Indeed 😌. Even though I like my Fibonacci numbers starting from 0.Now this
+Indeed 😌. Even though I like my Fibonacci numbers starting from 0. Now this
 implementation is not very computationally efficient, is it? Can we do any
 better?
 </div>
@@ -282,7 +282,7 @@ to get to `fib 2000` without a `*** Exception: stack overflow`.
 
 <div class="speaker b">
 I see what you are hinting at. Issue is not with the recursion as recursive
-calls are tail calls. I this case it is the same laziness that allows us to
+calls are tail calls. In this case it is the same laziness that allows us to
 define an infinite list of Fibonacci numbers defers the evaluation of addition
 and once we force evaluation at the end to be able to show the value, it
 causes the stack to explode. We can force the evaluation with `seq`, or we can
@@ -464,9 +464,12 @@ complexity to logarithmic.
 </div>
 
 <div class="speaker a">
+Good to see someone who remembers that matrix multiplication
+has more applications than just making haiku.
+
 I would like to see an implementation that avoids
 some duplicated calculations that matrix-based implementation
-has, and make it parametric with number of digits, please.
+has due to the symmetry of the matrix used, please.
 </div>
 
 TBD... 🤷
