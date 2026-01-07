@@ -63,7 +63,7 @@ in the area, and iterate over the shapes trying to place them there
 <p>Sounds good, what would be the complexity of this algorithm?</p>
 </div>
 <p>You are a bit startled by the interruption but decide it is okay.
-Perhaps it is a part of test? To be able to quickly adapt and
+Perhaps it is part of the test? To be able to quickly adapt and
 to think on your feet is important…</p>
 <div class="speaker b">
 <p>Exponential in terms of …</p>
@@ -203,7 +203,7 @@ ways to tile like this.</li>
 <p>… … … Those are Fibonacci numbers! 🤯</p>
 </div>
 <div class="speaker a">
-<p>Indeed 😌. Even though I like my Fibonacci numbers starting from 0.Now this
+<p>Indeed 😌. Even though I like my Fibonacci numbers starting from 0. Now this
 implementation is not very computationally efficient, is it? Can we do any
 better?</p>
 </div>
@@ -233,7 +233,7 @@ to get to <code>fib 2000</code> without a <code>*** Exception: stack overflow</c
 </div>
 <div class="speaker b">
 <p>I see what you are hinting at. Issue is not with the recursion as recursive
-calls are tail calls. I this case it is the same laziness that allows us to
+calls are tail calls. In this case it is the same laziness that allows us to
 define an infinite list of Fibonacci numbers defers the evaluation of addition
 and once we force evaluation at the end to be able to show the value, it
 causes the stack to explode. We can force the evaluation with <code>seq</code>, or we can
@@ -403,13 +403,16 @@ update matrix.</p>
 complexity to logarithmic.</p>
 </div>
 <div class="speaker a">
+<p>Good to see someone who remembers that matrix multiplication
+has more applications than just making haiku.</p>
 <p>I would like to see an implementation that avoids
 some duplicated calculations that matrix-based implementation
-has, and make it parametric with number of digits, please.</p>
+has due to the symmetry of the matrix used, please.</p>
 </div>
 <p>TBD… 🤷</p>
 <p>What will happen next? Will we see some type-level
 magic? Will they get to Pisano period? Will that help?
+Will our candidate turn out to be a “can do that” or “can’t do that”?
 Only time will show… stay tuned.</p>
 </div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
 </html>
