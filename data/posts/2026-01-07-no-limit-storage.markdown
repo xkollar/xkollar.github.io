@@ -10,6 +10,6 @@ suddenly limits...
 
 <script>
 //<[CDATA[
-if(new Date().getDay()%6){b=document.body;b.innerHTML=b.innerHTML.replace(/\bd[asset]{5}t\b/,'$&s')}
+if(new Date().getDay()%6)window.onload=()=>{b=document.body;b.innerHTML=b.innerHTML.replace(/\bd[asset]{5}t\b/,'$&s')}
 //]]>
 </script>
