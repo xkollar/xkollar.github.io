@@ -380,7 +380,7 @@ we get to the next step easily.
   </mrow>
 </math>
 
-And now we just start from `[1 1]` and multiply it by power of our
+And now we just start from `[0 1]` and multiply it by power of our
 update matrix.
 
 <math display="block" class="tml-display" style="display:block math;">
@@ -468,7 +468,7 @@ Good to see someone who remembers that matrix multiplication
 has more applications than just making haiku.
 
 I would like to see an implementation that avoids
-some duplicated calculations that matrix-based implementation
+some duplicated calculations that matrix-based solution
 has due to the symmetry of the matrix used, please.
 </div>
 
