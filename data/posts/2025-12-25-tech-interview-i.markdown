@@ -1,26 +1,26 @@
 ---
-title: "Tech Interview"
+title: "Tech Interview I"
 author: xkollar
 tags: Fun, Interview, Haskell
 ---
 
 Today is the day. After sitting for a few minutes
 in a comfy chair in a lobby of an unassuming office building
-with very calming art on the wall and pretending you are
-interested in magazines available, you are called into
+with serene art on the wall and pretending you are
+interested in the magazines available, you are called into
 what feels like a for-two-people-oversized meeting room
 where a smiling person with an outfit as if generated
-to a prompt "unassuming geek with glasses" is ready for you.
+from a prompt "unassuming geek with glasses" is ready for you.
 
 <div class="speaker a">
 Hello and welcome. I hope your wait was a pleasant one.
 Just to make sure, you are here for an interview for a
-position with ███ █████ where you'd be expected to do
-computer stuff. Is that what you expect?
+position with ███ █████ where you'd be doing computer stuff.
+Is that what you expect?
 </div>
 
-...the person says gesturing towards a chair where there
-is already some paper, few pens and whiteboard markers,
+...the person says, gesturing towards a chair where there
+is already some paper, a few pens and whiteboard markers,
 a glass, and a bottle of water.
 
 <div class="speaker b">
@@ -55,9 +55,9 @@ repetition) to fill the given area.
 
 After quick pause to wonder about how the interviewer managed to include a
 hyperlink in his speech you return back to your role of an interviewee and
-start thinking. The question is a bit vague, but I know what the question is
+start thinking: "The question is a bit vague, but I know what it is
 asking. Or at least I think I do. Perhaps I should ask some clarifying
-questions?
+questions?"
 
 After a short moment you say:
 
@@ -157,9 +157,9 @@ are possible and how to make sure you won't count same cases
 multiple times, when you decide to try to build things on that
 brute-force idea from earlier and see where it goes from there...
 
-You look with question in your eyes at whiteboard markers
+You look with a question in your eyes at the whiteboard markers
 and then into the eyes of the interviewer. The interviewer
-only briefly breaks the eye-contact to look at the whiteboard
+only briefly breaks the eye contact to look at the whiteboard
 giving you the answer.
 
 <div class="speaker b">
@@ -465,16 +465,16 @@ complexity to logarithmic.
 
 <div class="speaker a">
 Good to see someone who remembers that matrix multiplication
-has more applications than just making haiku.
+has more applications than just making [haiku](2026-01-07-no-limit-storage.html).
 
 I would like to see an implementation that avoids
 some duplicated calculations that matrix-based solution
 has due to the symmetry of the matrix used, please.
 </div>
 
-TBD... 🤷
+...
 
 What will happen next? Will we see some type-level
 magic? Will they get to Pisano period? Will that help?
 Will our candidate turn out to be a "can do that" or "can't do that"?
-Only time will show... stay tuned.
+Only time will show... [stay tuned](2026-01-25-tech-interview-ii.html).

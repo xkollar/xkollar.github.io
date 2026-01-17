@@ -209,6 +209,20 @@ code span.in { color: #808080; font-weight: bold; font-style: italic; } /* Infor
 
 /* }}} Code */
 
+/* Add spacing between columns */
+mtable mtd {
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+}
+/* Remove padding from first and last columns to keep brackets tight */
+mtable mtd:first-child {
+  padding-left: 0;
+}
+mtable mtd:last-child {
+  padding-right: 0;
+}
+
+
 .speaker {
     position: relative;
     border-radius: 5pt;
@@ -249,6 +263,23 @@ code span.in { color: #808080; font-weight: bold; font-style: italic; } /* Infor
   border-left: 15px solid transparent;
   border-right: 0px solid transparent;
   border-top: 15px solid #242;
+  border-bottom: 15px solid transparent;
+  left: -14px;
+  top: 5pt;
+}
+.c {
+    border: 1px solid #336;
+    background-color: #224;
+    margin-right: 2em;
+}
+.c:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 15px solid transparent;
+  border-right: 0px solid transparent;
+  border-top: 15px solid #224;
   border-bottom: 15px solid transparent;
   left: -14px;
   top: 5pt;

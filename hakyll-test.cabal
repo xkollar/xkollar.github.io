@@ -11,6 +11,7 @@ executable site
 
                   , base64-bytestring
                   , directory
+                  , pandoc
                   , pandoc-types
                   , process
                   , regex-compat

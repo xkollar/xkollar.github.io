@@ -21,6 +21,7 @@ import Text.Blaze.Html.Renderer.String (renderHtml)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 import Text.Pandoc.Definition
+import Text.Pandoc.Options
 import Text.Pandoc.Walk (walkM)
 import Text.Regex (subRegex, mkRegex)
 
@@ -158,7 +159,12 @@ myFeedConfiguration = FeedConfiguration
 transformativePandoc :: (Pandoc -> Compiler Pandoc) -> Compiler (Item String)
 transformativePandoc = pandocCompilerWithTransformM
     defaultHakyllReaderOptions
-    defaultHakyllWriterOptions
+    wo
+  where
+    wo = defaultHakyllWriterOptions
+        { writerExtensions = enableExtension Ext_tex_math_dollars $ writerExtensions defaultHakyllWriterOptions
+        , writerHTMLMathMethod = MathML
+        }
 
 runCmdIn
     :: FilePath
