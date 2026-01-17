@@ -31,7 +31,7 @@ L:1/4
 Notes:
 
 * Melody is in the right hand, so left hand should be played softer/gentler.
-  Required hand asymmetry might not be simple to achive. There is however simple
-  exercise to get there: Alternate playing C-major scale between left and right hand, right stonger.
-  Over time, make pauses after stronger arm smaller and smaller, untill you play both hands
+  Required hand asymmetry might not be simple to achieve. There is however simple
+  exercise to get there: Alternate playing C-major scale between left and right hand, right stronger.
+  Over time, make pauses after stronger arm smaller and smaller, until you play both hands
   at the same time, but different strength. (Do not forget to train also reverse.)

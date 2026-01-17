@@ -335,9 +335,10 @@ Hi, sorry for making you wait this long, we had an unexpected
 emergency. Are yous still available to do the interview now?
 </div>
 
-The new person looks at the wihteboard with expression of sudden
+The new person looks at the whiteboard with expression of sudden
 realization:
 
 <div class="speaker c">
-Not again 😮‍💨 ... Have you... have you just had a techinical round?
+Not again 😮‍💨 ... Have you... Have someone had a technical
+interview round with you just now?
 </div>

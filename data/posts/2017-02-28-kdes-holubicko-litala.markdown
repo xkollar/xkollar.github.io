@@ -42,7 +42,7 @@ In case you are not familiar with it, you can get the feel at
 Notes:
 
 * Pay attention to dynamics.
-* Dynamics change between 8th and 9th bar shoud be hearable but smooth (not too
+* Dynamics change between 8th and 9th bar should be audible but smooth (not too
   intense).
 * Train hands separately, with left extra attention to timing (count...)
 * Once comfortable, start putting things together.
