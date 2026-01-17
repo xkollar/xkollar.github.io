@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xkollar - Tech Interview II</title>
+<link rel="feed" type="application/atom+xml" href="../atom.xml" title="Atom Feed">
+<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Tech Interview II</h1><div class="info">Posted on 2026-01-25 by xkollar  <span class="tags">in <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a>, <a title="All pages tagged 'Interview'." href="../tags/Interview.html">Interview</a>, <a title="All pages tagged 'Haskell'." href="../tags/Haskell.html">Haskell</a></span>.</div><!-- Modified rendering of math. I used to compile
+it manually with something like https://temml.org/
+and embed resulting MathML. Now trying letting
+Pandoc compile it, and the result feels very dense,
+I don't think I like it, but maybe it can be CSS-ed? -->
+<p>In the <a href="2025-12-25-tech-interview-i.html">previous installment of the Tech Interview saga</a>
+we have left just as things started to get fun, perhaps expecting some quite
+heavy chunks of code dropping. Will they materialize? Or perhaps the interview
+will switch to Python? (Yeah, you saw the tags, no fooling you!) Keep reading
+and find out!</p>
+<p>Staring at the art outside of the meeting room gave you an uneasy feeling of
+discontinuity in time. It feels like you lost a month doing just that.
+But that is impossible, you are still here, doing the interview. There was a
+quesion, right.</p>
+<p>You take a deep breath and squeeze the whiteboard marker in your hand,
+feeling it’s weight like a master chef would feel the weight and
+the balance of a knife, ready to scribble.</p>
+<div class="speaker b">
+<p>To get the feel for what we are working with let’s look at the first few
+powers of the update matrix:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right"></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="right"><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="right"><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left"><mi>⋯</mi><mrow></mrow></mtd></mtr><mtr><mtd columnalign="right"><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="right"><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>2</mn></mtd><mtd columnalign="center"><mn>3</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="right"><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>2</mn></mtd><mtd columnalign="center"><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>3</mn></mtd><mtd columnalign="center"><mn>5</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left"><mi>⋯</mi><mrow></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{align}
+&amp;
+\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 1 \\
+\end{bmatrix}
+&amp;
+\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 1 \\
+\end{bmatrix}
+&amp;
+\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 1 \\
+\end{bmatrix}
+&amp;
+\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 1 \\
+\end{bmatrix}
+&amp;
+\cdots{}
+\\
+\begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; 1 \\
+\end{bmatrix}
+&amp;
+\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 1 \\
+\end{bmatrix}
+&amp;
+\begin{bmatrix}
+1 &amp; 1 \\
+1 &amp; 2 \\
+\end{bmatrix}
+&amp;
+\begin{bmatrix}
+1 &amp; 2 \\
+2 &amp; 3 \\
+\end{bmatrix}
+&amp;
+\begin{bmatrix}
+2 &amp; 3 \\
+3 &amp; 5 \\
+\end{bmatrix}
+&amp;
+\cdots{}
+\\
+\end{align}
+</annotation></semantics></math></p>
+<p>This seems to suggest that each element of the sequence is of form</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mi>a</mi></mtd><mtd columnalign="center"><mi>b</mi></mtd></mtr><mtr><mtd columnalign="center"><mi>b</mi></mtd><mtd columnalign="center"><mi>a</mi><mo>+</mo><mi>b</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">
+\begin{bmatrix}
+a &amp; b \\
+b &amp; a+b \\
+\end{bmatrix}
+</annotation></semantics></math></p>
+<p>For things to work we need e and f such that</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mi>a</mi></mtd><mtd columnalign="center"><mi>b</mi></mtd></mtr><mtr><mtd columnalign="center"><mi>b</mi></mtd><mtd columnalign="center"><mi>a</mi><mo>+</mo><mi>b</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mi>c</mi></mtd><mtd columnalign="center"><mi>d</mi></mtd></mtr><mtr><mtd columnalign="center"><mi>d</mi></mtd><mtd columnalign="center"><mi>c</mi><mo>+</mo><mi>d</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mi>e</mi></mtd><mtd columnalign="center"><mi>f</mi></mtd></mtr><mtr><mtd columnalign="center"><mi>f</mi></mtd><mtd columnalign="center"><mi>e</mi><mo>+</mo><mi>f</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+\begin{bmatrix}
+a &amp; b \\
+b &amp; a+b \\
+\end{bmatrix}
+\begin{bmatrix}
+c &amp; d \\
+d &amp; c+d \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+e &amp; f \\
+f &amp; e+f \\
+\end{bmatrix}
+</annotation></semantics></math></p>
+<p>Which is indeed the case for</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right"><mi>e</mi></mtd><mtd columnalign="left"><mo>=</mo><mi>a</mi><mi>c</mi><mo>+</mo><mi>b</mi><mi>d</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>f</mi></mtd><mtd columnalign="left"><mo>=</mo><mi>a</mi><mi>d</mi><mo>+</mo><mi>b</mi><mi>c</mi><mo>+</mo><mi>b</mi><mi>d</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{align}
+e &amp; = ac + bd \\
+f &amp; = ad + bc + bd \\
+\end{align}
+</annotation></semantics></math></p>
+<p>This not only shows that we can reduce the original matrices to just tuples,
+but it also tells us how to combine them! And based on the way we constructed
+the operation it is trivially associative too. Giving us a semigroup. An while
+identity matrix has corresponding representation in our new structure making
+it a monoid, we don’t need it now. Cherry on top? Haskell’s
+<a href="https://hackage-content.haskell.org/package/ghc-internal-9.1401.0/docs/src/GHC.Internal.Base.html#stimes"><code>Semigroup</code> class has method <code>stimes</code></a>
+that does what we need, and the default implementation does it the way that we
+want!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Fib</span> a <span class="ot">=</span> <span class="dt">F</span> <span class="op">!</span>a <span class="op">!</span>a <span class="kw">deriving</span> <span class="dt">Show</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>un (<span class="dt">F</span> x _) <span class="ot">=</span> x</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> <span class="dt">Semigroup</span> (<span class="dt">Fib</span> a) <span class="kw">where</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">F</span> a b <span class="op">&lt;&gt;</span> <span class="dt">F</span> c d <span class="ot">=</span> <span class="dt">F</span> (a<span class="op">*</span>c <span class="op">+</span> bd) (a<span class="op">*</span>d<span class="op">+</span>b<span class="op">*</span>c<span class="op">+</span>bd)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">where</span> bd <span class="ot">=</span> b<span class="op">*</span>d</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fib <span class="ot">=</span> un <span class="op">.</span> <span class="fu">flip</span> stimes (<span class="dt">F</span> <span class="dv">0</span> <span class="dv">1</span>) <span class="op">.</span> <span class="fu">succ</span></span></code></pre></div>
+<p>(Except for strictness, but if you’d want me to
+add that I’d just end up copy-pasting that code and
+sprinkling in some exclamation marks.)</p>
+<!-- And yes, I could have taken the second element and, that way avoid
+`succ` and then handle 0 separately, but this feels more elegant.
+And possibly removing strictness ftom the second argument
+would do as good. -->
+</div>
+<p>The interviewer takes in a breath to perhaps say something…
+but you decide to go on</p>
+<div class="speaker b">
+<p>I know what you want to say 🤔. This way we do 4 multiplications and 3
+additions, but we know that multiplications are more expensive.
+Can we do any better? I think we can:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right"><mi>e</mi></mtd><mtd columnalign="left"><mo>=</mo><mi>a</mi><mi>c</mi><mo>+</mo><mi>b</mi><mi>d</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>f</mi></mtd><mtd columnalign="left"><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo>+</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mi>a</mi><mi>c</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
+e &amp; = ac + bd \\
+f &amp; = (a+b)(c+d) - ac \\
+\end{align}</annotation></semantics></math></p>
+<p>This way we do 3 multiplications and 4 “additive” operations, except
+now we need minus on the underlying numeric types.</p>
+</div>
+<p>For an unexpectedly shaped moment there is a silence.
+You can almost feel it forming at the tip of your tongue.
+Also: are you beaming? In any case you feel good. This would
+not have been a bad moment to wrap up. Yet by how you
+structured the code in your answer… you know more is coming.</p>
+<div class="speaker a">
+<p>To be honest, I just wanted to say that if we were writing things in Python I
+would have made you write the whole thing explicitly, but because you know
+about <code>stimes</code> and have an idea about it’s default implementation, I’m willing
+to let that one go.</p>
+</div>
+<p>As you narrow your eyes you can just feel the camera zooming in on
+you<a href="https://tenor.com/bjU6d.gif?not-sure-fry">…</a></p>
+<div class="speaker a">
+<p>In any case earlier you correctly identified an issue with Fibonacci numbers:
+<a href="https://images.search.yahoo.com/search/images?p=they+grow+up+so+fast+meme">they grow too fast</a>.
+For example only first 94 Fibonacci numbers fit into 64 bits, at which point
+one might as well have a static lookup table.
+<!-- length . takeWhile (\(a,b) -> toInteger a == b) $ map (\x -> (fib_fun x :: Data.Word.Word64, fib_fun x :: Integer)) [0..] --></p>
+</div>
+<p>You nod.</p>
+<div class="speaker a">
+<p>So what if we wanted to see just last 2 digits of a Fibonacci number?</p>
+</div>
+<div class="speaker b">
+<p>Well, we just need a remainder after division by 100. And because
+<code>mod</code> is a homomorphism, we can carry out the whole calculation <code>(`mod` 100)</code>.</p>
+</div>
+<div class="speaker a">
+<p>What about last 3 digits in hex?</p>
+</div>
+<div class="speaker b">
+<p>Then that would be <code>(`mod` 16^3)</code>.</p>
+</div>
+<div class="speaker a">
+<p>How is your type magic?</p>
+</div>
+<div class="speaker b">
+<p>Depends. Please don’t make me do that without computer and documentation 🥺.</p>
+</div>
+<div class="speaker a">
+<p>I’m not a monster. Here is a piece of code vaguely inspired by package
+<a href="https://hackage.haskell.org/package/modular-arithmetic-2.0.0.3">modular-arithmetic</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE AllowAmbiguousTypes #-}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE DataKinds #-}</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE ScopedTypeVariables #-}</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE TypeApplications #-}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE UndecidableInstances #-}</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Proxy</span> (<span class="dt">Proxy</span>(<span class="dt">Proxy</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">GHC.TypeLits</span> (<span class="dt">KnownNat</span>, type (&lt;=), natVal)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">Mod</span> a n <span class="ot">=</span> <span class="dt">M</span> {<span class="ot"> unMod ::</span> a }</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ot">modulus ::</span> <span class="kw">forall</span> n a <span class="op">.</span> (<span class="dt">Integral</span> a, <span class="dt">KnownNat</span> n, <span class="dv">1</span> <span class="op">&lt;=</span> n) <span class="ot">=&gt;</span> a</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>modulus <span class="ot">=</span> <span class="fu">fromInteger</span> <span class="op">.</span> natVal <span class="op">$</span> <span class="dt">Proxy</span> <span class="op">@</span>n</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> (<span class="dt">Show</span> a, <span class="dt">KnownNat</span> n) <span class="ot">=&gt;</span> <span class="dt">Show</span> (<span class="dt">Mod</span> a n) <span class="kw">where</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">showsPrec</span> a n<span class="op">@</span>(<span class="dt">M</span> x) <span class="ot">=</span> <span class="fu">showParen</span> (a<span class="op">&gt;</span><span class="dv">9</span>) <span class="op">$</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">shows</span> x <span class="op">.</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        (<span class="ch">' '</span><span class="op">:</span>) <span class="op">.</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="fu">showParen</span> <span class="dt">True</span> ((<span class="st">&quot;mod &quot;</span><span class="op">&lt;&gt;</span>) <span class="op">.</span> <span class="fu">shows</span> (natVal n))</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> (<span class="dt">Integral</span> a, <span class="dt">KnownNat</span> n, <span class="dv">1</span> <span class="op">&lt;=</span> n) <span class="ot">=&gt;</span> <span class="dt">Num</span> (<span class="dt">Mod</span> a n) <span class="kw">where</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">M</span> x <span class="op">+</span> <span class="dt">M</span> y <span class="ot">=</span> <span class="dt">M</span> <span class="op">$</span> (x <span class="op">+</span> y) <span class="ot">`mod`</span> modulus <span class="op">@</span>n</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">M</span> x <span class="op">-</span> <span class="dt">M</span> y <span class="ot">=</span> <span class="dt">M</span> <span class="op">$</span> (x <span class="op">-</span> y) <span class="ot">`mod`</span> modulus <span class="op">@</span>n</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">M</span> x <span class="op">*</span> <span class="dt">M</span> y <span class="ot">=</span> <span class="dt">M</span> <span class="op">$</span> (x <span class="op">*</span> y) <span class="ot">`mod`</span> modulus <span class="op">@</span>n</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">negate</span> (<span class="dt">M</span> x) <span class="ot">=</span> <span class="dt">M</span> <span class="op">$</span> (modulus <span class="op">@</span>n) <span class="op">-</span> x</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abs</span> x <span class="ot">=</span> x</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">signum</span> (<span class="dt">M</span> x) <span class="ot">=</span> <span class="dt">M</span> <span class="op">$</span> <span class="fu">signum</span> x</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fromInteger</span> x <span class="ot">=</span> <span class="dt">M</span> <span class="op">.</span> <span class="fu">fromInteger</span> <span class="op">$</span> x <span class="ot">`mod`</span> modulus <span class="op">@</span>n</span></code></pre></div>
+<p>Thoughts?</p>
+</div>
+<div class="speaker b">
+<p>Pretty sweet. Now we can do <code>fib 10000 :: Mod Int 100</code> and get something like
+<code>75 (mod 100)</code>. And it seems like the compiler might be able to be smart
+enough to calculate modulus only once 🤔. I quite like it,
+but it is usable only if we know modulus at compile time or for playing
+on the command line. Also your implementation of minus might
+have an issue.</p>
+</div>
+<p>The interviewer seems to be happy with you being able to read and get
+some sense out of this code.</p>
+<div class="speaker a">
+<p>Yes. Now let us look at the whole modulo situation from a somewhat different
+angle: What is the biggest difference between <code>Natural</code> and <code>Mod Natural 100</code>?</p>
+</div>
+<p>As you ponder this question you can’t help it but feel that it is here not
+only to be answered, but also to guide you to some more interesting things.</p>
+<div class="speaker b">
+<p>One of them is (more) finite. But that means, that the step
+endomorphism <code>\(a,b) -&gt; (b,a+b)</code> will start looping at some point!
+So if we knew where the loop starts and how big it is, we could
+calculate the <code>n</code>-th Fibonacci number in time completely independent
+on the <code>n</code> itself! But cycle detection could eat a lot of memory
+and testing against all the elements we visited can also add up quickly…</p>
+</div>
+<div class="speaker a">
+<p>Would it help if it was invertible?</p>
+</div>
+<div class="speaker b">
+<p>Well that would make it an isomorphism (automorphism?), which means
+there are no “tails” and it generates a cycle, so we know we
+would get back to the starting point of <code>(0,1)</code>! So no need
+to remember all the visited elements!</p>
+<p>But is it?
+Let’s try <code>(c,d) -&gt; (d-c,c)</code>. For <code>(e,f)</code> after applying
+the step we get <code>(f,e+f)</code>, and applying the proposed inverse step we get
+<code>(e+f-f,f) = (e,f)</code>. So it is invertible!</p>
+</div>
+<div class="speaker a">
+<p>Have you heard of Leonardo Pisano?</p>
+</div>
+<div class="speaker b">
+<p>No.</p>
+</div>
+<div class="speaker a">
+<p>He is better known as Fibonacci. And you just discovered something
+called <a href="https://en.wikipedia.org/wiki/Pisano_period">Pisano period</a>.</p>
+</div>
+<div class="speaker b">
+<p>How can we make it work with the logarithmic version? Does it even make sense (we are already log, sooo log would need to be bigger than length of loop… still pretty cool…)</p>
+</div>
+<div class="speaker a">
+<p>You ask interesting questions. But this is the end my time allocated
+for this interview so I have too go. Thank you for coming today,
+someone will be here with you shortly…</p>
+</div>
+<p>It happened fast, but the interviewer is gone. You are still
+deep in thought when different person walks in.</p>
+<div class="speaker c">
+<p>Hi, sorry for making you wait this long, we had an unexpected
+emergency. Are yous still available to do the interview now?</p>
+</div>
+</div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
+</html>
