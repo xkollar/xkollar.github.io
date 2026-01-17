@@ -264,8 +264,8 @@ Pretty sweet. Now we can do `fib 10000 :: Mod Int 100` and get something like
 `75 (mod 100)`. And it seems like the compiler might be able to be smart
 enough to calculate modulus only once 🤔. I quite like it,
 but it is usable only if we know modulus at compile time or for playing
-on the command line. Also your implementation of minus might
-have an issue.
+on the command line. Also your implementation of negate and minus might
+have an issue 👀.
 </div>
 
 The interviewer seems to be happy with you being able to read and get
