@@ -262,143 +262,36 @@ calculate the Fibonacci number from the bottom up:</p>
 starting from (<code>0</code>, <code>1</code>) and then on each iteration we move up one step.
 This can be done with matrix multiplication! If given pair of <code>[a b]</code>
 we get to the next step easily.</p>
-<p><math display="block" class="tml-display" style="display:block math;">
-<mrow>
-<mrow>
-<mo fence="true" form="prefix">[</mo>
-<mtable>
-<mtr>
-<mtd style="padding-left:0em;padding-right:5.9776pt;">
-<mi>a</mi>
-</mtd>
-<mtd style="padding-left:5.9776pt;padding-right:0em;">
-<mi>b</mi>
-</mtd>
-</mtr>
-</mtable>
-<mo fence="true" form="postfix">]</mo>
-</mrow>
-<mo>×</mo>
-<mrow>
-<mo fence="true" form="prefix">[</mo>
-<mtable>
-<mtr>
-<mtd style="padding-left:0em;padding-right:5.9776pt;">
-<mn>0</mn>
-</mtd>
-<mtd style="padding-left:5.9776pt;padding-right:0em;">
-<mn>1</mn>
-</mtd>
-</mtr>
-<mtr>
-<mtd style="padding-left:0em;padding-right:5.9776pt;">
-<mn>1</mn>
-</mtd>
-<mtd style="padding-left:5.9776pt;padding-right:0em;">
-<mn>1</mn>
-</mtd>
-</mtr>
-</mtable>
-<mo fence="true" form="postfix">]</mo>
-</mrow>
-<mo>=</mo>
-<mrow>
-<mo fence="true" form="prefix">[</mo>
-<mtable>
-<mtr>
-<mtd style="padding-left:0em;padding-right:5.9776pt;">
-<mi>b</mi>
-</mtd>
-<mtd style="padding-left:5.9776pt;padding-right:0em;">
-<mrow>
-<mi>a</mi>
-<mo>+</mo>
-<mi>b</mi>
-</mrow>
-</mtd>
-</mtr>
-</mtable>
-<mo fence="true" form="postfix">]</mo>
-</mrow>
-</mrow>
-</math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mi>a</mi></mtd><mtd columnalign="center"><mi>b</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>×</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mi>b</mi></mtd><mtd columnalign="center"><mi>a</mi><mo>+</mo><mi>b</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+\begin{bmatrix}
+a &amp; b \\
+\end{bmatrix}
+\times
+\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 1 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+b &amp; a+b \\
+\end{bmatrix}
+</annotation></semantics></math></p>
 <p>And now we just start from <code>[0 1]</code> and multiply it by power of our
 update matrix.</p>
-<p><math display="block" class="tml-display" style="display:block math;">
-<mrow>
-<mrow>
-<mo fence="true" form="prefix">[</mo>
-<mtable>
-<mtr>
-<mtd style="padding-left:0em;padding-right:5.9776pt;">
-<mn>0</mn>
-</mtd>
-<mtd style="padding-left:5.9776pt;padding-right:0em;">
-<mn>1</mn>
-</mtd>
-</mtr>
-</mtable>
-<mo fence="true" form="postfix">]</mo>
-</mrow>
-<mo>×</mo>
-<msup>
-<mrow>
-<mo fence="true" form="prefix">[</mo>
-<mtable>
-<mtr>
-<mtd style="padding-left:0em;padding-right:5.9776pt;">
-<mn>0</mn>
-</mtd>
-<mtd style="padding-left:5.9776pt;padding-right:0em;">
-<mn>1</mn>
-</mtd>
-</mtr>
-<mtr>
-<mtd style="padding-left:0em;padding-right:5.9776pt;">
-<mn>1</mn>
-</mtd>
-<mtd style="padding-left:5.9776pt;padding-right:0em;">
-<mn>1</mn>
-</mtd>
-</mtr>
-</mtable>
-<mo fence="true" form="postfix">]</mo>
-</mrow>
-<mi>n</mi>
-</msup>
-<mo>=</mo>
-<mrow>
-<mo fence="true" form="prefix">[</mo>
-<mtable>
-<mtr>
-<mtd style="padding-left:0em;padding-right:5.9776pt;">
-<mrow>
-<mpadded lspace="0">
-<mi>fib</mi>
-</mpadded>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>n</mi>
-<mo form="postfix" stretchy="false">)</mo>
-</mrow>
-</mtd>
-<mtd style="padding-left:5.9776pt;padding-right:0em;">
-<mrow>
-<mpadded lspace="0">
-<mi>fib</mi>
-</mpadded>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>n</mi>
-<mo>+</mo>
-<mn>1</mn>
-<mo form="postfix" stretchy="false">)</mo>
-</mrow>
-</mtd>
-</mtr>
-</mtable>
-<mo fence="true" form="postfix">]</mo>
-</mrow>
-</mrow>
-</math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>×</mo><msup><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mi>n</mi></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mstyle mathvariant="normal"><mi>f</mi><mi>i</mi><mi>b</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="center"><mstyle mathvariant="normal"><mi>f</mi><mi>i</mi><mi>b</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+\begin{bmatrix}
+0 &amp; 1 \\
+\end{bmatrix}
+\times
+\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 1 \\
+\end{bmatrix}^n
+=
+\begin{bmatrix}
+\mathrm{fib}(n) &amp; \mathrm{fib}(n+1) \\
+\end{bmatrix}
+</annotation></semantics></math></p>
 <p>Which allows us to use “The Exponentiation Trick”™ and drive the
 complexity to logarithmic.</p>
 </div>

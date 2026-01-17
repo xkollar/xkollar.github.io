@@ -125,116 +125,19 @@ about probabilities.</p>
 </g>
 </svg>
 <p>From that we can easily write down the following two formulas:</p>
-<p><math display="block" class="tml-display" style="display:block math;">
-<mrow>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>B</mi>
-<mi>|</mi>
-<mi>A</mi>
-<mo form="postfix" stretchy="false">)</mo>
-<mo>=</mo>
-<mfrac>
-<mrow>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>A</mi>
-<mi>&amp;</mi>
-<mi>B</mi>
-<mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-</mrow>
-<mrow>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>A</mi>
-<mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-</mrow>
-</mfrac>
-<mspace width="0.2778em"></mspace>
-<mspace width="0.2778em"></mspace>
-<mspace width="0.2778em"></mspace>
-<mspace width="0.2778em"></mspace>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>A</mi>
-<mi>|</mi>
-<mi>B</mi>
-<mo form="postfix" stretchy="false">)</mo>
-<mo>=</mo>
-<mfrac>
-<mrow>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>A</mi>
-<mi>&amp;</mi>
-<mi>B</mi>
-<mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-</mrow>
-<mrow>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>B</mi>
-<mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-</mrow>
-</mfrac>
-</mrow>
-</math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mi>&amp;</mi><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mspace width="1.0em"></mspace><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mi>&amp;</mi><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+\mathbb{P}(B|A) = \frac{\mathbb{P}(A\&amp;B)}{\mathbb{P}(A)}
+\quad
+\mathbb{P}(A|B) = \frac{\mathbb{P}(A\&amp;B)}{\mathbb{P}(B)}
+</annotation></semantics></math></p>
 <p>And from there through</p>
-<p><math display="block" class="tml-display" style="display:block math;">
-<mrow>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>A</mi>
-<mi>&amp;</mi>
-<mi>B</mi>
-<mo form="postfix" stretchy="false">)</mo>
-<mo>=</mo>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>A</mi>
-<mi>|</mi>
-<mi>B</mi>
-<mo form="postfix" stretchy="false">)</mo>
-<mo>⋅</mo>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>B</mi>
-<mo form="postfix" stretchy="false">)</mo>
-</mrow>
-</math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mi>&amp;</mi><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+\mathbb{P}(A\&amp;B) = \mathbb{P}(A|B)\cdot\mathbb{P}(B)
+</annotation></semantics></math></p>
 <p>we get straight to</p>
-<p><math display="block" class="tml-display" style="display:block math;">
-<mrow>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>B</mi>
-<mi>|</mi>
-<mi>A</mi>
-<mo form="postfix" stretchy="false">)</mo>
-<mo>=</mo>
-<mfrac>
-<mrow>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>A</mi>
-<mi>|</mi>
-<mi>B</mi>
-<mo form="postfix" stretchy="false">)</mo>
-<mo>⋅</mo>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>B</mi>
-<mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-</mrow>
-<mrow>
-<mi>ℙ</mi>
-<mo form="prefix" stretchy="false">(</mo>
-<mi>A</mi>
-<mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-</mrow>
-</mfrac>
-</mrow>
-</math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+\mathbb{P}(B|A) = \frac{\mathbb{P}(A|B)\cdot\mathbb{P}(B)}{\mathbb{P}(A)}
+</annotation></semantics></math></p>
 <p>Boom: <a href="https://en.wikipedia.org/wiki/Bayes%27_theorem">Bayes’ theorem</a>. 🖐️🎤💥</p>
 </div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
 </html>
