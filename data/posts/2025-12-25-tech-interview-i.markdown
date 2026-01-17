@@ -319,145 +319,38 @@ starting from (`0`, `1`) and then on each iteration we move up one step.
 This can be done with matrix multiplication! If given pair of `[a b]`
 we get to the next step easily.
 
-<math display="block" class="tml-display" style="display:block math;">
-  <mrow>
-    <mrow>
-      <mo fence="true" form="prefix">[</mo>
-      <mtable>
-        <mtr>
-          <mtd style="padding-left:0em;padding-right:5.9776pt;">
-            <mi>a</mi>
-          </mtd>
-          <mtd style="padding-left:5.9776pt;padding-right:0em;">
-            <mi>b</mi>
-          </mtd>
-        </mtr>
-      </mtable>
-      <mo fence="true" form="postfix">]</mo>
-    </mrow>
-    <mo>×</mo>
-    <mrow>
-      <mo fence="true" form="prefix">[</mo>
-      <mtable>
-        <mtr>
-          <mtd style="padding-left:0em;padding-right:5.9776pt;">
-            <mn>0</mn>
-          </mtd>
-          <mtd style="padding-left:5.9776pt;padding-right:0em;">
-            <mn>1</mn>
-          </mtd>
-        </mtr>
-        <mtr>
-          <mtd style="padding-left:0em;padding-right:5.9776pt;">
-            <mn>1</mn>
-          </mtd>
-          <mtd style="padding-left:5.9776pt;padding-right:0em;">
-            <mn>1</mn>
-          </mtd>
-        </mtr>
-      </mtable>
-      <mo fence="true" form="postfix">]</mo>
-    </mrow>
-    <mo>=</mo>
-    <mrow>
-      <mo fence="true" form="prefix">[</mo>
-      <mtable>
-        <mtr>
-          <mtd style="padding-left:0em;padding-right:5.9776pt;">
-            <mi>b</mi>
-          </mtd>
-          <mtd style="padding-left:5.9776pt;padding-right:0em;">
-            <mrow>
-              <mi>a</mi>
-              <mo>+</mo>
-              <mi>b</mi>
-            </mrow>
-          </mtd>
-        </mtr>
-      </mtable>
-      <mo fence="true" form="postfix">]</mo>
-    </mrow>
-  </mrow>
-</math>
+$$
+\begin{bmatrix}
+a & b \\
+\end{bmatrix}
+\times
+\begin{bmatrix}
+0 & 1 \\
+1 & 1 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+b & a+b \\
+\end{bmatrix}
+$$
 
 And now we just start from `[0 1]` and multiply it by power of our
 update matrix.
 
-<math display="block" class="tml-display" style="display:block math;">
-  <mrow>
-    <mrow>
-      <mo fence="true" form="prefix">[</mo>
-      <mtable>
-        <mtr>
-          <mtd style="padding-left:0em;padding-right:5.9776pt;">
-            <mn>0</mn>
-          </mtd>
-          <mtd style="padding-left:5.9776pt;padding-right:0em;">
-            <mn>1</mn>
-          </mtd>
-        </mtr>
-      </mtable>
-      <mo fence="true" form="postfix">]</mo>
-    </mrow>
-    <mo>×</mo>
-    <msup>
-      <mrow>
-        <mo fence="true" form="prefix">[</mo>
-        <mtable>
-          <mtr>
-            <mtd style="padding-left:0em;padding-right:5.9776pt;">
-              <mn>0</mn>
-            </mtd>
-            <mtd style="padding-left:5.9776pt;padding-right:0em;">
-              <mn>1</mn>
-            </mtd>
-          </mtr>
-          <mtr>
-            <mtd style="padding-left:0em;padding-right:5.9776pt;">
-              <mn>1</mn>
-            </mtd>
-            <mtd style="padding-left:5.9776pt;padding-right:0em;">
-              <mn>1</mn>
-            </mtd>
-          </mtr>
-        </mtable>
-        <mo fence="true" form="postfix">]</mo>
-      </mrow>
-      <mi>n</mi>
-    </msup>
-    <mo>=</mo>
-    <mrow>
-      <mo fence="true" form="prefix">[</mo>
-      <mtable>
-        <mtr>
-          <mtd style="padding-left:0em;padding-right:5.9776pt;">
-            <mrow>
-              <mpadded lspace="0">
-                <mi>fib</mi>
-              </mpadded>
-              <mo form="prefix" stretchy="false">(</mo>
-              <mi>n</mi>
-              <mo form="postfix" stretchy="false">)</mo>
-            </mrow>
-          </mtd>
-          <mtd style="padding-left:5.9776pt;padding-right:0em;">
-            <mrow>
-              <mpadded lspace="0">
-                <mi>fib</mi>
-              </mpadded>
-              <mo form="prefix" stretchy="false">(</mo>
-              <mi>n</mi>
-              <mo>+</mo>
-              <mn>1</mn>
-              <mo form="postfix" stretchy="false">)</mo>
-            </mrow>
-          </mtd>
-        </mtr>
-      </mtable>
-      <mo fence="true" form="postfix">]</mo>
-    </mrow>
-  </mrow>
-</math>
+$$
+\begin{bmatrix}
+0 & 1 \\
+\end{bmatrix}
+\times
+\begin{bmatrix}
+0 & 1 \\
+1 & 1 \\
+\end{bmatrix}^n
+=
+\begin{bmatrix}
+\mathrm{fib}(n) & \mathrm{fib}(n+1) \\
+\end{bmatrix}
+$$
 
 Which allows us to use "The Exponentiation Trick"™ and drive the
 complexity to logarithmic.

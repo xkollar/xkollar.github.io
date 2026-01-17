@@ -130,119 +130,22 @@ Let's look at a demonstrative example in the following picture.
 
 From that we can easily write down the following two formulas:
 
-<math display="block" class="tml-display" style="display:block math;">
-  <mrow>
-    <mi>ℙ</mi>
-    <mo form="prefix" stretchy="false">(</mo>
-    <mi>B</mi>
-    <mi>|</mi>
-    <mi>A</mi>
-    <mo form="postfix" stretchy="false">)</mo>
-    <mo>=</mo>
-    <mfrac>
-      <mrow>
-        <mi>ℙ</mi>
-        <mo form="prefix" stretchy="false">(</mo>
-        <mi>A</mi>
-        <mi>&amp;</mi>
-        <mi>B</mi>
-        <mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-      </mrow>
-      <mrow>
-        <mi>ℙ</mi>
-        <mo form="prefix" stretchy="false">(</mo>
-        <mi>A</mi>
-        <mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-      </mrow>
-    </mfrac>
-    <mspace width="0.2778em"></mspace>
-    <mspace width="0.2778em"></mspace>
-    <mspace width="0.2778em"></mspace>
-    <mspace width="0.2778em"></mspace>
-    <mi>ℙ</mi>
-    <mo form="prefix" stretchy="false">(</mo>
-    <mi>A</mi>
-    <mi>|</mi>
-    <mi>B</mi>
-    <mo form="postfix" stretchy="false">)</mo>
-    <mo>=</mo>
-    <mfrac>
-      <mrow>
-        <mi>ℙ</mi>
-        <mo form="prefix" stretchy="false">(</mo>
-        <mi>A</mi>
-        <mi>&amp;</mi>
-        <mi>B</mi>
-        <mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-      </mrow>
-      <mrow>
-        <mi>ℙ</mi>
-        <mo form="prefix" stretchy="false">(</mo>
-        <mi>B</mi>
-        <mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-      </mrow>
-    </mfrac>
-  </mrow>
-</math>
+$$
+\mathbb{P}(B|A) = \frac{\mathbb{P}(A\&B)}{\mathbb{P}(A)}
+\quad
+\mathbb{P}(A|B) = \frac{\mathbb{P}(A\&B)}{\mathbb{P}(B)}
+$$
 
 And from there through
 
-<math display="block" class="tml-display" style="display:block math;">
-  <mrow>
-    <mi>ℙ</mi>
-    <mo form="prefix" stretchy="false">(</mo>
-    <mi>A</mi>
-    <mi>&amp;</mi>
-    <mi>B</mi>
-    <mo form="postfix" stretchy="false">)</mo>
-    <mo>=</mo>
-    <mi>ℙ</mi>
-    <mo form="prefix" stretchy="false">(</mo>
-    <mi>A</mi>
-    <mi>|</mi>
-    <mi>B</mi>
-    <mo form="postfix" stretchy="false">)</mo>
-    <mo>⋅</mo>
-    <mi>ℙ</mi>
-    <mo form="prefix" stretchy="false">(</mo>
-    <mi>B</mi>
-    <mo form="postfix" stretchy="false">)</mo>
-  </mrow>
-</math>
+$$
+\mathbb{P}(A\&B) = \mathbb{P}(A|B)\cdot\mathbb{P}(B)
+$$
 
 we get straight to
 
-<math display="block" class="tml-display" style="display:block math;">
-  <mrow>
-    <mi>ℙ</mi>
-    <mo form="prefix" stretchy="false">(</mo>
-    <mi>B</mi>
-    <mi>|</mi>
-    <mi>A</mi>
-    <mo form="postfix" stretchy="false">)</mo>
-    <mo>=</mo>
-    <mfrac>
-      <mrow>
-        <mi>ℙ</mi>
-        <mo form="prefix" stretchy="false">(</mo>
-        <mi>A</mi>
-        <mi>|</mi>
-        <mi>B</mi>
-        <mo form="postfix" stretchy="false">)</mo>
-        <mo>⋅</mo>
-        <mi>ℙ</mi>
-        <mo form="prefix" stretchy="false">(</mo>
-        <mi>B</mi>
-        <mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-      </mrow>
-      <mrow>
-        <mi>ℙ</mi>
-        <mo form="prefix" stretchy="false">(</mo>
-        <mi>A</mi>
-        <mo form="postfix" stretchy="false" lspace="0em" rspace="0em">)</mo>
-      </mrow>
-    </mfrac>
-  </mrow>
-</math>
+$$
+\mathbb{P}(B|A) = \frac{\mathbb{P}(A|B)\cdot\mathbb{P}(B)}{\mathbb{P}(A)}
+$$
 
 Boom: [Bayes' theorem](https://en.wikipedia.org/wiki/Bayes%27_theorem). 🖐️🎤💥

@@ -150,40 +150,9 @@ errors in the set is the number of ways how to place `e` errors in untested
 (`n-k`) positions divided by the number of ways how to place `e` errors in all
 positions, or in <abbr title="mathematics (inside joke)">mafs</abbr>:
 
-<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-  <mi>P</mi>
-  <mo>=</mo>
-  <mfrac>
-    <mrow data-mjx-texclass="ORD">
-      <mrow data-mjx-texclass="OPEN">
-        <mo minsize="1.2em" maxsize="1.2em">(</mo>
-      </mrow>
-      <mfrac linethickness="0">
-        <mrow>
-          <mi>n</mi>
-          <mo>&#x2212;</mo>
-          <mi>k</mi>
-        </mrow>
-        <mi>e</mi>
-      </mfrac>
-      <mrow data-mjx-texclass="CLOSE">
-        <mo minsize="1.2em" maxsize="1.2em">)</mo>
-      </mrow>
-    </mrow>
-    <mrow data-mjx-texclass="ORD">
-      <mrow data-mjx-texclass="OPEN">
-        <mo minsize="1.2em" maxsize="1.2em">(</mo>
-      </mrow>
-      <mfrac linethickness="0">
-        <mi>n</mi>
-        <mi>e</mi>
-      </mfrac>
-      <mrow data-mjx-texclass="CLOSE">
-        <mo minsize="1.2em" maxsize="1.2em">)</mo>
-      </mrow>
-    </mrow>
-  </mfrac>
-</math>
+$$
+P = \frac{\binom{n-k}{e}}{\binom{n}{e}}
+$$
 
 And here are some graphs in case it helps you understand
 things. Symmetry is not coincidental.
@@ -638,48 +607,9 @@ calculate `log(n!)` ... 🤔
 
 And you'd be right: [Stirling's approximation](https://en.wikipedia.org/wiki/Stirling%27s_approximation).
 
-<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-  <mi>log</mi>
-  <mo data-mjx-texclass="NONE">&#x2061;</mo>
-  <mrow data-mjx-texclass="ORD">
-    <mi>n</mi>
-    <mo>!</mo>
-  </mrow>
-  <mo>=</mo>
-  <mi>n</mi>
-  <mi>log</mi>
-  <mo data-mjx-texclass="NONE">&#x2061;</mo>
-  <mrow data-mjx-texclass="ORD">
-    <mi>n</mi>
-  </mrow>
-  <mo>&#x2212;</mo>
-  <mi>n</mi>
-  <mo>+</mo>
-  <mstyle displaystyle="false" scriptlevel="0">
-    <mfrac>
-      <mn>1</mn>
-      <mn>2</mn>
-    </mfrac>
-  </mstyle>
-  <mi>log</mi>
-  <mo data-mjx-texclass="NONE">&#x2061;</mo>
-  <mrow data-mjx-texclass="ORD">
-    <mn>2</mn>
-    <mi>&#x3C0;</mi>
-    <mrow data-mjx-texclass="ORD"></mrow>
-    <mi>n</mi>
-  </mrow>
-  <mo>+</mo>
-  <mi>O</mi>
-  <mo stretchy="false">(</mo>
-  <mstyle displaystyle="false" scriptlevel="0">
-    <mfrac>
-      <mn>1</mn>
-      <mi>n</mi>
-    </mfrac>
-  </mstyle>
-  <mo stretchy="false">)</mo>
-</math>
+$$
+\log n! = n \log n - n + \frac{1}{2}\log 2 \pi n + O(\frac{1}{n})
+$$
 
 Which is amazing as error goes down with `n` going up! Let's run
 a quick test!
