@@ -126,7 +126,6 @@ but it also tells us how to combine them! And based on the way we constructed
 the operation it is trivially associative too. Giving us a semigroup. And
 while the identity matrix has a corresponding representation in our new
 structure making it a monoid, we don't need it now. Cherry on top? Haskell's
-
 [`Semigroup` class has method `stimes`](https://hackage-content.haskell.org/package/ghc-internal-9.1401.0/docs/src/GHC.Internal.Base.html#stimes)
 that does what we need, and the default implementation does it the way that we
 want!
@@ -265,16 +264,19 @@ Pretty sweet. Now we can do `fib 10000 :: Mod Int 100` and get something like
 `75 (mod 100)`. And it seems like the compiler might be able to be smart
 enough to calculate modulus only once 🤔. I quite like it,
 but it is usable only if we know modulus at compile time or for playing
-on the command line. Also your implementation of negate and minus might
-have an issue 👀.
+on the command line. Also your implementation of negate and minus are
+problematic 👀. For example running `signum (negate 0) :: Mod Int 3` and `3 - 5 :: Mod Natural 10`
+will both break things. Would you like me to fix those?
 </div>
 
 The interviewer seems to be happy with you being able to read and get
 some sense out of this code.
 
 <div class="speaker a">
-Yes. Now let us look at the whole modulo situation from a somewhat different
-angle: What is the biggest difference between `Natural` and `Mod Natural 100`?
+I like your observations, but let's leave the fixes as en exercise for a
+patient reader. Now let us look at the whole modulo situation from a somewhat
+different angle: What is the biggest difference between `Natural` and `Mod
+Natural 100`?
 </div>
 
 As you ponder this question you can't help it but feel that it is here not
