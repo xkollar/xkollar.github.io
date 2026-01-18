@@ -97,6 +97,14 @@ a {
   padding-bottom: 0.5ex;
   padding-top: 0.5ex;
 }
+img[title="My avatar"]{
+filter: grayscale(1);
+transition: 2s;
+}
+img[title="My avatar"]:hover{
+filter: none;
+transition: 2s;
+}
 .main > * {
   padding: 1ex 0;
 }
