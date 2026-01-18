@@ -69,13 +69,13 @@ It has some nice properties. Let's have an event $A$ that will happen with proba
 
 Notice that both the length of the shorter edge of the red region and the area
 of the red region are equal to $\mathbb{P}(A)$. While nice and useful, this is
-simultaneously also horrible as it stretches your brain to think about
+simultaneously horrible as it stretches your brain to think about
 probability as a length (one-dimensional) and as an area (two-dimensional),
-which it is neither of, since it is just a ratio (dimensionless). Anyway, if
-you stomach that, you can use it to draw pictures that can help you reason
+neither of which it actually is, since it is just a ratio (dimensionless). Anyway, if
+you can stomach that, you can use it to draw pictures that can help you reason
 about probabilities.
 
-Let's look at a demonstrative example in the following picture.
+Let's look at a illustrative example in the following picture.
 
 <svg viewBox="0 0 300 150" fill="white">
   <style>
