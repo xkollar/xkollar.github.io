@@ -5,7 +5,7 @@ tags: Math
 ---
 
 I'm writing this to clarify my thoughts on the topic. The problem, while
-seemingly simple, is often source of confusion, amusement, and occasionally
+seemingly simple, is often a source of confusion, amusement, and occasionally
 even arguments. I have recently encountered fresh debate on the topic on
 [Hacker News](https://news.ycombinator.com/item?id=37829926) that started
 quite innocently (as conversations there often do).
@@ -14,7 +14,7 @@ For a comprehensive (though lengthy) introduction to the problem and its
 various forms see [Monty Hall problem on
 Wikipedia](https://en.wikipedia.org/wiki/Monty_Hall_problem).
 
-Here is re-creation of a scribble I made while thinking about the problem.
+Here is a re-creation of a scribble I made while thinking about the problem.
 
 ~~~ {.dot-render}
 digraph G {
@@ -161,7 +161,7 @@ as we progress through the problem.
 
 Obviously at the beginning (layer 0) we know nothing (with probability 1).
 
-Layer 1 emerges as we are presented with tree doors, car behind one of them.
+Layer 1 emerges as we are presented with three doors, car behind one of them.
 Each case has probability of 1/3.
 
 Layer 2 represents our choice of a door. As we don't know anything, we choose
@@ -174,32 +174,32 @@ would have happened if we chose non-uniform strategy here.)
 Alternative thinking about layer two is, that by choice we have collapsed
 the multiverse (grouped by the collapse).
 
-Layer 3 is when host opens one of remaining doors that has goat (there might
-be one or two such doors, if there are two host chooses randomly... As an
-exercise think about what would it mean if host did not choose uniformly). Red
+Layer 3 is when the host opens one of the remaining doors with a goat (there might
+be one or two such doors, if there are two the host chooses randomly... As an
+exercise, think about what would it mean if the host did not choose uniformly). Red
 states are the ones where we win by keeping our door, green ones where we win
 by switching. Interestingly both global (whole layer) and all collapsed
 multiverses imply winning probabilities for staying and switching 1/3 and 2/3
 respectively!
 
-Last layer is an attempt at demonstration for one of cases where confusion is
+Last layer is an attempt at demonstration for one of the cases where confusion is
 coming from. The question whether the car is behind left or right door is
 different from whether it is the door we choose or the other one.
 
 If you look at uncollapsed multiverse and ask about probabilities for left
 versus right, it is uniform (1/2 for each of remaining door). But once you
-have chosen a door suddenly asymmetry emerges. Part of our multiverse have
+have chosen a door suddenly asymmetry emerges. Part of our multiverse has
 collapsed. If our door is the left one of remaining ones, then it has only 1/3
 probability of hiding a car.
 
-The question is not whether it is behind left or right door (in the
+The question is not whether it is behind the left or right door (in the
 uncollapsed multiverse), but whether it is behind left or right door given our
 choice of door.
 
 Perhaps confusion here is similar to
 [Gambler's_fallacy](https://en.wikipedia.org/wiki/Gambler's_fallacy) where
 people assume that after head flipping another head is less probable not
-realising that by first flip part of multiverse available to them has
+realising that by the first flip part of multiverse available to them has
 collapsed and now it is 1/2 again.
 
 ~~~ {.dot-render}
@@ -234,7 +234,7 @@ Could it be that the way the question is phrased is the issue? An elegant and
 concise answer is only possible due to the presence of symmetries in the
 problem. If those were broken the answer might not be as simple as "always
 switch for 2/3 chance to win the car" but more like (if you chose door 1 and
-host showed you door 2 then switch for chance P, but if 3 then stay for chance
+the host showed you door 2 then switch for chance P, but if 3 then stay for chance
 Q, if you choose door 2…).
 
 Interesting insights from the thread:
@@ -246,5 +246,5 @@ Interesting insights from the thread:
 Ideas:
 
 * Interactive/scriptable version where it would be possible
-  to play with different strategies of both host and player
+  to play with different strategies of both the host and the player
   and see how final probabilities change.
