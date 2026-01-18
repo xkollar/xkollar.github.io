@@ -116,8 +116,8 @@ f &amp; = ad + bc + bd \\
 but it also tells us how to combine them! And based on the way we constructed
 the operation it is trivially associative too. Giving us a semigroup. And
 while the identity matrix has a corresponding representation in our new
-structure making it a monoid, we don’t need it now. Cherry on top? Haskell’s</p>
-<p><a href="https://hackage-content.haskell.org/package/ghc-internal-9.1401.0/docs/src/GHC.Internal.Base.html#stimes"><code>Semigroup</code> class has method <code>stimes</code></a>
+structure making it a monoid, we don’t need it now. Cherry on top? Haskell’s
+<a href="https://hackage-content.haskell.org/package/ghc-internal-9.1401.0/docs/src/GHC.Internal.Base.html#stimes"><code>Semigroup</code> class has method <code>stimes</code></a>
 that does what we need, and the default implementation does it the way that we
 want!</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Fib</span> a <span class="ot">=</span> <span class="dt">F</span> <span class="op">!</span>a <span class="op">!</span>a <span class="kw">deriving</span> <span class="dt">Show</span></span>
@@ -228,14 +228,16 @@ point one might as well have a static lookup table.
 <code>75 (mod 100)</code>. And it seems like the compiler might be able to be smart
 enough to calculate modulus only once 🤔. I quite like it,
 but it is usable only if we know modulus at compile time or for playing
-on the command line. Also your implementation of negate and minus might
-have an issue 👀.</p>
+on the command line. Also your implementation of negate and minus are
+problematic 👀. For example running <code>signum (negate 0) :: Mod Int 3</code> and <code>3 - 5 :: Mod Natural 10</code>
+will both break things. Would you like me to fix those?</p>
 </div>
 <p>The interviewer seems to be happy with you being able to read and get
 some sense out of this code.</p>
 <div class="speaker a">
-<p>Yes. Now let us look at the whole modulo situation from a somewhat different
-angle: What is the biggest difference between <code>Natural</code> and <code>Mod Natural 100</code>?</p>
+<p>I like your observations, but let’s leave the fixes as en exercise for a
+patient reader. Now let us look at the whole modulo situation from a somewhat
+different angle: What is the biggest difference between <code>Natural</code> and <code>Mod Natural 100</code>?</p>
 </div>
 <p>As you ponder this question you can’t help it but feel that it is here not
 only to be answered, but also to guide you to some more interesting things.</p>
