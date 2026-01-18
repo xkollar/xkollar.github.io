@@ -3,7 +3,8 @@ title: .org
 author: xkollar
 tags: Fun
 ---
-Fun little thing to do: Pronounce ".org" as you would pronounce "orgy".
+Fun little thing to do: pronounce ".org" like a rushed news anchor spelling it out.
+Instead of a crisp /oʊ ɑːr dʒiː/, the letters blend together coming out as /ˈɔːərdʒiː/.
 
 * [wikipedia.org](https://www.wikipedia.org/)
 * [haskell.org](https://www.haskell.org/)
