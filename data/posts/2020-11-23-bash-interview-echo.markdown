@@ -6,8 +6,8 @@ tags: Linux, Bash, Fun, Interview
 Interviews are funny. You have only very little time
 to find out whether participating sides are a good match or not.
 On many different levels: from personal to technical.
-Traditionally it is established by series of questions
-and answers (ideally not one sided...).
+Traditionally it is established by a series of questions
+and answers (ideally not one-sided...).
 
 Good questions are not necessarily about correct answer but they will
 let you see someone's thought process, will allow for a conversation about it,
@@ -68,8 +68,8 @@ echo –e
 ```
 
 Fair enough, it is important skill to be able to realize that one is being
-tricked (and try to trick in response). Interviewer needs to re-assure the
-candidate that it is indeed possible, with single echo. And that they meant
+tricked (and try to trick in response). Interviewer needs to reassure the
+candidate that it is indeed possible, with a single echo. And that they meant
 ASCII character <abbr title="HEX 2D">-</abbr>.
 
 ```bash
@@ -85,23 +85,23 @@ Hopefully from there it is not far to get to the following.
 echo -e '\x2De'
 ```
 
-If candidate on top of getting to the correct answer have
+If, on top of getting the correct answer, the candidate has
 a big grin on their face (signifying they had fun), I'm happy.
 
 ## Alternatives/similar
 
 > You run `echo *`{.bash} yet nothing gets printed. Can you explain?
 
-Hint: directory is not empy. Hidden files are irrelevant.
+Hint: the directory is not empty. Hidden files are irrelevant.
 
-> There is a directory called `~` in current directory. Remove it and
+> There is a directory called `~` in the current directory. Remove it and
 > all it contains.
 
 Hint: maybe don't give them terminal to try this one.
 
 Or slightly more obvious version:
 
-> There is a file called `file; rm -rf ~` in current directory. Remove it.
+> There is a file called `file; rm -rf ~` in the current directory. Remove it.
 
 Also fun thing to ponder:
 
