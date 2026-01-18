@@ -1,5 +1,5 @@
 ---
-title: "On-line Probability Estimation"
+title: "Online Probability Estimation"
 author: xkollar
 tags: Math, Probability, Stub
 ---
@@ -8,14 +8,14 @@ Maybe one day I'll turn this into a real article,
 but for now here are just some points and a picture:
 
 * For cases where we don't have "total population"
-  and samples just come to us one-by-one we can't use
-  the approach from previous article.
+  and samples just come to us one by one we can't use
+  the approach from [the previous article](2025-12-14-when-you-cant-test-everything.html).
 * But we can use the part from "Stumbling in the Dark"
   and realize that after `n` samples with no errors
   `P(observed no errors) = (1-P_err)^n`
 * Some math is possible (<https://en.wikipedia.org/wiki/Rule_of_three_(statistics)>),
   but also just binary search to find `P_err` for
-  given confidence.
+  a given confidence.
 * Logs are again useful.
 
 ```txt
@@ -70,7 +70,7 @@ But also high values of `P_err`
 are not very interesting (For example
 `P_err = 1` satisfies the inequality
 but is completely uninteresting),
-so we want to find as small `P_err`
+so we want to find as small a `P_err`
 as possible, which is getting us to
 
 ```
@@ -91,7 +91,7 @@ from online import find_err
 
 samples = range(1,1000)
 
-plt.title('Confidence-based Error Probabilies (and Heuristics)')
+plt.title('Confidence-based Error Probabilities (and Heuristics)')
 plt.xscale('log')
 plt.yscale('log')
 plt.xlabel('Samples')
