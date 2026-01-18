@@ -322,12 +322,12 @@ How can we make it work with the logarithmic version? Does it even make sense (w
 </div>
 
 <div class="speaker a">
-You ask interesting questions. But this is the end my time allocated
+You ask interesting questions. But this is the end of my time allocated
 for this interview so I have too go. Thank you for coming today,
 someone will be here with you shortly...
 </div>
 
-It happened fast, before being able to say goodbye, but the interviewer
+It happened fast, before being able to even say goodbye, the interviewer
 is gone. You are still deep in thought when a different person walks in.
 
 <div class="speaker c">
