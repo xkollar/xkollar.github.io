@@ -54,7 +54,7 @@ repetition) to fill the given area.
 </div>
 
 After quick pause to wonder about how the interviewer managed to include a
-hyperlink in his speech you return back to your role of an interviewee and
+hyperlink in his speech you snap back to your role of an interviewee and
 start thinking: "The question is a bit vague, but I know what it is
 asking. Or at least I think I do. Perhaps I should ask some clarifying
 questions?"
@@ -62,7 +62,7 @@ questions?"
 After a short moment you say:
 
 <div class="speaker b">
-Well, In general case I would just brute-force it. Start with one square
+Well, In the general case I would just brute-force it. Start with one square
 in the area, and iterate over the shapes trying to place them there
 (and all rotations x flips if that is desired too), and then recursively...
 </div>
@@ -216,9 +216,9 @@ Let's denote `count n` number of ways things are tiled.
 * Similarly `count 1 = 1`.
 * For cases when `N>=2`, there are two sub-cases, stemming from
   how we cover the top-left corner:
-    * In case we cover it with horizontal domino, then we need to
+    * In case we cover it with a vertical domino, then we need to
       tile `n-1` so there are `count (n-1)` ways to tile like this.
-    * In case we start with vertical domino, then we *have to* put
+    * In case we start with a horizontal domino, then we *have to* put
       one below, and we are left with `n-2`, so there are `count (n-2)`
       ways to tile like this.
 
@@ -261,7 +261,7 @@ fib = (!!) fibs
 ```
 
 And now we are linear... well, except for complexity of multiplication because
-as the value grows quite fast the complexity of multiplication can not really
+as the values grow quite fast the complexity of multiplication cannot really
 be considered constant.
 </div>
 
@@ -287,7 +287,7 @@ define an infinite list of Fibonacci numbers defers the evaluation of addition
 and once we force evaluation at the end to be able to show the value, it
 causes the stack to explode. We can force the evaluation with `seq`, or we can
 just use
-[bang batterns](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/strict.html#bang-patterns-informal)
+[bang patterns](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/strict.html#bang-patterns-informal)
 to sprinkle in some strictness.
 
 ```haskell
@@ -334,7 +334,7 @@ b & a+b \\
 \end{bmatrix}
 $$
 
-And now we just start from `[0 1]` and multiply it by power of our
+And now we just start from `[0 1]` and multiply it by `n`-th power of our
 update matrix.
 
 $$
