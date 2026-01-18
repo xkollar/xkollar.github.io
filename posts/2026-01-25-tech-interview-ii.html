@@ -14,16 +14,16 @@ and embed resulting MathML. Now trying letting
 Pandoc compile it, and the result feels very dense,
 I don't think I like it, but maybe it can be CSS-ed? -->
 <p>In the <a href="2025-12-25-tech-interview-i.html">previous installment of the Tech Interview saga</a>
-we have left just as things started to get fun, perhaps expecting some quite
+we left off just as things started to get fun, perhaps expecting some quite
 heavy chunks of code dropping. Will they materialize? Or perhaps the interview
 will switch to Python? (Yeah, you saw the tags, no fooling you!) Keep reading
 and find out!</p>
-<p>Staring at the art outside of the meeting room gave you an uneasy feeling of
-discontinuity in time. It feels like you lost a month doing just that.
+<p>Staring at the art outside the meeting room gave you an uneasy feeling of
+discontinuity in time. It feels like you’ve lost a month doing just that.
 But that is impossible, you are still here, doing the interview. There was a
-quesion, right.</p>
+question, right.</p>
 <p>You take a deep breath and squeeze the whiteboard marker in your hand,
-feeling it’s weight like a master chef would feel the weight and
+feeling its weight like a master chef would feel the weight and
 the balance of a knife, ready to scribble.</p>
 <div class="speaker b">
 <p>To get the feel for what we are working with let’s look at the first few
@@ -114,10 +114,10 @@ f &amp; = ad + bc + bd \\
 </annotation></semantics></math></p>
 <p>This not only shows that we can reduce the original matrices to just tuples,
 but it also tells us how to combine them! And based on the way we constructed
-the operation it is trivially associative too. Giving us a semigroup. An while
-identity matrix has corresponding representation in our new structure making
-it a monoid, we don’t need it now. Cherry on top? Haskell’s
-<a href="https://hackage-content.haskell.org/package/ghc-internal-9.1401.0/docs/src/GHC.Internal.Base.html#stimes"><code>Semigroup</code> class has method <code>stimes</code></a>
+the operation it is trivially associative too. Giving us a semigroup. And
+while the identity matrix has a corresponding representation in our new
+structure making it a monoid, we don’t need it now. Cherry on top? Haskell’s</p>
+<p><a href="https://hackage-content.haskell.org/package/ghc-internal-9.1401.0/docs/src/GHC.Internal.Base.html#stimes"><code>Semigroup</code> class has method <code>stimes</code></a>
 that does what we need, and the default implementation does it the way that we
 want!</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Fib</span> a <span class="ot">=</span> <span class="dt">F</span> <span class="op">!</span>a <span class="op">!</span>a <span class="kw">deriving</span> <span class="dt">Show</span></span>
@@ -158,7 +158,7 @@ structured the code in your answer… you know more is coming.</p>
 <div class="speaker a">
 <p>To be honest, I just wanted to say that if we were writing things in Python I
 would have made you write the whole thing explicitly, but because you know
-about <code>stimes</code> and have an idea about it’s default implementation, I’m willing
+about <code>stimes</code> and have an idea about its default implementation, I’m willing
 to let that one go.</p>
 </div>
 <p>As you narrow your eyes you can just feel the camera zooming in on
@@ -166,8 +166,8 @@ you<a href="https://tenor.com/bjU6d.gif?not-sure-fry">…</a></p>
 <div class="speaker a">
 <p>In any case earlier you correctly identified an issue with Fibonacci numbers:
 <a href="https://images.search.yahoo.com/search/images?p=they+grow+up+so+fast+meme">they grow too fast</a>.
-For example only first 94 Fibonacci numbers fit into 64 bits, at which point
-one might as well have a static lookup table.
+For example only the first 94 Fibonacci numbers fit into 64 bits, at which
+point one might as well have a static lookup table.
 <!-- length . takeWhile (\(a,b) -> toInteger a == b) $ map (\x -> (fib_fun x :: Data.Word.Word64, fib_fun x :: Integer)) [0..] --></p>
 </div>
 <p>You nod.</p>
@@ -188,7 +188,7 @@ one might as well have a static lookup table.
 <p>How is your type magic?</p>
 </div>
 <div class="speaker b">
-<p>Depends. Please don’t make me do that without computer and documentation 🥺.</p>
+<p>Depends. Please don’t make me do that without a computer and documentation 🥺.</p>
 </div>
 <div class="speaker a">
 <p>I’m not a monster. Here is a piece of code vaguely inspired by package
@@ -244,7 +244,7 @@ only to be answered, but also to guide you to some more interesting things.</p>
 endomorphism <code>\(a,b) -&gt; (b,a+b)</code> will start looping at some point!
 So if we knew where the loop starts and how big it is, we could
 calculate the <code>n</code>-th Fibonacci number in time completely independent
-on the <code>n</code> itself! But cycle detection could eat a lot of memory
+of the <code>n</code> itself! But cycle detection could eat a lot of memory
 and testing against all the elements we visited can also add up quickly…</p>
 </div>
 <div class="speaker a">
@@ -275,14 +275,14 @@ called <a href="https://en.wikipedia.org/wiki/Pisano_period">Pisano period</a>.<
 </div>
 <div class="speaker a">
 <p>You ask interesting questions. But this is the end of my time allocated
-for this interview so I have too go. Thank you for coming today,
+for this interview so I have to go. Thank you for coming today,
 someone will be here with you shortly…</p>
 </div>
-<p>It happened fast, before being able to even say goodbye, the interviewer
-is gone. You are still deep in thought when a different person walks in.</p>
+<p>It happened fast, before you were able to say goodbye, the interviewer is
+gone. You are still deep in thought when a different person walks in.</p>
 <div class="speaker c">
 <p>Hi, sorry for making you wait this long, we had an unexpected
-emergency. Are yous still available to do the interview now?</p>
+emergency. Are you still available to do the interview now?</p>
 </div>
 <p>The new person looks at the whiteboard with expression of sudden
 realization:</p>

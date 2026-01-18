@@ -11,8 +11,8 @@
 <body><div class="wrapper"><header><span id="not-title">xkollar</span><nav><ul><li><a href="../">Main</a></li><span class="space"> </span><li><a href="../archive.html">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Bash Interview: echo</h1><div class="info">Posted on 2020-11-23 by xkollar  <span class="tags">in <a title="All pages tagged 'Linux'." href="../tags/Linux.html">Linux</a>, <a title="All pages tagged 'Bash'." href="../tags/Bash.html">Bash</a>, <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a>, <a title="All pages tagged 'Interview'." href="../tags/Interview.html">Interview</a></span>.</div><p>Interviews are funny. You have only very little time
 to find out whether participating sides are a good match or not.
 On many different levels: from personal to technical.
-Traditionally it is established by series of questions
-and answers (ideally not one sided…).</p>
+Traditionally it is established by a series of questions
+and answers (ideally not one-sided…).</p>
 <p>Good questions are not necessarily about correct answer but they will
 let you see someone’s thought process, will allow for a conversation about it,
 and also will enable you to estimate candidate’s experience level. (So the
@@ -47,29 +47,29 @@ but no.</p>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt;&lt;</span> -e</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> –e</span></code></pre></div>
 <p>Fair enough, it is important skill to be able to realize that one is being
-tricked (and try to trick in response). Interviewer needs to re-assure the
-candidate that it is indeed possible, with single echo. And that they meant
+tricked (and try to trick in response). Interviewer needs to reassure the
+candidate that it is indeed possible, with a single echo. And that they meant
 ASCII character <abbr title="HEX 2D">-</abbr>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">$'</span><span class="dt">\x2D</span><span class="st">e'</span></span></code></pre></div>
 <p>Candidate realized that they need to be sneaky somehow, but
 still no. Somewhat impressive though as not everyone knows <code class="sourceCode bash"><span class="st">$''</span></code>.</p>
 <p>Hopefully from there it is not far to get to the following.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">'\x2De'</span></span></code></pre></div>
-<p>If candidate on top of getting to the correct answer have
+<p>If, on top of getting the correct answer, the candidate has
 a big grin on their face (signifying they had fun), I’m happy.</p>
 <h2 id="alternativessimilar">Alternatives/similar</h2>
 <blockquote>
 <p>You run <code class="sourceCode bash"><span class="bu">echo</span> <span class="pp">*</span></code> yet nothing gets printed. Can you explain?</p>
 </blockquote>
-<p>Hint: directory is not empy. Hidden files are irrelevant.</p>
+<p>Hint: the directory is not empty. Hidden files are irrelevant.</p>
 <blockquote>
-<p>There is a directory called <code>~</code> in current directory. Remove it and
+<p>There is a directory called <code>~</code> in the current directory. Remove it and
 all it contains.</p>
 </blockquote>
 <p>Hint: maybe don’t give them terminal to try this one.</p>
 <p>Or slightly more obvious version:</p>
 <blockquote>
-<p>There is a file called <code>file; rm -rf ~</code> in current directory. Remove it.</p>
+<p>There is a file called <code>file; rm -rf ~</code> in the current directory. Remove it.</p>
 </blockquote>
 <p>Also fun thing to ponder:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="st">'\e[31mhello'</span></span>

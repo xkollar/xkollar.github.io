@@ -49,13 +49,13 @@ go about determining whether it is possible to use these (possibly with
 repetition) to fill the given area.</p>
 </div>
 <p>After quick pause to wonder about how the interviewer managed to include a
-hyperlink in his speech you return back to your role of an interviewee and
+hyperlink in his speech you snap back to your role of an interviewee and
 start thinking: “The question is a bit vague, but I know what it is
 asking. Or at least I think I do. Perhaps I should ask some clarifying
 questions?”</p>
 <p>After a short moment you say:</p>
 <div class="speaker b">
-<p>Well, In general case I would just brute-force it. Start with one square
+<p>Well, In the general case I would just brute-force it. Start with one square
 in the area, and iterate over the shapes trying to place them there
 (and all rotations x flips if that is desired too), and then recursively…</p>
 </div>
@@ -183,9 +183,9 @@ giving you the answer.</p>
 <li>For cases when <code>N&gt;=2</code>, there are two sub-cases, stemming from
 how we cover the top-left corner:
 <ul>
-<li>In case we cover it with horizontal domino, then we need to
+<li>In case we cover it with a vertical domino, then we need to
 tile <code>n-1</code> so there are <code>count (n-1)</code> ways to tile like this.</li>
-<li>In case we start with vertical domino, then we <em>have to</em> put
+<li>In case we start with a horizontal domino, then we <em>have to</em> put
 one below, and we are left with <code>n-2</code>, so there are <code>count (n-2)</code>
 ways to tile like this.</li>
 </ul></li>
@@ -216,7 +216,7 @@ complexity is also Fibonacci).</p>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    fibs <span class="ot">=</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">1</span> <span class="op">:</span> <span class="fu">zipWith</span> (<span class="op">+</span>) fibs (<span class="fu">tail</span> fibs)</span></code></pre></div>
 <p>And now we are linear… well, except for complexity of multiplication because
-as the value grows quite fast the complexity of multiplication can not really
+as the values grow quite fast the complexity of multiplication cannot really
 be considered constant.</p>
 </div>
 <p>The interviewer seems pleased. Almost as if your answer brought up some
@@ -238,7 +238,7 @@ define an infinite list of Fibonacci numbers defers the evaluation of addition
 and once we force evaluation at the end to be able to show the value, it
 causes the stack to explode. We can force the evaluation with <code>seq</code>, or we can
 just use
-<a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/strict.html#bang-patterns-informal">bang batterns</a>
+<a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/strict.html#bang-patterns-informal">bang patterns</a>
 to sprinkle in some strictness.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fib <span class="ot">=</span> go <span class="dv">0</span> <span class="dv">1</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
@@ -276,7 +276,7 @@ a &amp; b \\
 b &amp; a+b \\
 \end{bmatrix}
 </annotation></semantics></math></p>
-<p>And now we just start from <code>[0 1]</code> and multiply it by power of our
+<p>And now we just start from <code>[0 1]</code> and multiply it by <code>n</code>-th power of our
 update matrix.</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>×</mo><msup><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mi>n</mi></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><mstyle mathvariant="normal"><mi>f</mi><mi>i</mi><mi>b</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="center"><mstyle mathvariant="normal"><mi>f</mi><mi>i</mi><mi>b</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
 \begin{bmatrix}
