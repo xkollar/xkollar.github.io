@@ -4,7 +4,7 @@ author: xkollar
 tags: Math, Probability
 ---
 
-In the real world there are many cases where we would like
+In the real world, there are many cases where we would like
 all members of a set/population/... to satisfy a certain property
 but it is not practical (or possible) to test them all.
 
@@ -119,9 +119,9 @@ loss of generality. 👋👋
 
 Notice that this is okay to do, as all rows in a given group have the same
 probability regardless of what is the probability of an individual element
-being faulty! **Assumption: Errors are randomly distributed across all elements
-with equal probability.** Also notice that we know for sure that there are not
-4 nor 5 errors (as we would have observed a faulty element).
+being faulty! **Assumption: Errors are randomly distributed across all
+elements with equal probability.** Also notice that we know for sure that
+there are neither 4 nor 5 errors (as we would have observed a faulty element).
 
 Now we can start asking questions:
 
@@ -146,8 +146,8 @@ sense too.)
 
 In general, the probability of not having seen any error after taking `k`
 samples without replacement from set of total size `n` given there are `e`
-errors in the set is the number of ways how to place `e` errors in untested
-(`n-k`) positions divided by the number of ways how to place `e` errors in all
+errors in the set is the number of ways to place `e` errors in untested
+(`n-k`) positions divided by the number of ways to place `e` errors in all
 positions, or in <abbr title="mathematics (inside joke)">mafs</abbr>:
 
 $$
@@ -695,7 +695,7 @@ Compare with and without precision correction.
 Now that we have these basic building blocks,
 let's try to find answers to some frivolous questions!
 
-> Given dataset of size n, what is the smallest number of errors we are
+> Given a dataset of size n, what is the smallest number of errors we are
 > c-confident we would have discovered an error by k samples?
 
 ```python
@@ -718,7 +718,7 @@ def min_errors(total: int, samples: int, confidence_threshold: float) -> int:
     return left
 ```
 
-> Given dataset of size n, what is the smallest number of samples we need to
+> Given a dataset of size n, what is the smallest number of samples we need to
 > take to be at least c-confident we would have discovered an error if
 > there were x errors present?
 
@@ -755,15 +755,15 @@ that is kinda okay.
 
 ## Severity of a Bug
 
-One more interesting thing I'd like to leave you with is a thought on what is a
-bug and how do I feel about "not knowing whether there is an error lurking
-just around the corner".
+One more interesting thing I'd like to leave you with is a thought on what is
+a bug and how I feel about "not knowing whether there is an error lurking just
+around the corner".
 
 Under "normal" circumstances, "system has a problem" is a binary thing; either
 yes or no. But here, unless an issue was discovered within chosen samples, we
 don't know.
 
-Let's say we have set of size `1_000_000`, and we have found out that after we
+Let's say we have a set of size `1_000_000`, and we have found out that after we
 have tested `1_000` members without finding an issue, we are 95% confident
 that if there were `min_errors(1_000_000, 1_000, 0.95) = 2_990` errors, we
 would have found at least 1.
@@ -785,7 +785,7 @@ the underlying issue, we were able to gain some curious insights!
 * Combinatorial analysis gives confidence bounds *without* knowing individual failure rates.
 * Stirling's approximation enables computation at scale.
 * Test design: Use `min_samples` to justify resource allocation.
-* Reporting: Use `min_errors` to state "We're 95% confident undetected errors < X",
+* Reporting: Use `min_errors` to state "We're 95% confident undetected errors < X".
 * What fraction of elements (users/products/...) are impacted by a bug
   can be an interesting measure of severity.
 
