@@ -11,18 +11,18 @@ Pandoc compile it, and the result feels very dense,
 I don't think I like it, but maybe it can be CSS-ed? -->
 
 In the [previous installment of the Tech Interview saga](2025-12-25-tech-interview-i.html)
-we have left just as things started to get fun, perhaps expecting some quite
+we left off just as things started to get fun, perhaps expecting some quite
 heavy chunks of code dropping. Will they materialize? Or perhaps the interview
 will switch to Python? (Yeah, you saw the tags, no fooling you!) Keep reading
 and find out!
 
-Staring at the art outside of the meeting room gave you an uneasy feeling of
-discontinuity in time. It feels like you lost a month doing just that.
+Staring at the art outside the meeting room gave you an uneasy feeling of
+discontinuity in time. It feels like you've lost a month doing just that.
 But that is impossible, you are still here, doing the interview. There was a
-quesion, right.
+question, right.
 
 You take a deep breath and squeeze the whiteboard marker in your hand,
-feeling it's weight like a master chef would feel the weight and
+feeling its weight like a master chef would feel the weight and
 the balance of a knife, ready to scribble.
 
 <div class="speaker b">
@@ -123,9 +123,10 @@ $$
 
 This not only shows that we can reduce the original matrices to just tuples,
 but it also tells us how to combine them! And based on the way we constructed
-the operation it is trivially associative too. Giving us a semigroup. An while
-identity matrix has corresponding representation in our new structure making
-it a monoid, we don't need it now. Cherry on top? Haskell's
+the operation it is trivially associative too. Giving us a semigroup. And
+while the identity matrix has a corresponding representation in our new
+structure making it a monoid, we don't need it now. Cherry on top? Haskell's
+
 [`Semigroup` class has method `stimes`](https://hackage-content.haskell.org/package/ghc-internal-9.1401.0/docs/src/GHC.Internal.Base.html#stimes)
 that does what we need, and the default implementation does it the way that we
 want!
@@ -179,7 +180,7 @@ structured the code in your answer... you know more is coming.
 <div class="speaker a">
 To be honest, I just wanted to say that if we were writing things in Python I
 would have made you write the whole thing explicitly, but because you know
-about `stimes` and have an idea about it's default implementation, I'm willing
+about `stimes` and have an idea about its default implementation, I'm willing
 to let that one go.
 </div>
 
@@ -189,8 +190,8 @@ you[...](https://tenor.com/bjU6d.gif?not-sure-fry)
 <div class="speaker a">
 In any case earlier you correctly identified an issue with Fibonacci numbers:
 [they grow too fast](https://images.search.yahoo.com/search/images?p=they+grow+up+so+fast+meme).
-For example only first 94 Fibonacci numbers fit into 64 bits, at which point
-one might as well have a static lookup table.
+For example only the first 94 Fibonacci numbers fit into 64 bits, at which
+point one might as well have a static lookup table.
 <!-- length . takeWhile (\(a,b) -> toInteger a == b) $ map (\x -> (fib_fun x :: Data.Word.Word64, fib_fun x :: Integer)) [0..] -->
 </div>
 
@@ -218,7 +219,7 @@ How is your type magic?
 </div>
 
 <div class="speaker b">
-Depends. Please don't make me do that without computer and documentation 🥺.
+Depends. Please don't make me do that without a computer and documentation 🥺.
 </div>
 
 <div class="speaker a">
@@ -284,7 +285,7 @@ One of them is (more) finite. But that means, that the step
 endomorphism `\(a,b) -> (b,a+b)` will start looping at some point!
 So if we knew where the loop starts and how big it is, we could
 calculate the `n`-th Fibonacci number in time completely independent
-on the `n` itself! But cycle detection could eat a lot of memory
+of the `n` itself! But cycle detection could eat a lot of memory
 and testing against all the elements we visited can also add up quickly...
 </div>
 
@@ -323,16 +324,16 @@ How can we make it work with the logarithmic version? Does it even make sense (w
 
 <div class="speaker a">
 You ask interesting questions. But this is the end of my time allocated
-for this interview so I have too go. Thank you for coming today,
+for this interview so I have to go. Thank you for coming today,
 someone will be here with you shortly...
 </div>
 
-It happened fast, before being able to even say goodbye, the interviewer
-is gone. You are still deep in thought when a different person walks in.
+It happened fast, before you were able to say goodbye, the interviewer is
+gone. You are still deep in thought when a different person walks in.
 
 <div class="speaker c">
 Hi, sorry for making you wait this long, we had an unexpected
-emergency. Are yous still available to do the interview now?
+emergency. Are you still available to do the interview now?
 </div>
 
 The new person looks at the whiteboard with expression of sudden
