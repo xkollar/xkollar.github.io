@@ -148,7 +148,7 @@ sprinkling in some exclamation marks.)
 
 <!-- And yes, I could have taken the second element and, that way avoid
 `succ` and then handle 0 separately, but this feels more elegant.
-And possibly removing strictness ftom the second argument
+And possibly removing strictness from the second argument
 would do as good. -->
 
 </div>

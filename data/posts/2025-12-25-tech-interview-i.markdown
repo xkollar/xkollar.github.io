@@ -48,7 +48,7 @@ Nice. I have heard some of those words.
 
 <div class="speaker a">
 Haha. Anyway. Let's get to the fun part. Given an area on a unit-square grid
-and some [polyominos](https://en.wikipedia.org/wiki/Polyomino), how would you
+and some [polyominoes](https://en.wikipedia.org/wiki/Polyomino), how would you
 go about determining whether it is possible to use these (possibly with
 repetition) to fill the given area.
 </div>
