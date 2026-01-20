@@ -11,7 +11,7 @@ X:1
 T:Morgengruss
 C:Cornelius Gurlitt
 B:Op. 210 No. 1
-Z:abc-transcription xkollar <http://xkollar.github.io/>
+Z:abc-transcription xkollar <http://tenticle.dev/>
 I:linebreak $
 Q:"Moderato"
 M:C

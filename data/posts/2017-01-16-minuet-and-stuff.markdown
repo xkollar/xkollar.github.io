@@ -68,7 +68,7 @@ X:1
 T:Minuet
 C:Christian Petzold, from Notebook for Anna Magdalena Bach
 B:Notebook for Anna Magdalena Bach
-Z:abc-transcription xkollar <http://xkollar.github.io/>
+Z:abc-transcription xkollar <http://tenticle.dev/>
 I:linebreak $
 M:3/4
 K:G

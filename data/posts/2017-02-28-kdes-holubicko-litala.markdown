@@ -10,7 +10,7 @@ X:1
 T:Kdes, holubičko, lítala
 C:Česká z Litenčic
 B:The Great Unwritten Book of Folk Songs
-Z:abc-transcription xkollar <http://xkollar.github.io/>
+Z:abc-transcription xkollar <http://tenticle.dev/>
 I:linebreak $
 Q:"Moderato"
 M:3/4

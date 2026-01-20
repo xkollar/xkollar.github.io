@@ -10,7 +10,7 @@ X:1
 T:Kočka leze dírou
 C:Lidová
 B:The Great Unwritten Book of Folk Songs
-Z:abc-transcription xkollar <http://xkollar.github.io/>
+Z:abc-transcription xkollar <http://tenticle.dev/>
 I:linebreak $
 Q:"Risoluto"
 M:C

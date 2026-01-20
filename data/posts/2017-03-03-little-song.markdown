@@ -10,7 +10,7 @@ X:1
 T:Песенка
 C:Дми́трий Бори́сович Кабале́вский
 B:Op. 39 (1943)
-Z:abc-transcription xkollar <http://xkollar.github.io/>
+Z:abc-transcription xkollar <http://tenticle.dev/>
 I:linebreak $
 Q:"Медленно"
 M:C

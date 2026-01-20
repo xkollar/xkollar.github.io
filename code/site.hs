@@ -149,11 +149,11 @@ menuTagsField key tags = field key $ \_ -> renderTags makeLink (intercalate sepa
 
 myFeedConfiguration :: FeedConfiguration
 myFeedConfiguration = FeedConfiguration
-    { feedTitle       = "xkollar"
+    { feedTitle       = "tenticle"
     , feedDescription = "…"
     , feedAuthorName  = "xkollar"
     , feedAuthorEmail = ""
-    , feedRoot        = "https://xkollar.github.io"
+    , feedRoot        = "https://tenticle.dev"
     }
 
 -------------------------------------------------------------------------------

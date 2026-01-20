@@ -10,7 +10,7 @@ X:1
 T:Mаленькoе Скерцо
 C:Неизвестный автор
 B:Etuda
-Z:abc-transcription xkollar <http://xkollar.github.io/>
+Z:abc-transcription xkollar <http://tenticle.dev/>
 I:linebreak $
 Q:"Живо\n"
 M:2/4
