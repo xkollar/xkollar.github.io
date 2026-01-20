@@ -10,7 +10,7 @@ and embed resulting MathML. Now trying letting
 Pandoc compile it, and the result feels very dense,
 I don't think I like it, but maybe it can be CSS-ed? -->
 
-In the [previous installment of the Tech Interview saga](2025-12-25-tech-interview-i.html)
+In the [previous installment of the Tech Interview saga](2025-12-25-tech-interview-i.html){rel="prev"}
 we left off just as things started to get fun, perhaps expecting some quite
 heavy chunks of code dropping. Will they materialize? Or perhaps the interview
 will switch to Python? (Yeah, you saw the tags, no fooling you!) Keep reading
