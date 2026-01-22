@@ -103,6 +103,11 @@ rules = do
                 >>= applyAsTemplate indexCtx
                 >>= finalize indexCtx
 
+    match "bookmarks.markdown" $ do
+        route $ setExtension "html"
+        compile $
+            awesomeCompiler >>= applyAsTemplate defaultContext >>= finalize defaultContext
+
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
