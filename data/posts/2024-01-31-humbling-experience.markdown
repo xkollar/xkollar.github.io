@@ -17,7 +17,7 @@ Let me copy it here just to appreciate it.
 function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 ```
 
-Let's explore what is going on here, lookig at it in easier to digest(?) form:
+Let's explore what is going on here, lookig at it in easier-to-digest(?) form:
 
 ```bash
 function urldecode() {
@@ -26,28 +26,28 @@ function urldecode() {
 }
 ```
 
-First part is using built-in `:`{.bash} and as the (single) argument expanding
-all the arguments to the function into a single string `"${*}"`{.bash} while
-replacing all occurrences of `+` with space (double forward slash pattern
-substitution).
+First part is using built-in `:`{.bash} with the (single) argument being
+expansion of all the function's arguments into a single string
+`"${*}"`{.bash} while replacing all the occurrences of `+` with space
+(double-forward-slash pattern substitution).
 
 Confusing part is that `:`{.bash} build-in kinda does nothing (except for
-exiting with 0, many of you probably invoked spell of shape `while :; do
-domething; done` or as a part of comment/documentation combined with here
-document). While this looks like
+exiting with 0; many of you probably invoked spell of shape `while :; do
+something; done` or used it as a part of comment/documentation when
+combined with here document). While this looks like
 [`nop`](https://en.wikipedia.org/wiki/NOP_(code))/pass/… it is not.
 
 The magic is revealed when we inspect the following line where special
-variable `${_}`{.bash} is used. From [Bash
-documentation](https://www.gnu.org/software/bash/manual/bash.html#index-_005f)
+variable `${_}`{.bash} is used. From
+[Bash documentation](https://www.gnu.org/software/bash/manual/bash.html#index-_005f),
 in this case it
 
 > expands to the last argument to the previous simple command executed in the
 > foreground, after expansion.
 
-Therefore meaning of the previous line was "just" to set `${_}`. There all
-percent signs get replaced with `\x` (double backslash for escaping in `"`) and
-pass that to `echo -e` for evaluation.
+Therefore the purpose of the previous line was "just" to set `${_}`. There all
+the percent signs get replaced with `\x` (double backslash
+for escaping in `"`) and pass that to `echo -e` for evaluation.
 
 Obviously, people who [read me](2020-11-23-bash-interview-echo.html) know
 there is a bug: `urldecode -e` will return nothing. It is still very elegant way to

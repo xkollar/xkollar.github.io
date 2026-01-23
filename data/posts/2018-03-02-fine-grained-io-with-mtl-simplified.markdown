@@ -4,13 +4,14 @@ author: xkollar
 tags: Haskell, mtl
 ---
 
-In [previous article](2018-01-25-fine-grained-io-with-mtl.html) I have provided
-example of how to do selectively add "impure" actions into mtl monadic stack
-without full power of `MonadIO`. There I have defined separate newtype
-wrappers, which is useful if you want to have more control and flexibility over
-possible interpreters. Most of the time however, one just wants to have simpler
-code. If that is what you are aiming for, you can have just one wrapper newtype
-and provide all instances for this particular wrapper.
+In the [previous article](2018-01-25-fine-grained-io-with-mtl.html){rel="prev"}
+I have provided an example of how to selectively add "impure" actions into mtl
+monadic stack without the full power of `MonadIO`. I have defined separate
+newtype wrappers, which is useful if you want to have more control and
+flexibility over possible interpreters. Most of the time however, one just
+wants to have simpler code. If that is what you are aiming for, you can have
+just one newtype wrapper and provide all the instances for this particular
+wrapper.
 
 Diff.
 

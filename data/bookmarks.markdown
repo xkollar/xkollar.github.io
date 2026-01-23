@@ -11,6 +11,7 @@ Browse at your own leisure.
 * [Project Euler](https://projecteuler.net/)
 * [Puzzles page](https://www.janestreet.com/puzzles/)
 * [Daily Skyscrapers](https://www.brainbashers.com/skyscrapers.asp)
+* [James Mickens' Wisdom](https://mickens.seas.harvard.edu/wisdom/), start with USENIX Articles.
 
 ## People
 
