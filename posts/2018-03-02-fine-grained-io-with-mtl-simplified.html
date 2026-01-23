@@ -8,13 +8,14 @@
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
-<body><div class="wrapper"><header><span id="not-title">tenticle</span><nav><ul><li><a href="../" rel="home">Main</a></li><span class="space"> </span><li><a href="../archive.html" rel="directory">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Fine-grained IO with mtl Simplified</h1><div class="info">Posted on 2018-03-02 by xkollar  <span class="tags">in <a title="All pages tagged 'Haskell'." href="../tags/Haskell.html">Haskell</a>, <a title="All pages tagged 'mtl'." href="../tags/mtl.html">mtl</a></span>.</div><p>In <a href="2018-01-25-fine-grained-io-with-mtl.html">previous article</a> I have provided
-example of how to do selectively add “impure” actions into mtl monadic stack
-without full power of <code>MonadIO</code>. There I have defined separate newtype
-wrappers, which is useful if you want to have more control and flexibility over
-possible interpreters. Most of the time however, one just wants to have simpler
-code. If that is what you are aiming for, you can have just one wrapper newtype
-and provide all instances for this particular wrapper.</p>
+<body><div class="wrapper"><header><span id="not-title">tenticle</span><nav><ul><li><a href="../" rel="home">Main</a></li><span class="space"> </span><li><a href="../archive.html" rel="directory">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Fine-grained IO with mtl Simplified</h1><div class="info">Posted on 2018-03-02 by xkollar  <span class="tags">in <a title="All pages tagged 'Haskell'." href="../tags/Haskell.html">Haskell</a>, <a title="All pages tagged 'mtl'." href="../tags/mtl.html">mtl</a></span>.</div><p>In the <a href="2018-01-25-fine-grained-io-with-mtl.html" rel="prev">previous article</a>
+I have provided an example of how to selectively add “impure” actions into mtl
+monadic stack without the full power of <code>MonadIO</code>. I have defined separate
+newtype wrappers, which is useful if you want to have more control and
+flexibility over possible interpreters. Most of the time however, one just
+wants to have simpler code. If that is what you are aiming for, you can have
+just one newtype wrapper and provide all the instances for this particular
+wrapper.</p>
 <p>Diff.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -27,18 +27,12 @@ class WriteFile m where</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     writeFile :: FilePath -&gt; String -&gt; m ()</span>
