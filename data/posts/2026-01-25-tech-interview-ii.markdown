@@ -168,6 +168,7 @@ f & = (a+b)(c+d) - ac \\
 
 This way we do 3 multiplications and 4 "additive" operations, except
 now we need minus on the underlying numeric types.
+<!-- Oppa Анато́лий Алексе́евич Карацу́ба Style -->
 </div>
 
 For an unexpectedly shaped moment there is a silence.
@@ -345,3 +346,4 @@ realization:
 Not again 😮‍💨 ... Have you... Have someone had a technical
 interview round with you just now?
 </div>
+<!-- Afterword? -->
