@@ -1,5 +1,5 @@
 ---
-title: "No limit storage"
+title: "No Limit Storage"
 author: xkollar
 tags: Haiku
 ---

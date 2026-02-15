@@ -1,5 +1,5 @@
 ---
-title: "Glass walls of comp day"
+title: "Glass Walls of Comp Day"
 author: xkollar
 tags: Haiku
 ---
