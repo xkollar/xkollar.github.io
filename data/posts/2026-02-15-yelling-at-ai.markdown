@@ -43,12 +43,12 @@ But even considering that, it still does not feel right. I tried to understand
 why. Writing in ALL CAPS is how yelling is represented (in my current cultural
 context). So as I type in all caps, my brain decodes it as yelling.
 
-Boundary between text and source code blurs with AI. With Python, Haskell,
+The boundary between text and source code blurs with AI. With Python, Haskell,
 sed, or other traditional programming languages the difference in form makes
 it easy to tell computer-speak from human-speak. With AI, even when you
 know you are writing for a machine, part of your brain still registers ALL
-CAPS as yelling. For a reader that context might vanish completely,
-all they see is the caps.
+CAPS as yelling. For a reader that context might vanish completely.
+All they see is the caps.
 
 Practice does not make perfect: it makes permanent. Practicing yelling builds
 muscle memory. That pattern can leak beyond writing for AI. It can fire when

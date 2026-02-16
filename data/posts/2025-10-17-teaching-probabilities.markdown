@@ -75,7 +75,7 @@ neither of which it actually is, since it is just a ratio (dimensionless). Anywa
 you can stomach that, you can use it to draw pictures that can help you reason
 about probabilities.
 
-Let's look at a illustrative example in the following picture.
+Let's look at an illustrative example in the following picture.
 
 <svg viewBox="0 0 300 150" fill="white">
   <style>

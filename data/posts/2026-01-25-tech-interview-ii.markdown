@@ -190,7 +190,7 @@ you[...](https://tenor.com/bjU6d.gif?not-sure-fry)
 <div class="speaker a">
 In any case earlier you correctly identified an issue with Fibonacci numbers:
 [they grow too fast](https://images.search.yahoo.com/search/images?p=they+grow+up+so+fast+meme).
-For example only the first 94 Fibonacci numbers fit into 64 bits, at which
+For example, only the first 94 Fibonacci numbers fit into 64 bits, at which
 point one might as well have a static lookup table.
 <!-- length . takeWhile (\(a,b) -> toInteger a == b) $ map (\x -> (fib_fun x :: Data.Word.Word64, fib_fun x :: Integer)) [0..] -->
 </div>
@@ -284,7 +284,7 @@ As you ponder this question you can't help it but feel that it is here not
 only to be answered, but also to guide you to some more interesting things.
 
 <div class="speaker b">
-One of them is (more) finite. But that means, that the step
+One of them is (more) finite. But that means that the step
 endomorphism `\(a,b) -> (b,a+b)` will start looping at some point!
 So if we knew where the loop starts and how big it is, we could
 calculate the `n`-th Fibonacci number in time completely independent
@@ -343,7 +343,7 @@ The new person looks at the whiteboard with expression of sudden
 realization:
 
 <div class="speaker c">
-Not again 😮‍💨 ... Have you... Have someone had a technical
+Not again 😮‍💨 ... Have you... Has someone had a technical
 interview round with you just now?
 </div>
 <!-- Afterword? -->

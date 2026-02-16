@@ -5,7 +5,7 @@ tags: Math, Probability
 ---
 
 In the real world, there are many cases where we would like
-all members of a set/population/... to satisfy a certain property
+all members of a set/population/... to satisfy a certain property,
 but it is not practical (or possible) to test them all.
 
 The set might be too big, individual tests themselves too time-consuming, or
@@ -73,7 +73,7 @@ Luckily, there is something we can do! We can ask:
 > If there were `n` errors, what is the probability that we missed all of them?
 
 For the purposes of our analysis we can fix which elements are checked without
-loss of generality. 👋👋
+loss of generality. <abbr title="Good old hand-waving.">👋👋</abbr>
 
 ```txt
  Errs | Untested | Tested | Miss | P(seen=0|e=Errs) | Confidence Threshold

@@ -99,7 +99,7 @@ it with dominoes.
 Hoping that at least this time you'll get to finish your thought you start.
 
 <div class="speaker b">
-Every domino fills two squares. So I definitely can't do rectangle with odd
+Every domino fills two squares. So I definitely can't do a rectangle with odd
 area. Now the question is, whether I can do all possible even areas. Even area
 of `MxN` has even `M` or `N`. Without loss of generality say it is `M`. Then
 we have `N` lines (`N` can be also even), that has `M = 2*X` unit squares,

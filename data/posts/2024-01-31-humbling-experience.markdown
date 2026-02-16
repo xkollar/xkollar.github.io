@@ -17,7 +17,7 @@ Let me copy it here just to appreciate it.
 function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 ```
 
-Let's explore what is going on here, lookig at it in easier-to-digest(?) form:
+Let's explore what is going on here, looking at it in an easier-to-digest(?) form:
 
 ```bash
 function urldecode() {
@@ -26,15 +26,15 @@ function urldecode() {
 }
 ```
 
-First part is using built-in `:`{.bash} with the (single) argument being
+First part is using builtin `:`{.bash} with the (single) argument being
 expansion of all the function's arguments into a single string
 `"${*}"`{.bash} while replacing all the occurrences of `+` with space
 (double-forward-slash pattern substitution).
 
-Confusing part is that `:`{.bash} build-in kinda does nothing (except for
-exiting with 0; many of you probably invoked spell of shape `while :; do
-something; done` or used it as a part of comment/documentation when
-combined with here document). While this looks like
+Confusing part is that `:`{.bash} builtin kinda does nothing (except for
+exiting with 0; many of you have probably invoked a spell of shape
+`while :; do something; done` or used it as a part of comment/documentation
+when combined with here document). While this looks like a
 [`nop`](https://en.wikipedia.org/wiki/NOP_(code))/pass/… it is not.
 
 The magic is revealed when we inspect the following line where special
@@ -51,4 +51,4 @@ for escaping in `"`) and pass that to `echo -e` for evaluation.
 
 Obviously, people who [read me](2020-11-23-bash-interview-echo.html) know
 there is a bug: `urldecode -e` will return nothing. It is still very elegant way to
-solve task at hand on command line.
+solve task at hand on command line. Easy fix with `printf '%b'`.
