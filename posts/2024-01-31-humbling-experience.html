@@ -17,18 +17,19 @@ my brain took a moment to process it.</p>
 </figure>
 <p>Let me copy it here just to appreciate it.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> urldecode()</span> <span class="kw">{</span> <span class="bu">:</span> <span class="st">&quot;</span><span class="va">${*</span><span class="op">//</span><span class="ss">+</span><span class="op">/</span> <span class="va">}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="bu">echo</span> <span class="at">-e</span> <span class="st">&quot;</span><span class="va">${_</span><span class="op">//</span><span class="ss">%</span><span class="op">/</span><span class="dt">\\</span>x<span class="va">}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">}</span></span></code></pre></div>
-<p>Let’s explore what is going on here, lookig at it in easier-to-digest(?) form:</p>
+<p>Let’s explore what is going on here, looking at it in an easier-to-digest(?) form:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> urldecode()</span> <span class="kw">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">:</span> <span class="st">&quot;</span><span class="va">${*</span><span class="op">//</span><span class="ss">+</span><span class="op">/</span> <span class="va">}</span><span class="st">&quot;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">&quot;</span><span class="va">${_</span><span class="op">//</span><span class="ss">%</span><span class="op">/</span><span class="dt">\\</span>x<span class="va">}</span><span class="st">&quot;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
-<p>First part is using built-in <code class="sourceCode bash"><span class="bu">:</span></code> with the (single) argument being
+<p>First part is using builtin <code class="sourceCode bash"><span class="bu">:</span></code> with the (single) argument being
 expansion of all the function’s arguments into a single string
 <code class="sourceCode bash"><span class="st">&quot;</span><span class="va">${*}</span><span class="st">&quot;</span></code> while replacing all the occurrences of <code>+</code> with space
 (double-forward-slash pattern substitution).</p>
-<p>Confusing part is that <code class="sourceCode bash"><span class="bu">:</span></code> build-in kinda does nothing (except for
-exiting with 0; many of you probably invoked spell of shape <code>while :; do something; done</code> or used it as a part of comment/documentation when
-combined with here document). While this looks like
+<p>Confusing part is that <code class="sourceCode bash"><span class="bu">:</span></code> builtin kinda does nothing (except for
+exiting with 0; many of you have probably invoked a spell of shape
+<code>while :; do something; done</code> or used it as a part of comment/documentation
+when combined with here document). While this looks like a
 <a href="https://en.wikipedia.org/wiki/NOP_(code)"><code>nop</code></a>/pass/… it is not.</p>
 <p>The magic is revealed when we inspect the following line where special
 variable <code class="sourceCode bash"><span class="va">${_}</span></code> is used. From
@@ -43,6 +44,6 @@ the percent signs get replaced with <code>\x</code> (double backslash
 for escaping in <code>"</code>) and pass that to <code>echo -e</code> for evaluation.</p>
 <p>Obviously, people who <a href="2020-11-23-bash-interview-echo.html">read me</a> know
 there is a bug: <code>urldecode -e</code> will return nothing. It is still very elegant way to
-solve task at hand on command line.</p>
+solve task at hand on command line. Easy fix with <code>printf '%b'</code>.</p>
 </div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
 </html>
