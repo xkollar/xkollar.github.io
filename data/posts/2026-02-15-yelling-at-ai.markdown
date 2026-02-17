@@ -5,7 +5,7 @@ tags: SoC
 ---
 
 ```patch
-commit ba5eddeadbeefc0ffeeda7acla55b00b1e5fafff
+commit ba5eddeadbeefc0ffeeda7ac1a55b00b1e5fafff
 Author: Anonymous Colleague <username@cool.company>
 Date:   Fri Jan 23 11:23:42 2026 +0000
 
@@ -31,7 +31,7 @@ near you.
 
 Did it feel wrong? It did to me. Why? I'll try to answer. For myself.
 
-Let's put aside whether it works or no. We could ask the same question about
+Let's put aside whether it works or not. We could ask the same question about
 yelling at people, but that's a different conversation.
 
 The first objection raised when I discuss this topic (with matrix-based and
@@ -62,9 +62,9 @@ to seeing *italic* in `*italic*`, **bold** in `**bold**`, čerešňa in
 my brain. And let's say I can keep that framing contained: one mode for
 computers, another for people.
 
-And there is precedent for this. Even with traditional programming languages,
+And there is a precedent for this. Even with traditional programming languages,
 the code looks different based on whether it is meant to be executed by a
-machine (optimized and architecture dependent) or read by a human. Is it study
+machine (optimized and architecture-dependent) or read by a human. Is it study
 material? A proof of concept? An expression of an idea shared between domain
 experts or researchers?
 
@@ -81,7 +81,7 @@ to become the future's past, and that way shaping the future.
 
 I don't want to manifest a future where yelling is normal.
 
-More thoughts on the topic have not taken concrete form in my mind yet.
+More thoughts on the topic have not taken a concrete form in my mind yet.
 I might add something later.
 
 <!--
