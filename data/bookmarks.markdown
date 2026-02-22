@@ -2,10 +2,10 @@
 title: Bookrmarks
 ---
 
-Here be links to thigs. Perhaps endorsements? Or recommendations?
+Here be links to things. Perhaps endorsements? Or recommendations?
 Browse at your own leisure.
 
-## Enterntaiment
+## Entertainment
 
 * [Ponder This](https://research.ibm.com/haifa/ponderthis/index.shtml)
 * [Project Euler](https://projecteuler.net/)
