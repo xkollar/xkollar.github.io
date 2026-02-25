@@ -223,7 +223,7 @@ $$
 
 <div class="speaker a">
 Great work! You can rationalize the denominators in those bases to
-make is prettier (and maybe a bit more useful) 👍.
+make it prettier (and maybe a bit more useful) 👍.
 </div>
 
 That sounds reasonable.
@@ -233,10 +233,10 @@ $$
 $$
 
 <div class="speaker b">
-Well, that's a beautiful closed form. And a strange too: all the irrational
-numbers, yet it produces natural numbers as results.
+Well, that's a beautiful closed form. And strange one too: all the irrational
+numbers, yet it produces natural numbers.
 
-But it still does not allow us to calculate n-th Fibonacci number
+However it still does not allow us to calculate n-th Fibonacci number
 in sub-log time! If it was possible there would be some great
 improvements to be made here:
 
@@ -302,11 +302,14 @@ fac n = numerator x
     -- to do the rational part.
     S 0 x = ((1 + s5)/2)^n - ((1 - s5)/2)^n
 ```
+
+Improvements might be possible but for now the matrix-inspired
+version is still more efficient.
 </div>
 
 You feel a congratulatory tap on your back.
 Well deserved. You feel satisfied. But tired too.
-Actually really tired. You look up and you see the
+Actually really tired. You blink, look up at the
 food-place employee giving you the "we are about to close look".
 There is nobody else in here, you are the last customer.
 
