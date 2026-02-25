@@ -179,16 +179,16 @@ form of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><seman
 </annotation></semantics></math></p>
 <div class="speaker a">
 <p>Great work! You can rationalize the denominators in those bases to
-make is prettier (and maybe a bit more useful) 👍.</p>
+make it prettier (and maybe a bit more useful) 👍.</p>
 </div>
 <p>That sounds reasonable.</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="normal"><mi>f</mi><mi>i</mi><mi>b</mi></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mn>1</mn><mo>+</mo><msqrt><mn>5</mn></msqrt></mrow><mn>2</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>n</mi></msup><mo>−</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mn>1</mn><mo>−</mo><msqrt><mn>5</mn></msqrt></mrow><mn>2</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>n</mi></msup></mrow><msqrt><mn>5</mn></msqrt></mfrac></mrow><annotation encoding="application/x-tex">
 \mathrm{fib}(n) = \frac{(\frac{1+\sqrt{5}}{2})^n-(\frac{1-\sqrt{5}}{2})^n}{\sqrt{5}}
 </annotation></semantics></math></p>
 <div class="speaker b">
-<p>Well, that’s a beautiful closed form. And a strange too: all the irrational
-numbers, yet it produces natural numbers as results.</p>
-<p>But it still does not allow us to calculate n-th Fibonacci number
+<p>Well, that’s a beautiful closed form. And strange one too: all the irrational
+numbers, yet it produces natural numbers.</p>
+<p>However it still does not allow us to calculate n-th Fibonacci number
 in sub-log time! If it was possible there would be some great
 improvements to be made here:</p>
 <ul>
@@ -246,10 +246,13 @@ some heavy hand-waving…</p>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- and even the last minus does technically not need</span></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- to do the rational part.</span></span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="dt">S</span> <span class="dv">0</span> x <span class="ot">=</span> ((<span class="dv">1</span> <span class="op">+</span> s5)<span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>n <span class="op">-</span> ((<span class="dv">1</span> <span class="op">-</span> s5)<span class="op">/</span><span class="dv">2</span>)<span class="op">^</span>n</span></code></pre></div>
+<!-- the "fac" typo is genuine -->
+<p>Improvements might be possible but for now the matrix-inspired
+version is still more efficient.</p>
 </div>
 <p>You feel a congratulatory tap on your back.
 Well deserved. You feel satisfied. But tired too.
-Actually really tired. You look up and you see the
+Actually really tired. You blink, look up at the
 food-place employee giving you the “we are about to close look”.
 There is nobody else in here, you are the last customer.</p>
 <p>Confused you stand up, stuff all your stuff into the backpack,
