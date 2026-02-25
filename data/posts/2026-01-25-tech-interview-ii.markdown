@@ -225,6 +225,9 @@ Depends. Please don't make me do that without a computer and documentation 🥺.
 <div class="speaker a">
 I'm not a monster. Here is a piece of code vaguely inspired by package
 [modular-arithmetic](https://hackage.haskell.org/package/modular-arithmetic-2.0.0.3):
+<!-- Warning: this has bugs! They are intentional. This is an interview
+technique to see whether candidate notices such things, to see how
+deeply the candidate thinks about code they encounter. -->
 ```haskell
 {-# LANGUAGE AllowAmbiguousTypes #-}
 {-# LANGUAGE DataKinds #-}
@@ -284,12 +287,24 @@ As you ponder this question you can't help it but feel that it is here not
 only to be answered, but also to guide you to some more interesting things.
 
 <div class="speaker b">
-One of them is (more) finite. But that means that the step
+One of them is (more) finite. Which means… that the step
 endomorphism `\(a,b) -> (b,a+b)` will start looping at some point!
 So if we knew where the loop starts and how big it is, we could
 calculate the `n`-th Fibonacci number in time completely independent
 of the `n` itself! But cycle detection could eat a lot of memory
 and testing against all the elements we visited can also add up quickly...
+```dot-render
+digraph g {
+    rankdir="LR";
+    edge [arrowsize=0.5, arrowhead=vee, color=lightgrey];
+    node [label="", shape=circle, width=0.1, color=grey];
+    a -> b -> c -> d -> e -> f -> a;
+    l -> l;
+    g -> h -> i -> d;
+    j -> i;
+    k -> l;
+}
+```
 </div>
 
 <div class="speaker a">
@@ -298,9 +313,25 @@ Would it help if it was invertible?
 
 <div class="speaker b">
 Well that would make it an isomorphism (automorphism?), which means
-there are no "tails" and it generates a cycle, so we know we
+there are no "tails" and it generates cycles, so we know we
 would get back to the starting point of `(0,1)`! So no need
-to remember all the visited elements!
+to remember all the visited elements! (Red edges and nodes can't
+exist because for them an inversion would not exist.)
+
+```dot-render
+digraph g {
+    rankdir="LR";
+    edge [arrowsize=0.5, arrowhead=vee, color=lightgreen];
+    node [label="", shape=circle, width=0.1, color=grey, style=filled, fillcolor=lightgreen];
+    a -> b -> c -> d -> e -> f -> a;
+    l -> l;
+    node [color=grey, style=filled, fillcolor=pink];
+    edge [color=pink];
+    g -> h -> i -> d;
+    j -> i;
+    k -> l;
+}
+```
 
 But is it?
 Let's try `(c,d) -> (d-c,c)`. For `(e,f)` after applying
@@ -347,3 +378,5 @@ Not again 😮‍💨 ... Have you... Has someone had a technical
 interview round with you just now?
 </div>
 <!-- Afterword? -->
+
+(Unexpected [next episode](2026-02-25-tech-interview-aftertaste.html){rel="next"}.)

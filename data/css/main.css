@@ -292,3 +292,22 @@ mtable mtd:last-child {
   left: -14px;
   top: 5pt;
 }
+.main > details {
+  display: block;
+  padding-left: 1em;
+  padding-right: 1em;
+  background: #333;
+  border-left: 2px solid #444;
+}
+details > summary {
+  display: block;
+  margin: -1ex -1em;
+  padding: 1ex 1em;
+  cursor: pointer;
+}
+details > summary::before {
+  content: "+ ";
+}
+details[open] > summary::before {
+  content: "- "
+}

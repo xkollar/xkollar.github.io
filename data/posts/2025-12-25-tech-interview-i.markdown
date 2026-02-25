@@ -178,7 +178,7 @@ Let's have a grid of `2xN`. Let's break it down to several cases.
     </pattern>
   </defs>
   <!-- Background -->
-  <rect x="0" y="0" width="150" height="100" fill="white" />
+  <rect x="0" y="0" width="120" height="70" fill="white" />
   <!-- N=0 -->
   <rect x="15" y="10" width="0.001" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"/>
   <text x="15" y="8" text-anchor="middle">N=0</text>
