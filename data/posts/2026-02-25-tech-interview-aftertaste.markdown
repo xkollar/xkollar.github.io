@@ -36,7 +36,7 @@ all about? Something around representing sequences of numbers as
 polynomials. Was it called [generating functions](https://en.wikipedia.org/wiki/Generating_function)?
 
 Starting simple is usually a good idea. Maybe encoding a list of all ones?
-In polynomials various powers of the variable naturally separate their
+In polynomials, the various powers of the variable naturally separate their
 coefficients. So a sequence $1, 1, 1, 1, 1, 1, \cdots$ could be represented
 as a polynomial on $x$ with
 
@@ -305,10 +305,10 @@ fac n = numerator x
 </div>
 
 You feel a congratulatory tap on your back.
-Well deserve. You feel satisfied. But tired too.
-Actually really tired. Yo look up and you see the
+Well deserved. You feel satisfied. But tired too.
+Actually really tired. You look up and you see the
 food-place employee giving you the "we are about to close look".
-The is nobody else in here, you are the last customer.
+There is nobody else in here, you are the last customer.
 
 Confused you stand up, stuff all your stuff into the backpack,
 say quick thank you and bye and disappear into the night.
