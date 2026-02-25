@@ -30,7 +30,7 @@ You pull out a writing device of your choice and a generic white-label
 wire-bound notebook. You open the notebook on a fresh page and stare at
 the empty lines for a bit.
 
-There was a class where someone derived formula for the Fibonacci
+There was a class where someone derived a formula for the Fibonacci
 numbers. Or someone mentioned it. And it was exciting. What was it
 all about? Something around representing sequences of numbers as
 polynomials. Was it called [generating functions](https://en.wikipedia.org/wiki/Generating_function)?
@@ -106,8 +106,8 @@ $$
 </div>
 
 <div class="speaker b">
-This is great, except, what do I do with this? How do I get individual
-back to the elements of the sequence? Or even better, to just to
+This is great, except, what do I do with this? How do I get
+back to elements of the sequence? Or even better, to just to
 an element on a given position?
 </div>
 
