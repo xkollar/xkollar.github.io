@@ -302,6 +302,7 @@ fac n = numerator x
     -- to do the rational part.
     S 0 x = ((1 + s5)/2)^n - ((1 - s5)/2)^n
 ```
+<!-- the "fac" typo is genuine -->
 
 Improvements might be possible but for now the matrix-inspired
 version is still more efficient.
