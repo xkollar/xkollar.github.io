@@ -117,9 +117,9 @@ you repeat the steps, but with extra <math display="inline" xmlns="http://www.w3
 \dfrac{1}{1-\alpha{}x} = 1 + \alpha{}x + \alpha^2x^2 + \alpha{}^3x^3 \cdots
 </annotation></semantics></math></p>
 <p>That is actually very useful! If we find an appropriately shaped expression,
-this formula allows us to find n-th element in the sequence on its own!
-And polynomials are easy to sum. That is handy. So is the pattern for
-adding two fractions. Now if only we could express this generating
+this formula allows us to find n-th element in the sequence on its own! And
+polynomials are easy to sum as we saw earlier. That is handy. So is the
+pattern for adding two fractions. Now if only we could express this generating
 function as a sum of appropriate forms…</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>A</mi><mrow><mn>1</mn><mo>−</mo><mi>α</mi><mrow></mrow><mi>x</mi></mrow></mfrac><mo>+</mo><mfrac><mi>B</mi><mrow><mn>1</mn><mo>−</mo><mi>β</mi><mrow></mrow><mi>x</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 \frac{A}{1-\alpha{}x} + \frac{B}{1-\beta{}x}
@@ -237,7 +237,7 @@ some heavy hand-waving…</p>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fromRational</span> a <span class="ot">=</span> <span class="dt">S</span> (<span class="fu">fromRational</span> a) <span class="dv">0</span></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">S</span> a b <span class="op">/</span> <span class="dt">S</span> c <span class="dv">0</span> <span class="ot">=</span> <span class="dt">S</span> (a<span class="op">/</span>c) (b<span class="op">/</span>c) <span class="co">-- we only divide by 2</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">T</span> <span class="ot">=</span> <span class="dt">S5</span> (<span class="dt">Rational</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">T</span> <span class="ot">=</span> <span class="dt">S5</span> <span class="dt">Rational</span></span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="ot">fac ::</span> <span class="dt">Integer</span> <span class="ot">-&gt;</span> <span class="dt">Integer</span></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>fac n <span class="ot">=</span> <span class="fu">numerator</span> x</span>
