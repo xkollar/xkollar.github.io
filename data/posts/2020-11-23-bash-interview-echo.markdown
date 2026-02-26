@@ -7,9 +7,9 @@ Interviews are funny. You have only very little time
 to find out whether participating sides are a good match or not.
 On many different levels: from personal to technical.
 Traditionally it is established by a series of questions
-and answers (ideally not one-sided...).
+and answers (ideally not one-sided…).
 
-Good questions are not necessarily about correct answer but they will
+Good questions are not necessarily about the correct answer but they will
 let you see someone's thought process, will allow for a conversation about it,
 and also will enable you to estimate candidate's experience level. (So the
 information gained from the interaction is not just binary.) Bonus points
@@ -67,7 +67,7 @@ cat <<< -e
 echo –e
 ```
 
-Fair enough, it is important skill to be able to realize that one is being
+Fair enough, it is an important skill to be able to realize that one is being
 tricked (and try to trick in response). Interviewer needs to reassure the
 candidate that it is indeed possible, with a single echo. And that they meant
 ASCII character <abbr title="HEX 2D">-</abbr>.
@@ -118,7 +118,7 @@ echo *
 If it is not clear from the tags, this article was not meant to be serious. If
 you however decide to use this in a real interview, please don't make it the
 first question. You can ask it once you think the candidate is good enough
-and want to have a bit more of a interesting conversation with them.
+and want to have a bit more of an interesting conversation with them.
 
-If anything, I hope that reader got some intuition into why defensive
+If anything, I hope that the reader got some intuition into why defensive
 programming in Bash is important.

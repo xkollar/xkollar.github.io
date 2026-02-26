@@ -247,7 +247,7 @@ implementation is not very computationally efficient, is it? Can we do any
 better?
 </div>
 
-Easy-peasy, let's just build it from bottom up, start from 0, and name the
+Easy-peasy, let's just build it from the bottom up, start from 0, and name the
 function properly.
 
 <div class="speaker b">

@@ -165,8 +165,8 @@ Ugh… Do I even remember quadratic formula? Let me try to remember real quick.
 
 $$
 \begin{align}
-ax^2 + bx + c &= 0 & /a \\
-x^2 + \frac{b}{a}x + \frac{c}{a} &= 0               & -\frac{c}{a} \\
+ax^2 + bx + c                    &= 0             & /a \\
+x^2 + \frac{b}{a}x + \frac{c}{a} &= 0             & - \frac{c}{a} \\
 x^2 + \frac{b}{a}x               &= - \frac{c}{a} & + \frac{b}{2a}^2 \\
 \end{align}
 $$
@@ -212,7 +212,7 @@ Even more paper is burned on re-shaping the denominator to the desired
 form of $1 - \alpha{}x$.
 
 $$
-\frac{-\frac{1}{\sqrt{5}}}{1 -(\frac{-2}{1-\sqrt{5}})x} + \frac{\frac{1}{\sqrt{5}}}{1 -(\frac{-2}{1-\sqrt{5}})x}
+\frac{-\frac{1}{\sqrt{5}}}{1 -(\frac{-2}{1+\sqrt{5}})x} + \frac{\frac{1}{\sqrt{5}}}{1 -(\frac{-2}{1-\sqrt{5}})x}
 $$
 
 And from there n-th element (coefficient for $x^n$) is:
@@ -302,7 +302,8 @@ fac n = numerator x
     -- to do the rational part.
     S 0 x = ((1 + s5)/2)^n - ((1 - s5)/2)^n
 ```
-<!-- the "fac" typo is genuine -->
+<!-- the "fac" typo is genuine and intentionally left behind to
+document that 2am tired brain effect -->
 
 Improvements might be possible but for now the matrix-inspired
 version is still more efficient.

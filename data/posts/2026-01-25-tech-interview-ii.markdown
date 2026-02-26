@@ -6,7 +6,7 @@ tags: Fun, Interview, Haskell
 
 <!-- Modified rendering of math. I used to compile
 it manually with something like https://temml.org/
-and embed resulting MathML. Now trying letting
+and embed resulting MathML. Now letting
 Pandoc compile it, and the result feels very dense,
 I don't think I like it, but maybe it can be CSS-ed? -->
 
@@ -226,7 +226,7 @@ Depends. Please don't make me do that without a computer and documentation 🥺.
 I'm not a monster. Here is a piece of code vaguely inspired by package
 [modular-arithmetic](https://hackage.haskell.org/package/modular-arithmetic-2.0.0.3):
 <!-- Warning: this has bugs! They are intentional. This is an interview
-technique to see whether candidate notices such things, to see how
+technique to see whether the candidate notices such things, to see how
 deeply the candidate thinks about code they encounter. -->
 ```haskell
 {-# LANGUAGE AllowAmbiguousTypes #-}
@@ -277,7 +277,7 @@ The interviewer seems to be happy with you being able to read and get
 some sense out of this code.
 
 <div class="speaker a">
-I like your observations, but let's leave the fixes as en exercise for a
+I like your observations, but let's leave the fixes as an exercise for a
 patient reader. Now let us look at the whole modulo situation from a somewhat
 different angle: What is the biggest difference between `Natural` and `Mod
 Natural 100`?
