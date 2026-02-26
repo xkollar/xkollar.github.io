@@ -37,7 +37,10 @@ yelling at people, but that's a different conversation.
 The first objection raised when I discuss this topic (with matrix-based and
 meat-based minds alike) is that AI (as we know it now) does not (and cannot)
 mind, be offended, get scared, or be otherwise negatively influenced in a way
-that a person would.
+that a person would. (And that is while holding back thoughts on things like
+[Large Language Models Understand and Can be Enhanced by Emotional Stimuli](https://arxiv.org/abs/2307.11760) (2023)
+that can bring up questions like "what is the difference between reacting to
+X vs feeling X" for X in {pain, fear, …}.)
 
 But even considering that, it still does not feel right. I tried to understand
 why. Writing in ALL CAPS is how yelling is represented (in my current cultural
@@ -89,7 +92,11 @@ I might add something later.
 Vague references:
 
 * George Lakoff, Mark Johnson: Metaphors We Live By
+  -- How you talk about things shapes how you think about things shapes how you perceive/interact_with/… things
 * Peter Naur: Programming as Theory Building
+  -- Culture as part of software development, (hand in hand with anti-fragility and stuff)
 * Robert Sapolsky: Human Behavioral Biology <https://www.youtube.com/watch?v=NNnIGh9g6fA&list=PL848F2368C90DDC3D>
-
+  -- Part of categorical thinking… how if we have categories for very similar things we can learn
+     to differentiate (example with connection with language and ability to differentiate colour)
+* Large Language Models Understand and Can be Enhanced by Emotional Stimuli (2023) <https://arxiv.org/abs/2307.11760>
 -->

@@ -144,9 +144,9 @@ $$
 $$
 
 That is actually very useful! If we find an appropriately shaped expression,
-this formula allows us to find n-th element in the sequence on its own!
-And polynomials are easy to sum. That is handy. So is the pattern for
-adding two fractions. Now if only we could express this generating
+this formula allows us to find n-th element in the sequence on its own! And
+polynomials are easy to sum as we saw earlier. That is handy. So is the
+pattern for adding two fractions. Now if only we could express this generating
 function as a sum of appropriate forms…
 
 $$
@@ -292,7 +292,7 @@ instance (Eq a, Fractional a) => Fractional (S5 a) where
     fromRational a = S (fromRational a) 0
     S a b / S c 0 = S (a/c) (b/c) -- we only divide by 2
 
-type T = S5 (Rational)
+type T = S5 Rational
 
 fac :: Integer -> Integer
 fac n = numerator x
