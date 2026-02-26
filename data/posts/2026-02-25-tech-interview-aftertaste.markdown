@@ -107,8 +107,8 @@ $$
 
 <div class="speaker b">
 This is great, except, what do I do with this? How do I get
-back to elements of the sequence? Or even better, to just to
-an element on a given position?
+back to elements of the sequence? Or even better, how do I
+get to an element at a given position?
 </div>
 
 <div class="speaker a">
