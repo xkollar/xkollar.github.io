@@ -10,7 +10,7 @@
 </head>
 <body><div class="wrapper"><header><span id="not-title">tenticle</span><nav><ul><li><a href="../" rel="home">Main</a></li><span class="space"> </span><li><a href="../archive.html" rel="directory">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Tech Interview II</h1><div class="info">Posted on 2026-01-25 by xkollar  <span class="tags">in <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a>, <a title="All pages tagged 'Interview'." href="../tags/Interview.html">Interview</a>, <a title="All pages tagged 'Haskell'." href="../tags/Haskell.html">Haskell</a></span>.</div><!-- Modified rendering of math. I used to compile
 it manually with something like https://temml.org/
-and embed resulting MathML. Now trying letting
+and embed resulting MathML. Now letting
 Pandoc compile it, and the result feels very dense,
 I don't think I like it, but maybe it can be CSS-ed? -->
 <p>In the <a href="2025-12-25-tech-interview-i.html" rel="prev">previous installment of the Tech Interview saga</a>
@@ -195,7 +195,7 @@ point one might as well have a static lookup table.
 <p>I’m not a monster. Here is a piece of code vaguely inspired by package
 <a href="https://hackage.haskell.org/package/modular-arithmetic-2.0.0.3">modular-arithmetic</a>:
 <!-- Warning: this has bugs! They are intentional. This is an interview
-technique to see whether candidate notices such things, to see how
+technique to see whether the candidate notices such things, to see how
 deeply the candidate thinks about code they encounter. --></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE AllowAmbiguousTypes #-}</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE DataKinds #-}</span></span>
@@ -239,7 +239,7 @@ will both break things. Would you like me to fix those?</p>
 <p>The interviewer seems to be happy with you being able to read and get
 some sense out of this code.</p>
 <div class="speaker a">
-<p>I like your observations, but let’s leave the fixes as en exercise for a
+<p>I like your observations, but let’s leave the fixes as an exercise for a
 patient reader. Now let us look at the whole modulo situation from a somewhat
 different angle: What is the biggest difference between <code>Natural</code> and <code>Mod Natural 100</code>?</p>
 </div>
