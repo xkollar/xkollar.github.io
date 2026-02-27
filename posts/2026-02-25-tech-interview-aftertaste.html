@@ -204,7 +204,7 @@ on unbounded numbers?</p>
 </div>
 <div class="speaker b">
 <figure>
-<a href="https://tenor.com/btXLD.gif"><img src="https://media1.tenor.com/m/jZVZa853eNEAAAAd/gif.gif" alt="Challenge Accepted" /></a>
+<a href="https://tenor.com/btXLD.gif"><img src="https://media1.tenor.com/m/jZVZa853eNEAAAAd/gif.gif" alt="Challenge accepted" /></a>
 </figure>
 <p>The trick is that we don’t need exact value of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mn>5</mn></msqrt><annotation encoding="application/x-tex">\sqrt{5}</annotation></semantics></math>. We can
 treat it as a special symbol for which <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>5</mn></msqrt><mo>⋅</mo><msqrt><mn>5</mn></msqrt><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">\sqrt{5} \cdot \sqrt{5} = 5</annotation></semantics></math>.
@@ -235,7 +235,7 @@ some heavy hand-waving…</p>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> (<span class="dt">Eq</span> a, <span class="dt">Fractional</span> a) <span class="ot">=&gt;</span> <span class="dt">Fractional</span> (<span class="dt">S5</span> a) <span class="kw">where</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fromRational</span> a <span class="ot">=</span> <span class="dt">S</span> (<span class="fu">fromRational</span> a) <span class="dv">0</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">S</span> a b <span class="op">/</span> <span class="dt">S</span> c <span class="dv">0</span> <span class="ot">=</span> <span class="dt">S</span> (a<span class="op">/</span>c) (b<span class="op">/</span>c) <span class="co">-- we only divide by 2</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">S</span> a b <span class="op">/</span> <span class="dt">S</span> c <span class="dv">0</span> <span class="ot">=</span> <span class="dt">S</span> (a<span class="op">/</span>c) (b<span class="op">/</span>c) <span class="co">-- This is okay as we only divide by 2 anyway</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">T</span> <span class="ot">=</span> <span class="dt">S5</span> <span class="dt">Rational</span></span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
@@ -249,14 +249,18 @@ some heavy hand-waving…</p>
 <!-- the "fac" typo is genuine and intentionally left behind to
 document that 2am tired brain effect -->
 <p>Improvements might be possible but for now the matrix-inspired
-version is still more efficient.</p>
+version is still more efficient as <code>S</code> is holding to rational
+number that are themselves tuples.</p>
 </div>
 <p>You feel a congratulatory tap on your back.
 Well deserved. You feel satisfied. But tired too.
 Actually really tired. You blink, look up at the
 food-place employee giving you the “we are about to close look”.
 There is nobody else in here, you are the last customer.</p>
-<p>Confused you stand up, stuff all your stuff into the backpack,
+<p>Confused, you stand up, stuff all your stuff into the backpack,
 say quick thank you and bye and disappear into the night.</p>
+<figure>
+<img src="../images/fib-notebook.jpg" alt="Generic white-label wire-bound notebook" /><figcaption aria-hidden="true">Generic white-label wire-bound notebook</figcaption>
+</figure>
 </div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
 </html>
