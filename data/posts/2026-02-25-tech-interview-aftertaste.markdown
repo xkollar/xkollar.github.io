@@ -228,9 +228,11 @@ make it prettier (and maybe a bit more useful) 👍.
 
 That sounds reasonable.
 
+<div style="color: orange">
 $$
 \mathrm{fib}(n) = \frac{(\frac{1+\sqrt{5}}{2})^n-(\frac{1-\sqrt{5}}{2})^n}{\sqrt{5}}
 $$
+</div>
 
 <div class="speaker b">
 Well, that's a beautiful closed form. And strange one too: all the irrational
@@ -240,8 +242,8 @@ However it still does not allow us to calculate n-th Fibonacci number
 in sub-log time! If it was possible there would be some great
 improvements to be made here:
 
-* <https://github.com/python/cpython/blob/66bca383bd3b12d21e879d991d77b37a4c638f88/Objects/floatobject.c#L685-L802>
-* <https://github.com/python/cpython/blob/66bca383bd3b12d21e879d991d77b37a4c638f88/Objects/longobject.c#L4983-L5261>
+* [cpython's Objects/floatobject.c](https://github.com/python/cpython/blob/66bca383bd3b12d21e879d991d77b37a4c638f88/Objects/floatobject.c#L685-L802)
+* [cpython's Objects/longobject.c](https://github.com/python/cpython/blob/66bca383bd3b12d21e879d991d77b37a4c638f88/Objects/longobject.c#L4983-L5261)
 </div>
 
 <!-- So actually actually: It can't -->
@@ -254,7 +256,7 @@ on unbounded numbers?
 
 <div class="speaker b">
 <figure>
-[![Challenge Accepted](https://media1.tenor.com/m/jZVZa853eNEAAAAd/gif.gif)](https://tenor.com/btXLD.gif)
+[![Challenge accepted](https://media1.tenor.com/m/jZVZa853eNEAAAAd/gif.gif)](https://tenor.com/btXLD.gif)
 </figure>
 
 The trick is that we don't need exact value of $\sqrt{5}$. We can
@@ -290,7 +292,7 @@ instance Num a => Num (S5 a) where
 
 instance (Eq a, Fractional a) => Fractional (S5 a) where
     fromRational a = S (fromRational a) 0
-    S a b / S c 0 = S (a/c) (b/c) -- we only divide by 2
+    S a b / S c 0 = S (a/c) (b/c) -- This is okay as we only divide by 2 anyway
 
 type T = S5 Rational
 
@@ -306,7 +308,8 @@ fac n = numerator x
 document that 2am tired brain effect -->
 
 Improvements might be possible but for now the matrix-inspired
-version is still more efficient.
+version is still more efficient as `S` is holding to rational
+number that are themselves tuples.
 </div>
 
 You feel a congratulatory tap on your back.
@@ -315,5 +318,7 @@ Actually really tired. You blink, look up at the
 food-place employee giving you the "we are about to close look".
 There is nobody else in here, you are the last customer.
 
-Confused you stand up, stuff all your stuff into the backpack,
+Confused, you stand up, stuff all your stuff into the backpack,
 say quick thank you and bye and disappear into the night.
+
+![Generic white-label wire-bound notebook](/images/fib-notebook.jpg)
