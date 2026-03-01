@@ -52,3 +52,7 @@ for escaping in `"`) and pass that to `echo -e` for evaluation.
 Obviously, people who [read me](2020-11-23-bash-interview-echo.html) know
 there is a bug: `urldecode -e` will return nothing. It is still very elegant way to
 solve task at hand on command line. Easy fix with `printf '%b'`.
+
+```bash
+function urldecode() { : "${*//+/ }"; printf %b "${_//%/\\x}"; }
+```
