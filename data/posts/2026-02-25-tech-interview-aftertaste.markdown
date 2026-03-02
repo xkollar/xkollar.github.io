@@ -310,8 +310,8 @@ fac n = numerator x
 document that 2am tired brain effect -->
 
 Improvements might be possible but for now the matrix-inspired
-version is still more efficient as `S` is holding to rational
-number that are themselves tuples.
+version is still more efficient as `S` is holding two rational
+numbers that are themselves tuples.
 </div>
 
 You feel a congratulatory tap on your back.
