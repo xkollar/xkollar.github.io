@@ -184,7 +184,7 @@ enjoyment from the last pizza.)</p>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">D(\pi)</annotation></semantics></math>, the optimal discount.</p>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>D</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P_{\!\!D}(\pi)</annotation></semantics></math>, the optimal price <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Σ</mi><mspace width="-0.167em"></mspace><mi>π</mi><mo>−</mo><mi>D</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Sigma\!\pi - D(\pi)</annotation></semantics></math>.</p>
 <p>And I will omit <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>π</mi><annotation encoding="application/x-tex">\pi</annotation></semantics></math> when convenient/obvious.</p>
-<h3 id="value-proportional-split">Value-Proportional Split</h3>
+<h3 id="price-proportional-split">Price-Proportional Split</h3>
 <svg viewBox="0 0 210 70" fill="white">
 <style>
   text {
@@ -275,7 +275,7 @@ enjoyment from the last pizza.)</p>
 <p>This split is based on the assumption that the value of each pizza
 is proportional to its original (pre-discount) price and
 we will just uniformly scale the value of each pizza by
-ratio <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>=</mo><mfrac><msub><mi>P</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>D</mi></mrow></msub><mi>Σ</mi></mfrac></mrow><annotation encoding="application/x-tex">R = \frac{P_{\!\!D}}{\Sigma}</annotation></semantics></math>, so new prices are</p>
+ratio <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>=</mo><mfrac><msub><mi>P</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>D</mi></mrow></msub><mrow><mi>Σ</mi><mspace width="-0.167em"></mspace><mi>π</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">R = \frac{P_{\!\!D}}{\Sigma\!\pi}</annotation></semantics></math>, so new prices are</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mrow></mrow><mi>′</mi><mo>=</mo><mi>R</mi><mo>⋅</mo><mrow></mrow><mi>π</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>R</mi><mo>⋅</mo><mrow></mrow><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>R</mi><mo>⋅</mo><mrow></mrow><msub><mi>p</mi><mn>2</mn></msub><mo>,</mo><mi>⋯</mi><mrow></mrow><mo>,</mo><mi>R</mi><mo>⋅</mo><mrow></mrow><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
 \pi{}' = R\cdot{}\pi = (R\cdot{}p_1, R\cdot{}p_2, \cdots{}, R\cdot{}p_n)
 </annotation></semantics></math></p>
@@ -300,7 +300,7 @@ side of the spectrum. Makes sense.</li>
 <p>Overall a very reasonable split, innit? Especially given
 that it is easy and (computationally) cheap to calculate.</p>
 <h3 id="saving-contribution-proportional-split">Saving-Contribution-Proportional Split</h3>
-<p>So why would anyone ever be unhappy with the pizza-proportional split?</p>
+<p>So why would anyone ever be unhappy with the price-proportional split?</p>
 <p>As an example take an individual <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> who is eyeing a
 <a href="https://en.wikipedia.org/wiki/Currency_sign_(generic)"><abbr title="Generic Currency Sign">¤</abbr></a>6
 pizza. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> usually buys pizza with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>, who also get ¤6 pizzas,
@@ -326,10 +326,9 @@ So equal split of ¤6 savings seems sensible, making contributions
 (10,4,4).</p>
 <p>How does this generalize to multiple participants? And to m+n
 discount structure?</p>
-<p>Things are going to get a bit hairy so let’s scale down to
-1+1 offer where we will be able to observe the thought
-process yet won’t get overwhelmed by scaling
-challenges of naive approach on 3 participants.</p>
+<p>To avoid getting overwhelmed let’s scale down to
+a 1+1 offer. We will still be able to observe the thought
+process without the combinatorial explosion.</p>
 <p>Example: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>,</mo><mi>B</mi><mo>,</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">A,B,C</annotation></semantics></math> want to buy pizzas priced <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>6</mn><mo>,</mo><mn>10</mn><mo>,</mo><mn>12</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\pi=(6,10,12)</annotation></semantics></math> with <strong>1+1</strong> offer.
 How much does each contribute to total savings <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>P</mi></mrow></msub><annotation encoding="application/x-tex">D_{\!\!P}</annotation></semantics></math> of ¤10?</p>
 <p>This case is less straightforward than the previous. How
@@ -360,12 +359,11 @@ was a rock star in certain circles.</p>
 <figure>
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Lloyd_Shapley_2_2012.jpg" alt="Lloyd Stowell Shapley, source: Wikipedia" /><figcaption aria-hidden="true">Lloyd Stowell Shapley, source: Wikipedia</figcaption>
 </figure>
-<p>By now you probably see the problem: Doing it by hand for more than
-three participants can be something to keep oneself busy for a
-duration of a flight where the only other thing fighting for
-your attention is a screaming child and a flight attendant with
-quite limited snack selection, but otherwise to be avoided.
-(But so is <a href="https://www.brainbashers.com/showskyscrapers.asp">filling squares with numbers</a>.)</p>
+<p>By now you see the problem: Doing this by hand for more participants can
+entertain you during a flight. To block out a screaming child and a
+flight attendant with a limited selection of overpriced snacks.
+(Alternatively you can
+<a href="https://www.brainbashers.com/showskyscrapers.asp">fill squares with numbers</a>.)</p>
 <figure>
 <img src="../images/in-flight-entertainment.jpg" alt="In-flight entertainment" /><figcaption aria-hidden="true">In-flight entertainment</figcaption>
 </figure>
