@@ -4,6 +4,8 @@ author: xkollar
 tags: Fun, Math, Python
 ---
 
+Unfinished; posting anyway.
+
 Pizza and 2+1 offers go together like
 [Apache Airflow](https://airflow.apache.org/)
 and data engineering: Nobody knows why, but it is a thing.
@@ -14,7 +16,7 @@ me, but I'm not a marketing guru.)
 
 "Nothing complicated" you might think, and if you are a monster that can eat
 three pizzas in one sitting (shout out to my past self) or a small family and
-your pizza consumption patterns ends at three pizzas, you are mostly right.
+your pizza consumption patterns end at three pizzas, you are mostly right.
 
 But if you are one of my 2 regular readers (hi mum 👋), at this point
 you probably suspect we will try to find problems where others seek
@@ -24,19 +26,19 @@ Let's start simple.
 
 ## Maximizing Savings
 
-Faithful to the tradition of [spherical cow](https://en.wikipedia.org/wiki/Spherical_cow)
+Faithful to the tradition of the [spherical cow](https://en.wikipedia.org/wiki/Spherical_cow)
 we will ignore delivery/packaging/… costs.
 <!-- Not sure why everyone gives "spherical chicken in a vacuum"
-to Big Bang theory, we had joke like that looong before that -->
+to Big Bang theory, we had a joke like that looong before that -->
 
-Given group of people wanting to buy pizzas priced
+Given a group of people wanting to buy pizzas priced
 $\pi = (p_1, p_2, p_3, \cdots, p_n) \in \mathbb{R}_+^n$, how to form groups of three
 to maximize our savings with 2+1 offer? (We can always make things
 divide evenly by three by filling with empty pizza $\varepsilon$ valued 0.)
 
 <details>
 <summary>
-One can try brute force, but that is a no way to feed a
+One can try brute force, but that is no way to feed a
 large crowd of hungry people who are not willing to
 wait until you iterate through all the permutations/combinations/…
 </summary>
@@ -62,7 +64,7 @@ for l in permutations(pizza_prices):
         max_savings = s
         best_split = groups
 
-print(f"{max_savings = }\n{best_split = }"
+print(f"{max_savings = }\n{best_split = }")
 ```
 </details>
 
@@ -95,14 +97,14 @@ but at the end of the day, I'm just a stranger on the Internet, and you
 might not want to base your financial decisions on a random Python snippet.
 
 To convince yourself that `max_savings` produces optimal
-grouping as valuated by `saving`, you may employ the following
+grouping as valuated by `savings`, you may employ the following
 steps:
 
 * Take a random permutation.
 * Split it into groups of three + tail.
 * Fill the tail (if there is one) with 0s to form a full group.
 * Permutations within groups don't do anything to savings
-  (because minimum always takes smallest regardless of it's position).
+  (because minimum always takes smallest regardless of its position).
     * Reverse-sort elements within groups.
 * Permutations of groups don't do anything to savings
   (because of associativity of sum).
@@ -168,7 +170,7 @@ And here we hit another complication: how to split the savings?
 Alternatively, how to do proper cost attribution? Imagine two
 friends buying three pizzas to share (each arbitrarily split).
 Or three individuals forming an alliance to get the exact pizza
-they want for the best possible prize. Should we be doing
+they want for the best possible price. Should we be doing
 attribution per person or per pizza? Or perhaps some other
 way? <span style="color: red">We need a way to evaluate them,
 a criterion that would help us evaluate which split is the best.</span>
@@ -179,7 +181,7 @@ That is lots of questions and we'll talk about some of them.
 
 First and foremost, any split that all the participants
 agree on is "okay". Taking as an example two people
-and total prize of pizza $P$, the $(0,P)$ split (one friend
+and total price of pizza $P$, the $(0,P)$ split (one friend
 foots the bill) is okay. Even $({-X},P+X)$ split for $X > 0$
 is fine. Though in these cases there is usually some
 other value flowing that is invisible to our pizza-and-money-focused
@@ -206,7 +208,7 @@ $P_{\!\!D}(\pi)$, the optimal price $\Sigma\!\pi - D(\pi)$.
 
 And I will omit $\pi$ when convenient/obvious.
 
-### Value-Proportional Split
+### Price-Proportional Split
 
 <svg viewBox="0 0 210 70" fill="white">
   <style>
@@ -262,9 +264,9 @@ And I will omit $\pi$ when convenient/obvious.
       <use href="#pines" />
     </g>
     <use href="#pizza-1" />
-    <path id="omg" transform="rotate(-45)" d="M 0 0 L 30 0 A 30 30 0 0 1 0 30 Z" />
+    <path id="omg1" transform="rotate(-45)" d="M 0 0 L 30 0 A 30 30 0 0 1 0 30 Z" />
     <clipPath id="clip1" clipPathUnits="userSpaceOnUse">
-      <use href="#omg" />
+      <use href="#omg1" />
     </clipPath>
     <use transform="translate(2 0)" clip-path="url(#clip1)" href="#pizza-1" />
   </g>
@@ -275,11 +277,11 @@ And I will omit $\pi$ when convenient/obvious.
       <use href="#mushies" />
     </g>
     <use href="#pizza-2" />
-    <path id="omg" transform="rotate(-45)" d="M 0 0 L 30 0 A 30 30 0 0 1 0 30 Z" />
-    <clipPath id="clip1" clipPathUnits="userSpaceOnUse">
-      <use href="#omg" />
+    <path id="omg2" transform="rotate(-45)" d="M 0 0 L 30 0 A 30 30 0 0 1 0 30 Z" />
+    <clipPath id="clip2" clipPathUnits="userSpaceOnUse">
+      <use href="#omg2" />
     </clipPath>
-    <use transform="translate(2 0)" clip-path="url(#clip1)" href="#pizza-2" />
+    <use transform="translate(2 0)" clip-path="url(#clip2)" href="#pizza-2" />
   </g>
   <g transform="translate(175 35)">
     <g id="pizza-3">
@@ -288,16 +290,16 @@ And I will omit $\pi$ when convenient/obvious.
       <use href="#pines" />
     </g>
     <use href="#pizza-3" />
-    <path id="omg" transform="rotate(-45)" d="M 0 0 L 30 0 A 30 30 0 0 1 0 30 Z" />
-    <clipPath id="clip1" clipPathUnits="userSpaceOnUse">
-      <use href="#omg" />
+    <path id="omg3" transform="rotate(-45)" d="M 0 0 L 30 0 A 30 30 0 0 1 0 30 Z" />
+    <clipPath id="clip3" clipPathUnits="userSpaceOnUse">
+      <use href="#omg3" />
     </clipPath>
-    <use transform="translate(2 0)" clip-path="url(#clip1)" href="#pizza-3" />
+    <use transform="translate(2 0)" clip-path="url(#clip3)" href="#pizza-3" />
   </g>
 </svg>
 
 This split is based on the assumption that the value of each pizza
-is proportional to it's original (pre-discount) price and
+is proportional to its original (pre-discount) price and
 we will just uniformly scale the value of each pizza by
 ratio $R = \frac{P_{\!\!D}}{\Sigma}$, so new prices are
 
@@ -329,7 +331,7 @@ that it is easy and (computationally) cheap to calculate.
 
 ### Saving-Contribution-Proportional Split
 
-So why would anyone ever be unhappy with the pizza-proportional split?
+So why would anyone ever be unhappy with the price-proportional split?
 
 As an example take an individual $A$ who is eyeing a
 [<abbr title="Generic Currency Sign">¤</abbr>](https://en.wikipedia.org/wiki/Currency_sign_\(generic\))6
@@ -353,7 +355,7 @@ formations.
 
 ```dot-render
 digraph g {
-    # Full graph here is kinda oconfusing here because
+    # Full graph here is kinda confusing here because
     # it is hiding all permutations and marginal contributions.
     # node [color="lightgrey" shape="rectangle" fontcolor="grey"];
     edge [color="lightgrey"];
@@ -396,7 +398,7 @@ How much does each contribute to total savings $D_{\!\!P}$ of ¤10?
 
 This case is less straightforward than the previous. How
 much is contributed by whom is determined by order in which
-they join. Here are all 6 possible permutations (pizza-party fromation orders):
+they join. Here are all 6 possible permutations (pizza-party formation orders):
 
 ```
 A, B(-6),  C(-4) -- A alone has no discount,
@@ -426,7 +428,7 @@ and basically re-discovered [Shapley value](https://en.wikipedia.org/wiki/Shaple
 [Lloyd Stowell Shapley](https://www.lindau-nobel.org/lloyd-shapley-a-founding-giant-of-game-theory/)
 was a rock star in certain circles.
 
-![Lloyd Stowel Shapley, source: Wikipedia](https://upload.wikimedia.org/wikipedia/commons/d/d2/Lloyd_Shapley_2_2012.jpg)
+![Lloyd Stowell Shapley, source: Wikipedia](https://upload.wikimedia.org/wikipedia/commons/d/d2/Lloyd_Shapley_2_2012.jpg)
 
 
 By now you probably see the problem: Doing it by hand for more than
@@ -445,8 +447,8 @@ even further if we have multiple pizzas with the same price.
 
 At this point you can visualize BFS-style discovery of a
 lattice-shaped graph that has nodes for all sub-multi-sets, edges represent
-adding a element, annotated with the element, count (how many ways we can
-travel it from the root) and marginal contribution of that element for to the
+adding an element, annotated with the element, count (how many ways we can
+travel it from the root) and marginal contribution of that element for the
 source node.
 
 
@@ -541,13 +543,13 @@ digraph G {
 
 That's all for now 🍕
 
-I'd like to extnd this article with:
+I'd like to extend this article with:
 
-* Algorithm to calculate shapely value.
+* Algorithm to calculate Shapley value.
 * Complexity
     * Good algo collapses to good complexity
       on degenerated inputs (all same prices, ...)
-* A paragraphs or two on stability of coalitions
-    * What motivates people to form this coaltion
+* A paragraph or two on stability of coalitions
+    * What motivates people to form this coalition
       and to not kick out a person out of a coalition
       for a higher profit.
