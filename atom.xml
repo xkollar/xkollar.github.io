@@ -8,13 +8,13 @@
         <name>xkollar</name>
         <email></email>
     </author>
-    <updated>2026-03-25T00:00:00Z</updated>
+    <updated>2026-07-31T00:00:00Z</updated>
     <entry>
     <title>Pizza Time</title>
-    <link href="https://tenticle.dev/posts/2026-03-25-pizza-time.html" />
-    <id>https://tenticle.dev/posts/2026-03-25-pizza-time.html</id>
-    <published>2026-03-25T00:00:00Z</published>
-    <updated>2026-03-25T00:00:00Z</updated>
+    <link href="https://tenticle.dev/posts/2026-07-31-pizza-time.html" />
+    <id>https://tenticle.dev/posts/2026-07-31-pizza-time.html</id>
+    <published>2026-07-31T00:00:00Z</published>
+    <updated>2026-07-31T00:00:00Z</updated>
     <summary type="html"><![CDATA[<p>Pizza and 2+1 offers go together like
 <a href="https://airflow.apache.org/">Apache Airflow</a>
 and data engineering: Nobody knows why, but it is a thing.</p>
