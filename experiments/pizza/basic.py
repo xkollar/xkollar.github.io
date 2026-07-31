@@ -1,8 +1,8 @@
 from decimal import Decimal
 from fractions import Fraction
-from itertools import islice
+from itertools import batched
 from random import choices
-from typing import Generic, Iterable, Iterator, Literal, Protocol, Sized, TypeVar
+from typing import Generic, Iterable, Literal, Protocol, Sized, TypeVar
 
 A = TypeVar("A")
 # Is there a better way to make mypy happy?
@@ -19,17 +19,12 @@ def savings(groups: Iterable[IterableSized[T]]) -> T | Literal[0]:
     return sum(min(g) for g in groups if len(g) == 3)
 
 
-def chunks(it: Iterable[A], n: int) -> Iterator[tuple[A, ...]]:
-    it = iter(it)
-    return iter(lambda: tuple(islice(it, n)), ())
-
-
 def max_savings(prices: Iterable[T]) -> Iterable[tuple[T, ...]]:
-    return chunks(sorted(prices, reverse=True), 3)
+    return batched(sorted(prices, reverse=True), 3)
 
 
 if __name__ == "__main__":
-    prices = choices(range(1, 20), k=300)
+    prices = choices(range(1, 20), k=7)
     solution = list(max_savings(prices))
-
-    print(f"{solution = }\n{savings(solution) = }")
+    print(f"{solution = }")
+    print(f"{savings(solution) = }")

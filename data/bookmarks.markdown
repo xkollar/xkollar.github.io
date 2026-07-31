@@ -19,3 +19,7 @@ Browse at your own leisure.
 * [L.D. Smith](https://www.goodreads.com/author/show/5834269.L_D_Smith)
 * [dogmat.us](https://web.archive.org/web/20091026073348/http://dogmat.us/)
 * [georgik.rocks](https://georgik.rocks/)
+
+## Random
+
+* [indieblog.page](https://indieblog.page/), place to discover IndieWeb, one blog at a time.
