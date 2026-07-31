@@ -301,7 +301,7 @@ And I will omit $\pi$ when convenient/obvious.
 This split is based on the assumption that the value of each pizza
 is proportional to its original (pre-discount) price and
 we will just uniformly scale the value of each pizza by
-ratio $R = \frac{P_{\!\!D}}{\Sigma}$, so new prices are
+ratio $R = \frac{P_{\!\!D}}{\Sigma\!\pi}$, so new prices are
 
 $$
 \pi{}' = R\cdot{}\pi = (R\cdot{}p_1, R\cdot{}p_2, \cdots{}, R\cdot{}p_n)
@@ -388,10 +388,9 @@ So equal split of ¤6 savings seems sensible, making contributions
 How does this generalize to multiple participants? And to m+n
 discount structure?
 
-Things are going to get a bit hairy so let's scale down to
-1+1 offer where we will be able to observe the thought
-process yet won't get overwhelmed by scaling
-challenges of naive approach on 3 participants.
+To avoid getting overwhelmed let's scale down to
+a 1+1 offer. We will still be able to observe the thought
+process without the combinatorial explosion.
 
 Example: $A,B,C$ want to buy pizzas priced $\pi=(6,10,12)$ with **1+1** offer.
 How much does each contribute to total savings $D_{\!\!P}$ of ¤10?
@@ -430,13 +429,11 @@ was a rock star in certain circles.
 
 ![Lloyd Stowell Shapley, source: Wikipedia](https://upload.wikimedia.org/wikipedia/commons/d/d2/Lloyd_Shapley_2_2012.jpg)
 
-
-By now you probably see the problem: Doing it by hand for more than
-three participants can be something to keep oneself busy for a
-duration of a flight where the only other thing fighting for
-your attention is a screaming child and a flight attendant with
-quite limited snack selection, but otherwise to be avoided.
-(But so is [filling squares with numbers](https://www.brainbashers.com/showskyscrapers.asp).)
+By now you see the problem: Doing this by hand for more participants can
+entertain you during a flight. To block out a screaming child and a
+flight attendant with a limited selection of overpriced snacks.
+(Alternatively you can
+[fill squares with numbers](https://www.brainbashers.com/showskyscrapers.asp).)
 
 ![In-flight entertainment](/images/in-flight-entertainment.jpg)
 
