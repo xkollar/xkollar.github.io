@@ -28,9 +28,9 @@ we will ignore delivery/packaging/… costs.
 <!-- Not sure why everyone gives "spherical chicken in a vacuum"
 to Big Bang theory, we had a joke like that looong before that --></p>
 <p>Given a group of people wanting to buy pizzas priced
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><msub><mi>p</mi><mn>2</mn></msub><mo>,</mo><msub><mi>p</mi><mn>3</mn></msub><mo>,</mo><mi>⋯</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><msubsup><mstyle mathvariant="double-struck"><mi>ℝ</mi></mstyle><mo>+</mo><mi>n</mi></msubsup></mrow><annotation encoding="application/x-tex">\pi = (p_1, p_2, p_3, \cdots, p_n) \in \mathbb{R}_+^n</annotation></semantics></math>, how to form groups of three
-to maximize our savings with 2+1 offer? (We can always make things
-divide evenly by three by filling with empty pizza <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ε</mi><annotation encoding="application/x-tex">\varepsilon</annotation></semantics></math> valued 0.)</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><msub><mi>p</mi><mn>2</mn></msub><mo>,</mo><msub><mi>p</mi><mn>3</mn></msub><mo>,</mo><mi>⋯</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><msubsup><mstyle mathvariant="double-struck"><mi>ℝ</mi></mstyle><mo>+</mo><mi>n</mi></msubsup></mrow><annotation encoding="application/x-tex">\pi = (p_1, p_2, p_3, \cdots, p_n) \in \mathbb{R}_+^n</annotation></semantics></math>,
+find a division into groups (of three and at most one
+group of less than three) to maximize overall savings with 2+1 offer.</p>
 <details>
 <summary>
 One can try brute force, but that is no way to feed a
@@ -38,8 +38,8 @@ large crowd of hungry people who are not willing to
 wait until you iterate through all the permutations/combinations/…
 </summary>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> islice, permutations</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> choices</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Number</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numbers <span class="im">import</span> Number</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> choices</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pizza_prices <span class="op">=</span> choices(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>), k<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -77,7 +77,7 @@ wait until you iterate through all the permutations/combinations/…
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(<span class="bu">min</span>(g) <span class="cf">for</span> g <span class="kw">in</span> groups <span class="cf">if</span> <span class="bu">len</span>(g) <span class="op">==</span> <span class="dv">3</span>)</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> max_savings(prices: Iterable[T]) <span class="op">-&gt;</span> Iterable[<span class="bu">tuple</span>[T, ...]]:</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimal_grouping(prices: Iterable[T]) <span class="op">-&gt;</span> Iterable[<span class="bu">tuple</span>[T, ...]]:</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> batched(<span class="bu">sorted</span>(prices, reverse<span class="op">=</span><span class="va">True</span>), <span class="dv">3</span>)</span></code></pre></div>
 <p>You may feel tempted to copy-paste this into your “get-me-a-cheap-pizza.py”,
 but at the end of the day, I’m just a stranger on the Internet, and you
@@ -139,12 +139,13 @@ for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(p <span class="cf">for</span> g <span class="kw">in</span> groups <span class="cf">for</span> p <span class="kw">in</span> <span class="bu">sorted</span>(g)[:<span class="op">-</span>m][:n])</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> max_savings(prices: Iterable[T], m: <span class="bu">int</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> Iterable[<span class="bu">tuple</span>[T, ...]]:</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimal_grouping(prices: Iterable[T], m: <span class="bu">int</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> Iterable[<span class="bu">tuple</span>[T, ...]]:</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> m <span class="op">&gt;</span> <span class="dv">0</span></span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> n <span class="op">&gt;</span> <span class="dv">0</span></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> batched(<span class="bu">sorted</span>(prices, reverse<span class="op">=</span><span class="va">True</span>), m <span class="op">+</span> n)</span></code></pre></div>
 <p>A proof can follow similar structure.</p>
 Can you generalize for m+n for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>,</mo><mi>n</mi><mo>∈</mo><msub><mstyle mathvariant="double-struck"><mi>ℝ</mi></mstyle><mo>+</mo></msub></mrow><annotation encoding="application/x-tex">m,n \in \mathbb{R}_{+}</annotation></semantics></math>?
+(Buy two and half pizzas and get second half free.)
 </details>
 <h2 id="splitting-the-savings">Splitting the Savings</h2>
 <p>Armed with the way to maximize savings,
@@ -161,7 +162,7 @@ they want for the best possible price. Should we be doing
 attribution per person or per pizza? Or perhaps some other
 way? <span style="color: red">We need a way to evaluate them,
 a criterion that would help us evaluate which split is the best.</span></p>
-<p>That is lots of questions and we’ll talk about some of them.</p>
+<p>That is a lot of questions and we’ll talk about some of them.</p>
 <h3 id="any-split-is-okay">Any Split is Okay</h3>
 <p>First and foremost, any split that all the participants
 agree on is “okay”. Taking as an example two people
@@ -169,9 +170,9 @@ and total price of pizza <math display="inline" xmlns="http://www.w3.org/1998/Ma
 foots the bill) is okay. Even <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mo>−</mo><mi>X</mi></mrow><mo>,</mo><mi>P</mi><mo>+</mo><mi>X</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">({-X},P+X)</annotation></semantics></math> split for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">X &gt; 0</annotation></semantics></math>
 is fine. Though in these cases there is usually some
 other value flowing that is invisible to our pizza-and-money-focused
-sight. (Friendship, being parent, or whatever reason
+sight. (Friendship, being a parent, or whatever reason
 one might have to financially incentivize someone to have food with them.)</p>
-<p>That said, here we will focus mainly on cases where participating
+<p>We will focus mainly on cases where participating
 parties want to consume only specific amount of specific pizza(s)
 and we’ll assume non-existence of fridges 🤪. (Person who
 wants 2 pizzas but orders 3 just to get the discount gets 0 <del>utility</del>
@@ -275,7 +276,7 @@ enjoyment from the last pizza.)</p>
 <p>This split is based on the assumption that the value of each pizza
 is proportional to its original (pre-discount) price and
 we will just uniformly scale the value of each pizza by
-ratio <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>=</mo><mfrac><msub><mi>P</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>D</mi></mrow></msub><mrow><mi>Σ</mi><mspace width="-0.167em"></mspace><mi>π</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">R = \frac{P_{\!\!D}}{\Sigma\!\pi}</annotation></semantics></math>, so new prices are</p>
+ratio <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>=</mo><mfrac><mrow><msub><mi>P</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>D</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>Σ</mi><mspace width="-0.167em"></mspace><mi>π</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">R = \frac{P_{\!\!D}(\pi)}{\Sigma\!\pi}</annotation></semantics></math>, so new prices are</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mrow></mrow><mi>′</mi><mo>=</mo><mi>R</mi><mo>⋅</mo><mrow></mrow><mi>π</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>R</mi><mo>⋅</mo><mrow></mrow><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>R</mi><mo>⋅</mo><mrow></mrow><msub><mi>p</mi><mn>2</mn></msub><mo>,</mo><mi>⋯</mi><mrow></mrow><mo>,</mo><mi>R</mi><mo>⋅</mo><mrow></mrow><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
 \pi{}' = R\cdot{}\pi = (R\cdot{}p_1, R\cdot{}p_2, \cdots{}, R\cdot{}p_n)
 </annotation></semantics></math></p>
@@ -288,7 +289,7 @@ here’s a bunch of examples to think about:</p>
 <li>Group bought all same-priced pizzas. After scaling all
 still cost the same. Makes sense.</li>
 <li>Two friends bought 3 pizzas and each friend had half of each pizza.
-Each one will pay half of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>D</mi></mrow></msub><annotation encoding="application/x-tex">P_{\!\!D}</annotation></semantics></math>. Makes sense.</li>
+Each one will pay half of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>D</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P_{\!\!D}(\pi)</annotation></semantics></math>. Makes sense.</li>
 <li>Previous example generalized to 1 friend eating <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>∈</mo><mrow></mrow><mrow><mo stretchy="true" form="prefix">⟨</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">⟩</mo></mrow></mrow><annotation encoding="application/x-tex">x \in{} \left&lt;0,1\right&gt;</annotation></semantics></math>
 and the other eating <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">1-x</annotation></semantics></math>. Makes sense.</li>
 <li>Generalization to multiple participants is also sensible.</li>
@@ -323,32 +324,32 @@ formations.</p>
 </figure>
 <p>Here we see that all contribute equally to the discount.
 So equal split of ¤6 savings seems sensible, making contributions
-(10,4,4).</p>
+(4,4,10).</p>
 <p>How does this generalize to multiple participants? And to m+n
 discount structure?</p>
 <p>To avoid getting overwhelmed let’s scale down to
 a 1+1 offer. We will still be able to observe the thought
 process without the combinatorial explosion.</p>
 <p>Example: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>,</mo><mi>B</mi><mo>,</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">A,B,C</annotation></semantics></math> want to buy pizzas priced <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>6</mn><mo>,</mo><mn>10</mn><mo>,</mo><mn>12</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\pi=(6,10,12)</annotation></semantics></math> with <strong>1+1</strong> offer.
-How much does each contribute to total savings <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>P</mi></mrow></msub><annotation encoding="application/x-tex">D_{\!\!P}</annotation></semantics></math> of ¤10?</p>
+How much does each contribute to total savings <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>D</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P_{\!\!D}(\pi)</annotation></semantics></math> of ¤10?</p>
 <p>This case is less straightforward than the previous. How
 much is contributed by whom is determined by order in which
 they join. Here are all 6 possible permutations (pizza-party formation orders):</p>
-<pre><code>A, B(-6),  C(-4) -- A alone has no discount,
-                 -- when B joins they have discount 6
-                 -- and when C joins they have discount 10
-                 -- so C contributed only 4.
-A, C(-6),  B(-4)
-B, A(-6),  C(-4)
-B, C(-10), A(0)
-C, A(-6),  B(-4)
-C, B(-10), A(0)</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>A, B(6),  C(4) -- A alone has no discount,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>               -- when B joins they have discount 6</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               -- and when C joins they have discount 10</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>               -- so C contributed only 4.</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>A, C(6),  B(4)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>B, A(6),  C(4)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>B, C(10), A(0)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>C, A(6),  B(4)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>C, B(10), A(0)</span></code></pre></div>
 <p>And now we average individual discount contributions across all the possibilities:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right"><msub><mi>A</mi><mi>C</mi></msub><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mi>/</mi><mn>6</mn></mtd><mtd columnalign="right"><mo>=</mo><mrow><mo>−</mo><mn>2</mn></mrow></mtd></mtr><mtr><mtd columnalign="right"><msub><mi>B</mi><mi>C</mi></msub><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>6</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>10</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mi>/</mi><mn>6</mn></mtd><mtd columnalign="right"><mo>=</mo><mrow><mo>−</mo><mn>4</mn></mrow></mtd></mtr><mtr><mtd columnalign="right"><msub><mi>C</mi><mi>C</mi></msub><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>4</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>10</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mi>/</mi><mn>6</mn></mtd><mtd columnalign="right"><mo>=</mo><mrow><mo>−</mo><mn>4</mn></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right"><msub><mi>A</mi><mi>C</mi></msub><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>6</mn></mtd><mtd columnalign="right"><mo>=</mo><mn>2</mn></mtd></mtr><mtr><mtd columnalign="right"><msub><mi>B</mi><mi>C</mi></msub><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">(</mo><mn>6</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>10</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>6</mn></mtd><mtd columnalign="right"><mo>=</mo><mn>4</mn></mtd></mtr><mtr><mtd columnalign="right"><msub><mi>C</mi><mi>C</mi></msub><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">(</mo><mn>4</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>10</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>6</mn></mtd><mtd columnalign="right"><mo>=</mo><mn>4</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{align}
-A_C =&amp; {-(0+0+6+ 0+6+ 0)}/6 &amp;= {-2} \\
-B_C =&amp; {-(6+4+0+ 0+4+10)}/6 &amp;= {-4} \\
-C_C =&amp; {-(4+6+4+10+0+ 0)}/6 &amp;= {-4} \\
+A_C =&amp; (0+0+6+ 0+6+ 0)/6 &amp;= 2 \\
+B_C =&amp; (6+4+0+ 0+4+10)/6 &amp;= 4 \\
+C_C =&amp; (4+6+4+10+0+ 0)/6 &amp;= 4 \\
 \end{align}
 </annotation></semantics></math></p>
 <p>We just calculated everyone’s average marginal
@@ -360,7 +361,7 @@ was a rock star in certain circles.</p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Lloyd_Shapley_2_2012.jpg" alt="Lloyd Stowell Shapley, source: Wikipedia" /><figcaption aria-hidden="true">Lloyd Stowell Shapley, source: Wikipedia</figcaption>
 </figure>
 <p>By now you see the problem: Doing this by hand for more participants can
-entertain you during a flight. To block out a screaming child and a
+entertain perhaps during a flight. To block out a screaming child and a
 flight attendant with a limited selection of overpriced snacks.
 (Alternatively you can
 <a href="https://www.brainbashers.com/showskyscrapers.asp">fill squares with numbers</a>.)</p>
@@ -394,7 +395,7 @@ on degenerated inputs (all same prices, …)</li>
 <ul>
 <li>What motivates people to form this coalition
 and to not kick out a person out of a coalition
-for a higher profit.</li>
+for a higher profit. (Spoiler: fear of lower profit.)</li>
 </ul></li>
 </ul>
 </div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
