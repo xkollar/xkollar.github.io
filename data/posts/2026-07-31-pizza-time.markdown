@@ -32,9 +32,9 @@ we will ignore delivery/packaging/… costs.
 to Big Bang theory, we had a joke like that looong before that -->
 
 Given a group of people wanting to buy pizzas priced
-$\pi = (p_1, p_2, p_3, \cdots, p_n) \in \mathbb{R}_+^n$, how to form groups of three
-to maximize our savings with 2+1 offer? (We can always make things
-divide evenly by three by filling with empty pizza $\varepsilon$ valued 0.)
+$\pi = (p_1, p_2, p_3, \cdots, p_n) \in \mathbb{R}_+^n$,
+find a division into groups (of three and at most one
+group of less than three) to maximize overall savings with 2+1 offer.
 
 <details>
 <summary>
@@ -45,8 +45,8 @@ wait until you iterate through all the permutations/combinations/…
 
 ```python
 from itertools import islice, permutations
+from numbers import Number
 from random import choices
-from typing import Number
 
 pizza_prices = choices(range(1,10), k=10)
 
@@ -88,7 +88,7 @@ def savings(groups: Iterable[IterableSized[T]]) -> T | Literal[0]:
     return sum(min(g) for g in groups if len(g) == 3)
 
 
-def max_savings(prices: Iterable[T]) -> Iterable[tuple[T, ...]]:
+def optimal_grouping(prices: Iterable[T]) -> Iterable[tuple[T, ...]]:
     return batched(sorted(prices, reverse=True), 3)
 ```
 
@@ -146,7 +146,7 @@ def savings(groups: Iterable[Iterable[T]], m: int, n: int) -> T | Literal[0]:
     return sum(p for g in groups for p in sorted(g)[:-m][:n])
 
 
-def max_savings(prices: Iterable[T], m: int, n: int) -> Iterable[tuple[T, ...]]:
+def optimal_grouping(prices: Iterable[T], m: int, n: int) -> Iterable[tuple[T, ...]]:
     assert m > 0
     assert n > 0
     return batched(sorted(prices, reverse=True), m + n)
@@ -155,6 +155,7 @@ def max_savings(prices: Iterable[T], m: int, n: int) -> Iterable[tuple[T, ...]]:
 A proof can follow similar structure.
 
 Can you generalize for m+n for $m,n \in \mathbb{R}_{+}$?
+(Buy two and half pizzas and get second half free.)
 </details>
 
 ## Splitting the Savings
@@ -175,7 +176,7 @@ attribution per person or per pizza? Or perhaps some other
 way? <span style="color: red">We need a way to evaluate them,
 a criterion that would help us evaluate which split is the best.</span>
 
-That is lots of questions and we'll talk about some of them.
+That is a lot of questions and we'll talk about some of them.
 
 ### Any Split is Okay
 
@@ -185,10 +186,10 @@ and total price of pizza $P$, the $(0,P)$ split (one friend
 foots the bill) is okay. Even $({-X},P+X)$ split for $X > 0$
 is fine. Though in these cases there is usually some
 other value flowing that is invisible to our pizza-and-money-focused
-sight. (Friendship, being parent, or whatever reason
+sight. (Friendship, being a parent, or whatever reason
 one might have to financially incentivize someone to have food with them.)
 
-That said, here we will focus mainly on cases where participating
+We will focus mainly on cases where participating
 parties want to consume only specific amount of specific pizza(s)
 and we'll assume non-existence of fridges 🤪. (Person who
 wants 2 pizzas but orders 3 just to get the discount gets 0 ~~utility~~
@@ -301,7 +302,7 @@ And I will omit $\pi$ when convenient/obvious.
 This split is based on the assumption that the value of each pizza
 is proportional to its original (pre-discount) price and
 we will just uniformly scale the value of each pizza by
-ratio $R = \frac{P_{\!\!D}}{\Sigma\!\pi}$, so new prices are
+ratio $R = \frac{P_{\!\!D}(\pi)}{\Sigma\!\pi}$, so new prices are
 
 $$
 \pi{}' = R\cdot{}\pi = (R\cdot{}p_1, R\cdot{}p_2, \cdots{}, R\cdot{}p_n)
@@ -317,7 +318,7 @@ here's a bunch of examples to think about:
 * Group bought all same-priced pizzas. After scaling all
   still cost the same. Makes sense.
 * Two friends bought 3 pizzas and each friend had half of each pizza.
-  Each one will pay half of $P_{\!\!D}$. Makes sense.
+  Each one will pay half of $P_{\!\!D}(\pi)$. Makes sense.
 * Previous example generalized to 1 friend eating $x \in{} \left<0,1\right>$
   and the other eating $1-x$. Makes sense.
 * Generalization to multiple participants is also sensible.
@@ -383,7 +384,7 @@ digraph g {
 
 Here we see that all contribute equally to the discount.
 So equal split of ¤6 savings seems sensible, making contributions
-(10,4,4).
+(4,4,10).
 
 How does this generalize to multiple participants? And to m+n
 discount structure?
@@ -393,31 +394,31 @@ a 1+1 offer. We will still be able to observe the thought
 process without the combinatorial explosion.
 
 Example: $A,B,C$ want to buy pizzas priced $\pi=(6,10,12)$ with **1+1** offer.
-How much does each contribute to total savings $D_{\!\!P}$ of ¤10?
+How much does each contribute to total savings $P_{\!\!D}(\pi)$ of ¤10?
 
 This case is less straightforward than the previous. How
 much is contributed by whom is determined by order in which
 they join. Here are all 6 possible permutations (pizza-party formation orders):
 
-```
-A, B(-6),  C(-4) -- A alone has no discount,
-                 -- when B joins they have discount 6
-                 -- and when C joins they have discount 10
-                 -- so C contributed only 4.
-A, C(-6),  B(-4)
-B, A(-6),  C(-4)
-B, C(-10), A(0)
-C, A(-6),  B(-4)
-C, B(-10), A(0)
+```txt
+A, B(6),  C(4) -- A alone has no discount,
+               -- when B joins they have discount 6
+               -- and when C joins they have discount 10
+               -- so C contributed only 4.
+A, C(6),  B(4)
+B, A(6),  C(4)
+B, C(10), A(0)
+C, A(6),  B(4)
+C, B(10), A(0)
 ```
 
 And now we average individual discount contributions across all the possibilities:
 
 $$
 \begin{align}
-A_C =& {-(0+0+6+ 0+6+ 0)}/6 &= {-2} \\
-B_C =& {-(6+4+0+ 0+4+10)}/6 &= {-4} \\
-C_C =& {-(4+6+4+10+0+ 0)}/6 &= {-4} \\
+A_C =& (0+0+6+ 0+6+ 0)/6 &= 2 \\
+B_C =& (6+4+0+ 0+4+10)/6 &= 4 \\
+C_C =& (4+6+4+10+0+ 0)/6 &= 4 \\
 \end{align}
 $$
 
@@ -430,7 +431,7 @@ was a rock star in certain circles.
 ![Lloyd Stowell Shapley, source: Wikipedia](https://upload.wikimedia.org/wikipedia/commons/d/d2/Lloyd_Shapley_2_2012.jpg)
 
 By now you see the problem: Doing this by hand for more participants can
-entertain you during a flight. To block out a screaming child and a
+entertain perhaps during a flight. To block out a screaming child and a
 flight attendant with a limited selection of overpriced snacks.
 (Alternatively you can
 [fill squares with numbers](https://www.brainbashers.com/showskyscrapers.asp).)
@@ -549,4 +550,4 @@ I'd like to extend this article with:
 * A paragraph or two on stability of coalitions
     * What motivates people to form this coalition
       and to not kick out a person out of a coalition
-      for a higher profit.
+      for a higher profit. (Spoiler: fear of lower profit.)

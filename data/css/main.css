@@ -305,6 +305,9 @@ details > summary {
   padding: 1ex 1em;
   cursor: pointer;
 }
+details[open] summary {
+  margin-bottom: 2ex;
+}
 details > summary::before {
   content: "+ ";
 }
