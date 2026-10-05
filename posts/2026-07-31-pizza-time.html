@@ -8,7 +8,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
-<body><div class="wrapper"><header><span id="not-title">tenticle</span><nav><ul><li><a href="../" rel="home">Main</a></li><span class="space"> </span><li><a href="../archive.html" rel="directory">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Pizza Time</h1><div class="info">Posted on 2026-07-31 by xkollar  <span class="tags">in <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a>, <a title="All pages tagged 'Math'." href="../tags/Math.html">Math</a>, <a title="All pages tagged 'Python'." href="../tags/Python.html">Python</a></span>.</div><p>Unfinished; posting anyway.</p>
+<body><div class="wrapper"><header><span id="not-title">tenticle</span><nav><ul><li><a href="../" rel="home">Main</a></li><span class="space"> </span><li><a href="../archive.html" rel="directory">Archive</a> <ul class="tags"><li><a href="../tags/Fun.html">Fun</a></li><span class="space"> </span><li><a href="../tags/Haskell.html">Haskell</a></li><span class="space"> </span><li><a href="../tags/Music.html">Music</a></li><span class="space"> </span><li><a href="../tags/">...</a></li></ul></li></ul></nav></header><div class="main"><h1>Pizza Time</h1><div class="info">Posted on 2026-07-31 by xkollar  <span class="tags">in <a title="All pages tagged 'Fun'." href="../tags/Fun.html">Fun</a>, <a title="All pages tagged 'Math'." href="../tags/Math.html">Math</a>, <a title="All pages tagged 'Python'." href="../tags/Python.html">Python</a>, <a title="All pages tagged 'Unfinished'." href="../tags/Unfinished.html">Unfinished</a></span>.</div><p>Unfinished; posting anyway.</p>
 <p>Pizza and 2+1 offers go together like
 <a href="https://airflow.apache.org/">Apache Airflow</a>
 and data engineering: Nobody knows why, but it is a thing.</p>
@@ -82,11 +82,11 @@ wait until you iterate through all the permutations/combinations/…
 <p>You may feel tempted to copy-paste this into your “get-me-a-cheap-pizza.py”,
 but at the end of the day, I’m just a stranger on the Internet, and you
 might not want to base your financial decisions on a random Python snippet.</p>
-<p>To convince yourself that <code>max_savings</code> produces optimal
+<p>To convince yourself that <code>optimal_grouping</code> produces optimal
 grouping as valuated by <code>savings</code>, you may employ the following
 steps:</p>
 <ul>
-<li>Take a random permutation.</li>
+<li>Take a random permutation the input.</li>
 <li>Split it into groups of three + tail.</li>
 <li>Fill the tail (if there is one) with 0s to form a full group.</li>
 <li>Permutations within groups don’t do anything to savings
@@ -97,7 +97,7 @@ steps:</p>
 <li>Permutations of groups don’t do anything to savings
 (because of associativity of sum).
 <ul>
-<li>Reverse-sort groups by the smallest (after sorting the last) element.</li>
+<li>Reverse-sort groups by the smallest (after reverse-sorting the last) element.</li>
 </ul></li>
 <li>Boundaries of groups.
 <ul>
@@ -305,13 +305,13 @@ that it is easy and (computationally) cheap to calculate.</p>
 <p>As an example take an individual <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> who is eyeing a
 <a href="https://en.wikipedia.org/wiki/Currency_sign_(generic)"><abbr title="Generic Currency Sign">¤</abbr></a>6
 pizza. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> usually buys pizza with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>, who also get ¤6 pizzas,
-each paying ¤4. But what happens if <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math> develops
-more expensive taste and decides to go for a pizza worth ¤12.
+each paying ¤4. But what happens when <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math> develops
+more expensive taste and decides to go for a pizza worth ¤12?
 Suddenly, even though total group saving is still ¤6, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
 needs to pay ¤4.5. Savings distribution (1.5,1.5,3)
 is skewed towards the person with more expensive taste.</p>
 <p>We might try to convince ourselves that this is compensated
-by having bigger proportion of savings if someone decided
+for by having bigger proportion of savings if someone decided
 to go cheaper, but it is not the same: total savings
 are unchanged, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> still gets the same pizza, yet
 saves less.</p>
@@ -331,7 +331,7 @@ discount structure?</p>
 a 1+1 offer. We will still be able to observe the thought
 process without the combinatorial explosion.</p>
 <p>Example: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>,</mo><mi>B</mi><mo>,</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">A,B,C</annotation></semantics></math> want to buy pizzas priced <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>6</mn><mo>,</mo><mn>10</mn><mo>,</mo><mn>12</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\pi=(6,10,12)</annotation></semantics></math> with <strong>1+1</strong> offer.
-How much does each contribute to total savings <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mspace width="-0.167em"></mspace><mspace width="-0.167em"></mspace><mi>D</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P_{\!\!D}(\pi)</annotation></semantics></math> of ¤10?</p>
+How much does each contribute to total savings <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">D(\pi)</annotation></semantics></math> of ¤10?</p>
 <p>This case is less straightforward than the previous. How
 much is contributed by whom is determined by order in which
 they join. Here are all 6 possible permutations (pizza-party formation orders):</p>
@@ -344,7 +344,8 @@ they join. Here are all 6 possible permutations (pizza-party formation orders):<
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>B, C(10), A(0)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>C, A(6),  B(4)</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>C, B(10), A(0)</span></code></pre></div>
-<p>And now we average individual discount contributions across all the possibilities:</p>
+<p>And now we average individual discount contributions across all the
+possibilities:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right"><msub><mi>A</mi><mi>C</mi></msub><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>6</mn></mtd><mtd columnalign="right"><mo>=</mo><mn>2</mn></mtd></mtr><mtr><mtd columnalign="right"><msub><mi>B</mi><mi>C</mi></msub><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">(</mo><mn>6</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>10</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>6</mn></mtd><mtd columnalign="right"><mo>=</mo><mn>4</mn></mtd></mtr><mtr><mtd columnalign="right"><msub><mi>C</mi><mi>C</mi></msub><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo stretchy="true" form="prefix">(</mo><mn>4</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>10</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>6</mn></mtd><mtd columnalign="right"><mo>=</mo><mn>4</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{align}
 A_C =&amp; (0+0+6+ 0+6+ 0)/6 &amp;= 2 \\
@@ -363,7 +364,7 @@ was a rock star in certain circles.</p>
 <p>By now you see the problem: Doing this by hand for more participants can
 entertain perhaps during a flight. To block out a screaming child and a
 flight attendant with a limited selection of overpriced snacks.
-(Alternatively you can
+With no other alternative. (Alternatively you can
 <a href="https://www.brainbashers.com/showskyscrapers.asp">fill squares with numbers</a>.)</p>
 <figure>
 <img src="../images/in-flight-entertainment.jpg" alt="In-flight entertainment" /><figcaption aria-hidden="true">In-flight entertainment</figcaption>
@@ -398,5 +399,5 @@ and to not kick out a person out of a coalition
 for a higher profit. (Spoiler: fear of lower profit.)</li>
 </ul></li>
 </ul>
-</div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>H4sIAIisZlgAA3PLzy9JLdLT0wMAzFDh2gkAAAA=</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
+</div><footer><p>Find me on <a href="https://github.com/xkollar/">GitHub</a>. Fancy an <a href="../atom.xml">Atom feed</a>?</p><p>KLUv/QQAHQEAwCi1L/0EAB0BAMADAE0VATGlKlyQmuf6sAMATRUBMaUqXJCa5/qw</p><p>Version 1, powered by <a href="https://jaspervdj.be/hakyll">Hakyll</a>.</p></footer></div></body>
 </html>
