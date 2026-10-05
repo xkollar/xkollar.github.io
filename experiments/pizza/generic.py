@@ -14,15 +14,18 @@ def savings(groups: Iterable[Iterable[T]], m: int, n: int) -> T | Literal[0]:
     return sum(p for g in groups for p in sorted(g)[:-m][:n])
 
 
-def max_savings(prices: Iterable[T], m: int, n: int) -> Iterable[tuple[T, ...]]:
+def optimal_grouping(prices: Iterable[T], m: int, n: int) -> Iterable[tuple[T, ...]]:
     assert m > 0
     assert n > 0
     return batched(sorted(prices, reverse=True), m + n)
 
 
 if __name__ == "__main__":
+    m = 2
+    n = 2
     prices = choices(range(1, 20), k=7)
-    solution = list(max_savings(prices, 2, 2))
+    solution = list(optimal_grouping(prices, m, n))
 
+    print(f"{m = }, {n = }")
     print(f"{solution = }")
-    print(f"{savings(solution,2,2) = }")
+    print(f"{savings(solution,m,n) = }")

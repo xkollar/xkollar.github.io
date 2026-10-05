@@ -96,11 +96,11 @@ You may feel tempted to copy-paste this into your "get-me-a-cheap-pizza.py",
 but at the end of the day, I'm just a stranger on the Internet, and you
 might not want to base your financial decisions on a random Python snippet.
 
-To convince yourself that `max_savings` produces optimal
+To convince yourself that `optimal_grouping` produces optimal
 grouping as valuated by `savings`, you may employ the following
 steps:
 
-* Take a random permutation.
+* Take a random permutation the input.
 * Split it into groups of three + tail.
 * Fill the tail (if there is one) with 0s to form a full group.
 * Permutations within groups don't do anything to savings
@@ -108,7 +108,7 @@ steps:
     * Reverse-sort elements within groups.
 * Permutations of groups don't do anything to savings
   (because of associativity of sum).
-    * Reverse-sort groups by the smallest (after sorting the last) element.
+    * Reverse-sort groups by the smallest (after reverse-sorting the last) element.
 * Boundaries of groups.
     * Pick two neighbouring groups $(a,b,c)$, $(d,e,f)$.
         * Such that $d > c$.
@@ -337,14 +337,14 @@ So why would anyone ever be unhappy with the price-proportional split?
 As an example take an individual $A$ who is eyeing a
 [<abbr title="Generic Currency Sign">¤</abbr>](https://en.wikipedia.org/wiki/Currency_sign_\(generic\))6
 pizza. $A$ usually buys pizza with $B$ and $C$, who also get ¤6 pizzas,
-each paying ¤4. But what happens if $C$ develops
-more expensive taste and decides to go for a pizza worth ¤12.
+each paying ¤4. But what happens when $C$ develops
+more expensive taste and decides to go for a pizza worth ¤12?
 Suddenly, even though total group saving is still ¤6, $A$
 needs to pay ¤4.5. Savings distribution (1.5,1.5,3)
 is skewed towards the person with more expensive taste.
 
 We might try to convince ourselves that this is compensated
-by having bigger proportion of savings if someone decided
+for by having bigger proportion of savings if someone decided
 to go cheaper, but it is not the same: total savings
 are unchanged, and $A$ still gets the same pizza, yet
 saves less.
@@ -394,7 +394,7 @@ a 1+1 offer. We will still be able to observe the thought
 process without the combinatorial explosion.
 
 Example: $A,B,C$ want to buy pizzas priced $\pi=(6,10,12)$ with **1+1** offer.
-How much does each contribute to total savings $P_{\!\!D}(\pi)$ of ¤10?
+How much does each contribute to total savings $D(\pi)$ of ¤10?
 
 This case is less straightforward than the previous. How
 much is contributed by whom is determined by order in which
@@ -412,7 +412,8 @@ C, A(6),  B(4)
 C, B(10), A(0)
 ```
 
-And now we average individual discount contributions across all the possibilities:
+And now we average individual discount contributions across all the
+possibilities:
 
 $$
 \begin{align}
@@ -433,7 +434,7 @@ was a rock star in certain circles.
 By now you see the problem: Doing this by hand for more participants can
 entertain perhaps during a flight. To block out a screaming child and a
 flight attendant with a limited selection of overpriced snacks.
-(Alternatively you can
+With no other alternative. (Alternatively you can
 [fill squares with numbers](https://www.brainbashers.com/showskyscrapers.asp).)
 
 ![In-flight entertainment](/images/in-flight-entertainment.jpg)
