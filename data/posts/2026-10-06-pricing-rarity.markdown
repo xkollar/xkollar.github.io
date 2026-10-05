@@ -1,8 +1,10 @@
 ---
 title: "Pricing Rarity"
 author: xkollar
-tags: Fun, Math, Python, Probability
+tags: Fun, Math, Python, Probability, Unfinished
 ---
+
+Unfinished; posting anyway.
 
 <!--
 Alternative titles:
