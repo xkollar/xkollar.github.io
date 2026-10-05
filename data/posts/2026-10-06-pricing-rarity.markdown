@@ -27,7 +27,7 @@ peers. Hockey cards, Kinder surprise toys, Pogs, Cs... Most of them
 managed to mostly pass me. I had owned some, but I was never really into
 the thing to the point of spending my own money on it. The only exception
 were stickers that came with Resanka (filled croissant in package with a
-drawing of a girl). Collecting a full set allower yout to enter a draw
+drawing of a girl). Collecting a full set allowed you to enter a draw
 for prizes or something. (I haven't managed to find more information about
 it beyond stickers being numbered, there being about 16 or 20 different
 ones, number one being "Kamoš Loptoš", and number sixteen "Hadica" (very
@@ -47,7 +47,7 @@ We'll start with a very simple card collecting game CG20
 (Collecting Game 20). It will be our playground to explore
 some basic principles guiding the price of these cards.
 
-CGA works as follows:
+CG20 works as follows:
 
 * There are 20 different cards.
 * Cards are sold in individual packs (one card per pack).
@@ -105,6 +105,7 @@ $$
 So if we want a specific card and see an offer for less
 than ¤20, it is better than buying individual packs.
 And it works the other way too: we should not be willing to pay more than ¤20.
+(Or should we?)
 
 This gives us a bound on what a fair price of a card might be. As aspiring
 finance bros we might be tempted to slap an order book on the problem, and we
@@ -226,7 +227,7 @@ x &= 30 \\
 $$
 
 With price per card now only 15 as opposed to 20 in case of a single card.
-Here we see why a seller would offer discounts four buyers of several packs.
+Here we see why a seller would offer discounts for buyers of several packs.
 
 <details>
 <summary>
@@ -394,7 +395,7 @@ It is interesting to see that while expected cost is for CG20 is 20,
 probability of paying more is almost 36%. (And as N grows,
 this probability is approaching $\frac{1}{e}$.)
 
-Maybe mitigatig risk of paying more than expected value
+Maybe mitigating risk of paying more than expected value
 is worth something and paying more than N might be a reasonable
 thing to do.
 
