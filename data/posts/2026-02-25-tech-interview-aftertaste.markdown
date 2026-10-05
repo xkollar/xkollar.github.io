@@ -161,7 +161,7 @@ x_{1,2} = - \frac{1 \pm \sqrt{5}}{2}
 $$
 </summary>
 
-Ugh… Do I even remember quadratic formula? Let me try to remember real quick.
+Ugh… Do I even remember quadratic formula? Let me try to derive it real quick.
 
 $$
 \begin{align}
