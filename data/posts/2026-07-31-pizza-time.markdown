@@ -100,7 +100,7 @@ To convince yourself that `optimal_grouping` produces optimal
 grouping as valuated by `savings`, you may employ the following
 steps:
 
-* Take a random permutation the input.
+* Take a random permutation of the input.
 * Split it into groups of three + tail.
 * Fill the tail (if there is one) with 0s to form a full group.
 * Permutations within groups don't do anything to savings
@@ -164,7 +164,7 @@ Armed with the way to maximize savings,
 some entrepreneurially-spirited readers might already
 be looking for more people to join them on the saving-on-pizza
 (ad)venture. After all, even if I can/want to buy only one pizza,
-there is nothing stopping me from finding more people to join-in
+there is nothing stopping me from finding more people to join in
 on the fun.
 
 And here we hit another complication: how to split the savings?
@@ -195,7 +195,7 @@ and we'll assume non-existence of fridges 🤪. (Person who
 wants 2 pizzas but orders 3 just to get the discount gets 0 ~~utility~~
 enjoyment from the last pizza.)
 
-Before proceeding any further let's introduce couple of handy shorthands.
+Before proceeding any further let's introduce a couple of handy shorthands.
 
 $\Sigma{}\!\pi{}$, the total original price.
 
@@ -464,7 +464,7 @@ digraph G {
     node [shape=point, width=0, height=0, margin=0, style=invis];
     T0; T1; T2; T3; T4; T5;
 
-    // More invisible nodes and edges to force pretty latice shape...
+    // More invisible nodes and edges to force pretty lattice shape...
     edge [color=none];
     0 -> Ax -> AB [weight=10];
     A -> AAx -> AAB [weight=10];
@@ -550,5 +550,5 @@ I'd like to extend this article with:
       on degenerated inputs (all same prices, ...)
 * A paragraph or two on stability of coalitions
     * What motivates people to form this coalition
-      and to not kick out a person out of a coalition
+      and to not kick a person out of a coalition
       for a higher profit. (Spoiler: fear of lower profit.)

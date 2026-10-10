@@ -24,7 +24,7 @@ Ouroboros hydra
 
 As a kid I lived through several collecting manias in the midst of my
 peers. Hockey cards, Kinder surprise toys, Pogs, Cs... Most of them
-managed to mostly pass me. I had owned some, but I was never really into
+passed me by. I had owned some, but I was never really into
 the thing to the point of spending my own money on it. The only exception
 were stickers that came with Resanka (filled croissant in package with a
 drawing of a girl). Collecting a full set allowed you to enter a draw
@@ -35,7 +35,7 @@ childish pun on snake female and a garden hose). I think I managed to
 fill about three of the albums which shows how many I must have eaten. 😅)
 
 Primary mechanism of acquiring these collectible items is buying an
-opaque collection which contains a random selection of given size.
+opaque collection containing a random selection of a given size.
 Common names are "Pack" or "Loot box" or similar. However, oftentimes
 people start trading these cards, either for other cards,
 or through established value-exchange media such as money (and so
@@ -123,14 +123,14 @@ and that way offset our cost. Let's not think about that just yet.)
 
 **Question #2**: How much should we expect to pay for two specific (different) cards?
 
-Trying to make infinity eat itself will start soon
+Trying to make infinity eat itself will soon
 turn to ourohydraboros. Time for pictures!
 
 
 ```dot-render
 digraph g {
     splines=false;
-    graph[label="One-Card-Finding Snake for GC20" labelloc=t ranksep=0.5 nodesep=2]
+    graph[label="One-Card-Finding Snake for CG20" labelloc=t ranksep=0.5 nodesep=2]
     node [label="", shape=circle, color="#f66", fontcolor="#f66"]
     edge [color="#f66", fontcolor="#f66"]
     x [label="x", shape=circle]
@@ -295,7 +295,7 @@ digraph g {
 ```
 </details>
 
-**Question #3**: What is expected of m different cards?
+**Question #3**: What is expected cost for m different cards?
 
 $$
 \sum_{i=1}^{m} \frac{20}{i}
@@ -333,7 +333,7 @@ To translate previous results without going into details:
     = i p (1-p)^{i-1}
     = N
   $$
-* Expected number of opened pack to find m different specific cards?
+* Expected number of opened packs to find m different specific cards?
   $$
     \sum_{i=1}^{m}\frac{N}{i}
   $$
@@ -345,7 +345,7 @@ to be open to collect all N cards? (You can meet there
 logarithms and Stirling numbers again!)
 
 We ask similar question: What is the probability that more than
-x packs need to be open to find a given card, and more specifically
+x packs need to be opened to find a given card, and more specifically
 what is the probability $P^{+}$ that we'll need to open more than
 expected number of packs?
 
@@ -417,7 +417,7 @@ secondary market down even below ¤1, while our price would still be more than
 compared to opening packs.
 
 Price above ¤1 would allow us to get the card for less than
-¤1. But everyone else would be also incentivized do so.
+¤1. But everyone else would be also incentivized to do so.
 Obviously, not everyone might have resources to enter the
 market (time, money, ...).
 
@@ -433,7 +433,7 @@ prices for collectors are high and unpredictable (most value is captured
 by the primary issuer). If the medium allows (especially with digital
 collectibles, exchange between users can be prohibited), maybe some
 card-for-card exchange happens. With secondary market too efficient there
-is not enough value spared for it's own existence.
+is not enough value spared for its own existence.
 
 Secondary markets can provide value for both
 buyers and sellers while being able to keep some

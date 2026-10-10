@@ -7,6 +7,19 @@ tags: Math, Probability, Stub
 Maybe one day I'll turn this into a real article,
 but for now here are just some points and a picture:
 
+The key question is:
+
+> After `n` runs without an error,
+> what is the lowest error rate `P_err`,
+> that we can be C-confident we would have already observed an error.
+
+(Lowest/highest can be kinda slippery here, but think
+about extremes: for fail rate "almost 100%"
+it would be very unlikely that we did not observe any error,
+while with fail rate "almost 0%" not observing error would not be very suprising.)
+
+* TL;DR, for large enough n (usually >30), good approximation for 95% confidence is `3/n`.
+  (E.g. after 100 runs I am 95% confident the error rate is `≤3%`.)
 * For cases where we don't have "total population"
   and samples just come to us one by one we can't use
   the approach from [the previous article](2025-12-14-when-you-cant-test-everything.html).
@@ -17,6 +30,8 @@ but for now here are just some points and a picture:
   but also just binary search to find `P_err` for
   a given confidence.
 * Logs are again useful.
+
+To build up an intuition, here is example with 5 samples
 
 ```txt
  Errs | Samples   | Probability   | Comment
@@ -112,3 +127,5 @@ plt.legend(loc='best')
 
 plt.savefig("/dev/stdout", format="svg")
 ```
+
+(Upper bound of confidence band `(0, P_err)`.
