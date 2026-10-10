@@ -95,7 +95,7 @@ as possible, which is getting us to
 And again, running things through logs makes it a smidge faster.
 
 ```
-log (1-P_err)^n = log (1-c)
+log(1-P_err)*n = log(1-c)
 ```
 
 ```python-render
