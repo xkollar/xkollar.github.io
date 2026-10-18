@@ -12,6 +12,7 @@ in pkgs.mkShell {
     pkgs.ruff
     pkgs.stack
     pkgs.zlib
+    pkgs.gitFull
     (pkgs.python312.withPackages (python-pkgs: [
       python-pkgs.matplotlib
       python-pkgs.mypy

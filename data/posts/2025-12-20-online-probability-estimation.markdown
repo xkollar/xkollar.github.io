@@ -4,6 +4,9 @@ author: xkollar
 tags: Math, Probability, Stub
 ---
 
+This is an extension of an older article
+[When You Can’t Test Everything](2025-12-14-when-you-cant-test-everything.html).
+
 Maybe one day I'll turn this into a real article,
 but for now here are just some points and a picture:
 
@@ -16,7 +19,8 @@ The key question is:
 (Lowest/highest can be kinda slippery here, but think
 about extremes: for fail rate "almost 100%"
 it would be very unlikely that we did not observe any error,
-while with fail rate "almost 0%" not observing error would not be very suprising.)
+while with fail rate "almost 0%" not observing error would not be very surprising.
+So the confidence band is `[0,P_err)`.)
 
 * TL;DR, for large enough n (usually >30), good approximation for 95% confidence is `3/n`.
   (E.g. after 100 runs I am 95% confident the error rate is `≤3%`.)
@@ -75,7 +79,7 @@ To build up an intuition, here is example with 5 samples
     5 | X X X X X |               |
 ```
 
-To have c-confidence, we want
+To have C-confidence, we want
 
 ```
 (1-P_err)^n <= (1-c)
@@ -110,7 +114,7 @@ plt.title('Confidence-based Error Probabilities (and Heuristics)')
 plt.xscale('log')
 plt.yscale('log')
 plt.xlabel('Samples')
-plt.ylabel('Estimated upper bound of P_err')
+plt.ylabel('Estimated upper side of of [0,P_err] band')
 
 data = [
     (0.5,  0.7, "blue"),
@@ -128,4 +132,4 @@ plt.legend(loc='best')
 plt.savefig("/dev/stdout", format="svg")
 ```
 
-(Upper bound of confidence band `(0, P_err)`.
+(Upper bound of confidence band `[0, P_err)`).

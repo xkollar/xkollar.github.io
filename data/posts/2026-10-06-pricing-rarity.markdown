@@ -26,7 +26,7 @@ As a kid I lived through several collecting manias in the midst of my
 peers. Hockey cards, Kinder surprise toys, Pogs, Cs... Most of them
 passed me by. I had owned some, but I was never really into
 the thing to the point of spending my own money on it. The only exception
-were stickers that came with Resanka (filled croissant in package with a
+was stickers that came with Resanka (filled croissant in package with a
 drawing of a girl). Collecting a full set allowed you to enter a draw
 for prizes or something. (I haven't managed to find more information about
 it beyond stickers being numbered, there being about 16 or 20 different
@@ -34,7 +34,7 @@ ones, number one being "Kamoš Loptoš", and number sixteen "Hadica" (very
 childish pun on snake female and a garden hose). I think I managed to
 fill about three of the albums which shows how many I must have eaten. 😅)
 
-Primary mechanism of acquiring these collectible items is buying an
+The primary mechanism of acquiring these collectible items is buying an
 opaque collection containing a random selection of a given size.
 Common names are "Pack" or "Loot box" or similar. However, oftentimes
 people start trading these cards, either for other cards,
@@ -51,10 +51,10 @@ CG20 works as follows:
 
 * There are 20 different cards.
 * Cards are sold in individual packs (one card per pack).
-* Pack costs ¤1.
+* A pack costs ¤1.
 * Cards have uniform probability. (So each card has the same probability
   to be found in each pack. For this particular setup that is
-  probability that is sometimes expressed as 1/20, 0.05, 5%, or 1:19.)
+  probablity 1/20, alternatively expressed as 0.05, 5%, or 1:19.)
 * There is no limit on how many packs can be bought (so [scarcity](https://simple.wikipedia.org/wiki/Scarcity)
   is not a part of our problem in this game).
 
@@ -66,7 +66,7 @@ hit from completing our collection?)
 As each pack costs ¤1 this is the same as asking what is the
 expected number of packs to open to get a specific card.
 
-* Probability of us getting it on the first try is 0.05.
+* Probability of getting it on the first try is 0.05.
 * Getting it on the second try means we did not
   get it on the first try so that is 0.95 * 0.05.
 * Getting it on the third try means we did not get it on
@@ -113,7 +113,7 @@ might be right to let the market discover a fair price. But it is good to know
 that if such a market goes above ¤20, it is time to sell... (Or maybe
 something happened that we don't know about? 🤔)
 
-On the other side it is obvious that if price goes under ¤1 it is time
+On the other hand it is obvious that if price goes below ¤1 it is time
 to buy like there is no tomorrow. (Or not, could be a sign
 of collapsing market 🤷.)
 
@@ -176,7 +176,7 @@ x &= 20 \\
 \end{align}
 $$
 
-From there we can draw diagram for 2 cards
+From there we can draw a diagram for 2 cards
 
 ```dot-render
 digraph g {
@@ -227,7 +227,7 @@ x &= 30 \\
 $$
 
 With price per card now only 15 as opposed to 20 in case of a single card.
-Here we see why a seller would offer discounts for buyers of several packs.
+Here we see why a seller would offer discounts to buyers of several packs.
 
 <details>
 <summary>
@@ -495,9 +495,9 @@ Expected cost for a card per tier
 
 $$
 \begin{align}
-    C_1 =& \frac{1}{0.2} = 5 \\
-    C_2 =& \frac{1}{0.04} = 25 \\
-    C_3 =& \frac{1}{0.01} = 100 \\
+    C_2 =& \frac{1}{0.2} = 5 \\
+    C_1 =& \frac{1}{0.04} = 25 \\
+    C_0 =& \frac{1}{0.01} = 100 \\
 \end{align}
 $$
 
